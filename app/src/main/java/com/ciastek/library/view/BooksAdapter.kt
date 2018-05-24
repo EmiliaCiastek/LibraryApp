@@ -23,7 +23,7 @@ class BooksAdapter : RecyclerView.Adapter<BookViewHolder>() {
     }
 
     fun addBook(book: Book) {
-        books.add(book)
+        books += book
         notifyItemInserted(books.size - 1)
     }
 }
