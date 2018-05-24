@@ -4,4 +4,5 @@
     <string name="title_activity_create_book">CreateBookActivity</string>
     <string name="books_title">Book\'s title</string>
     <string name="books_author">Book\'s author</string>
+    <string name="books_read">Is read</string>
 </resources>
