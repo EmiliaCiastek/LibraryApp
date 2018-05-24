@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Library</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_create_book">CreateBookActivity</string>
+    <string name="books_title">Book\'s title</string>
+    <string name="books_author">Book\'s author</string>
 </resources>

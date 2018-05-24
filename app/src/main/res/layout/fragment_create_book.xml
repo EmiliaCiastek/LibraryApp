@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivityFragment"
-    tools:showIn="@layout/activity_main">
+    tools:context=".view.CreateBookActivityFragment"
+    tools:showIn="@layout/activity_create_book">
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_fab"
+        android:id="@+id/save_book_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -16,17 +16,5 @@
         android:layout_marginEnd="@dimen/fab_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add_white_24dp" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/books_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
+        app:srcCompat="@drawable/ic_save_white_24dp" />
 </android.support.constraint.ConstraintLayout>
