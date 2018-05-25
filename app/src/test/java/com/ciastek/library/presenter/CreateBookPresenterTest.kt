@@ -21,9 +21,19 @@ class CreateBookPresenterTest {
     }
 
     @Test
-    fun shouldSetBookCreatedOnView_whenSaveBookButtonClicked() {
+    fun shouldSetBookCreatedOnView_whenSaveBookButtonClickedAndBookIsValid() {
         presenter.saveBookButtonClicked(fakeBook)
 
         verify(view).setBookCreated(fakeBook)
     }
+
+    @Test
+    fun shouldDisplayError_whenSaveBookButtonClickedAndBookIsNotValid() {
+        val notValidBook = Book("", "")
+        presenter.saveBookButtonClicked(notValidBook)
+
+        verify(view).showError()
+    }
+
+
 }

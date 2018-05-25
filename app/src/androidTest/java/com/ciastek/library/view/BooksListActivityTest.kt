@@ -32,13 +32,6 @@ class BooksListActivityTest {
     }
 
     @Test
-    fun shouldGoBackToMainActivity_WhenSaveButtonClicked() {
-        onView(withId(R.id.add_fab)).perform(click())
-        onView(withId(R.id.save_book_fab)).perform(click())
-        onView(withId(R.id.add_fab)).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun shouldShowNewBookOnTheList_WhenSaveButtonClicked() {
         val randomSuffix = Random().nextInt()
         val fakeValue = "something$randomSuffix"
@@ -49,5 +42,13 @@ class BooksListActivityTest {
         onView(withId(R.id.save_book_fab)).perform(click())
 
         onView(withId(R.id.books_recycler_view)).perform(RecyclerViewActions.scrollTo<BookViewHolder>(hasDescendant(withText(fakeValue)))) //TODO: move to extension function scrollTo(index)
+    }
+
+    @Test
+    fun shouldShowError_WhenSaveButtonClicked_withEmptyBook() {
+        onView(withId(R.id.add_fab)).perform(click())
+        onView(withId(R.id.save_book_fab)).perform(click())
+
+        onView(withText(R.string.empty_fields_message)).check(matches(isDisplayed()))
     }
 }

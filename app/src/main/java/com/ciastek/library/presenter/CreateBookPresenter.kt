@@ -1,6 +1,7 @@
 package com.ciastek.library.presenter
 
 import com.ciastek.library.CreateBookContract
+import com.ciastek.library.isValid
 import com.ciastek.library.model.Book
 
 class CreateBookPresenter : CreateBookContract.Presenter {
@@ -8,7 +9,10 @@ class CreateBookPresenter : CreateBookContract.Presenter {
     private var view: CreateBookContract.View? = null
 
     override fun saveBookButtonClicked(book: Book) {
-        view?.setBookCreated(book) //TODO: add validation
+        if (book.isValid())
+            view?.setBookCreated(book)
+        else
+            view?.showError()
     }
 
     override fun attachView(view: CreateBookContract.View) {

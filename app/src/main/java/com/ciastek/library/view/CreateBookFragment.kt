@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_create_book.*
 
 class CreateBookFragment : Fragment(), CreateBookContract.View {
     private lateinit var presenter: CreateBookContract.Presenter
+    private lateinit var errorDialog: AlertDialog
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -42,7 +44,16 @@ class CreateBookFragment : Fragment(), CreateBookContract.View {
     }
 
     override fun showError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (!::errorDialog.isInitialized) {
+            errorDialog = AlertDialog.Builder(context!!)
+                    .apply {
+                        setMessage(getString(R.string.empty_fields_message))
+                        setTitle(getString(R.string.empty_fields_title))
+                    }
+                    .create()
+        }
+
+        errorDialog.show()
     }
 
     override fun setBookCreated(book: Book) {

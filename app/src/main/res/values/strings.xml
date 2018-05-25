@@ -5,4 +5,6 @@
     <string name="books_title">Book\'s title</string>
     <string name="books_author">Book\'s author</string>
     <string name="books_read">Is read</string>
+    <string name="empty_fields_message">Fields can\'t be empty</string>
+    <string name="empty_fields_title">Empty Fields</string>
 </resources>
