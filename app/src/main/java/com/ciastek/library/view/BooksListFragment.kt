@@ -1,7 +1,5 @@
 package com.ciastek.library.view
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -13,7 +11,7 @@ import com.ciastek.library.BooksContracts
 import com.ciastek.library.BooksContracts.Presenter
 import com.ciastek.library.R
 import com.ciastek.library.model.Book
-import com.ciastek.library.model.InMemoryBookDao
+import com.ciastek.library.model.db.LibraryDatabase
 import com.ciastek.library.presenter.BooksPresenter
 import kotlinx.android.synthetic.main.fragment_books.*
 
@@ -42,8 +40,13 @@ class BooksListFragment : Fragment(), BooksContracts.View {
                 (books_recycler_view.layoutManager as LinearLayoutManager).orientation)
         books_recycler_view.addItemDecoration(dividerItemDecoration)
 
-        presenter = BooksPresenter(InMemoryBookDao())
+        presenter = BooksPresenter(LibraryDatabase.getInstance(context!!).bookDao())
         presenter.attachView(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.loadData()
     }
 
     override fun onDestroyView() {
@@ -52,18 +55,8 @@ class BooksListFragment : Fragment(), BooksContracts.View {
         presenter.detachView()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == CREATE_BOOK_REQUEST && resultCode == RESULT_OK) {
-            val book = data.getParcelableExtra<Book>(CreateBookFragment.NEW_BOOK)
-
-            presenter.newBookReceived(book)
-        }
-    }
-
     override fun startNewBookActivity() {
-        startActivityForResult(CreateBookActivity.getIntent(this.context!!), CREATE_BOOK_REQUEST)
+        startActivity(CreateBookActivity.getIntent(this.context!!))
     }
 
     override fun addBook(book: Book) {
@@ -72,9 +65,5 @@ class BooksListFragment : Fragment(), BooksContracts.View {
 
     override fun setBooks(books: List<Book>) {
         booksAdapter.setBooks(books)
-    }
-
-    private companion object {
-        private const val CREATE_BOOK_REQUEST = 1
     }
 }

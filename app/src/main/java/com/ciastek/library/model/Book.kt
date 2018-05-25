@@ -1,36 +1,15 @@
 package com.ciastek.library.model
 
-import android.os.Parcel
-import android.os.Parcelable
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 
-data class Book(val title: String, val author: String) : Parcelable {
+@Entity(tableName = "books")
+data class Book(
+        @PrimaryKey(autoGenerate = true) val id: Long? = null,
+        @ColumnInfo val title: String,
+        @ColumnInfo val author: String) {
+
+    @ColumnInfo
     var isRead: Boolean = false
-
-    constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString()) {
-        isRead = parcel.readByte() != 0.toByte()
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(title)
-        parcel.writeString(author)
-        parcel.writeByte(if (isRead) 1 else 0)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Book> {
-        override fun createFromParcel(parcel: Parcel): Book {
-            return Book(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Book?> {
-            return arrayOfNulls(size)
-        }
-    }
-
-
 }

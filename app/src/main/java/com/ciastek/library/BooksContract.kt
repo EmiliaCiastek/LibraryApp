@@ -7,7 +7,7 @@ object BooksContracts {
     interface Presenter : Attachable<BooksContracts.View> {
         fun newBookButtonClicked()
 
-        fun newBookReceived(book: Book)
+        fun loadData()
     }
 
     interface View {
