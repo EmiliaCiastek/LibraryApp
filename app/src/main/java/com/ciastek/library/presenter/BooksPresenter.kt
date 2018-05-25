@@ -2,16 +2,19 @@ package com.ciastek.library.presenter
 
 import com.ciastek.library.BooksContracts
 import com.ciastek.library.model.Book
+import com.ciastek.library.model.BookDao
 
-class BooksPresenter : BooksContracts.Presenter {
+class BooksPresenter(private val booksDao: BookDao) : BooksContracts.Presenter {
     private var view: BooksContracts.View? = null
 
     override fun newBookReceived(book: Book) {
         view?.addBook(book)
+        booksDao.addBook(book)
     }
 
     override fun attachView(view: BooksContracts.View) {
         this.view = view
+        view.setBooks(booksDao.getBooks())
     }
 
     override fun detachView() {
@@ -21,5 +24,4 @@ class BooksPresenter : BooksContracts.Presenter {
     override fun newBookButtonClicked() {
         view?.startNewBookActivity()
     }
-
 }

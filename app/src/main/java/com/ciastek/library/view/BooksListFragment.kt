@@ -13,6 +13,7 @@ import com.ciastek.library.BooksContracts
 import com.ciastek.library.BooksContracts.Presenter
 import com.ciastek.library.R
 import com.ciastek.library.model.Book
+import com.ciastek.library.model.InMemoryBookDao
 import com.ciastek.library.presenter.BooksPresenter
 import kotlinx.android.synthetic.main.fragment_books.*
 
@@ -28,9 +29,6 @@ class BooksListFragment : Fragment(), BooksContracts.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = BooksPresenter()
-        presenter.attachView(this)
-
         add_fab.setOnClickListener {
             presenter.newBookButtonClicked()
         }
@@ -43,19 +41,15 @@ class BooksListFragment : Fragment(), BooksContracts.View {
         val dividerItemDecoration = DividerItemDecoration(books_recycler_view.context,
                 (books_recycler_view.layoutManager as LinearLayoutManager).orientation)
         books_recycler_view.addItemDecoration(dividerItemDecoration)
+
+        presenter = BooksPresenter(InMemoryBookDao())
+        presenter.attachView(this)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
         presenter.detachView()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        booksAdapter.addBook(Book("Kotlin in Action", "D. Jemerov"))
-        booksAdapter.addBook(Book("Effective Java", "J. Bloch"))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -74,6 +68,10 @@ class BooksListFragment : Fragment(), BooksContracts.View {
 
     override fun addBook(book: Book) {
         booksAdapter.addBook(book)
+    }
+
+    override fun setBooks(books: List<Book>) {
+        booksAdapter.setBooks(books)
     }
 
     private companion object {

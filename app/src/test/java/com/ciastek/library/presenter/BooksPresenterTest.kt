@@ -2,6 +2,7 @@ package com.ciastek.library.presenter
 
 import com.ciastek.library.BooksContracts
 import com.ciastek.library.model.Book
+import com.ciastek.library.model.BookDao
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -9,15 +10,17 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
 class BooksPresenterTest {
-    lateinit var view: BooksContracts.View
-    lateinit var presenter: BooksPresenter
+    private lateinit var view: BooksContracts.View
+    private lateinit var presenter: BooksPresenter
+    private lateinit var bookDao: BookDao
 
     private val fakeBook = Book("Title", "Author")
 
     @Before
     fun setUp() {
         view = mock(BooksContracts.View::class.java)
-        presenter = BooksPresenter()
+        bookDao = mock(BookDao::class.java)
+        presenter = BooksPresenter(bookDao)
         presenter.attachView(view)
     }
 

@@ -14,5 +14,7 @@ object BooksContracts {
         fun startNewBookActivity()
 
         fun addBook(book: Book)
+
+        fun setBooks(books: List<Book>)
     }
 }

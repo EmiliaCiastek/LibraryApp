@@ -26,4 +26,9 @@ class BooksAdapter : RecyclerView.Adapter<BookViewHolder>() {
         books += book
         notifyItemInserted(books.size - 1)
     }
+
+    fun setBooks(books: List<Book>) {
+        this.books + books
+        notifyDataSetChanged()
+    }
 }
