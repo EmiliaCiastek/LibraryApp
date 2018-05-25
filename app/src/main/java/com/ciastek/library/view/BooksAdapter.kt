@@ -23,12 +23,12 @@ class BooksAdapter : RecyclerView.Adapter<BookViewHolder>() {
     }
 
     fun addBook(book: Book) {
-        books += book
+        books.add(book)
         notifyItemInserted(books.size - 1)
     }
 
     fun setBooks(books: List<Book>) {
-        this.books + books
+        this.books.addAll(books)
         notifyDataSetChanged()
     }
 }
