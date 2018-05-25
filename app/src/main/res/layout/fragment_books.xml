@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivityFragment"
-    tools:showIn="@layout/activity_main">
+    tools:context=".view.BooksListFragment"
+    tools:showIn="@layout/activity_books">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_fab"

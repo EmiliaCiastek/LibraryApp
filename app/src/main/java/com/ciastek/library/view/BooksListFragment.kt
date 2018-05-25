@@ -9,23 +9,30 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ciastek.library.BooksContracts
+import com.ciastek.library.BooksContracts.Presenter
 import com.ciastek.library.R
 import com.ciastek.library.model.Book
-import kotlinx.android.synthetic.main.fragment_main.*
+import com.ciastek.library.presenter.BooksPresenter
+import kotlinx.android.synthetic.main.fragment_books.*
 
-class MainActivityFragment : Fragment() {
+class BooksListFragment : Fragment(), BooksContracts.View {
     private lateinit var booksAdapter: BooksAdapter
+    private lateinit var presenter: Presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return inflater.inflate(R.layout.fragment_books, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenter = BooksPresenter()
+        presenter.attachView(this)
+
         add_fab.setOnClickListener {
-            startActivityForResult(CreateBookActivity.getIntent(this.context!!), CREATE_BOOK_REQUEST)
+            presenter.newBookButtonClicked()
         }
 
         booksAdapter = BooksAdapter()
@@ -36,6 +43,12 @@ class MainActivityFragment : Fragment() {
         val dividerItemDecoration = DividerItemDecoration(books_recycler_view.context,
                 (books_recycler_view.layoutManager as LinearLayoutManager).orientation)
         books_recycler_view.addItemDecoration(dividerItemDecoration)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        presenter.detachView()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -49,10 +62,18 @@ class MainActivityFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == CREATE_BOOK_REQUEST && resultCode == RESULT_OK) {
-            val book = data.getParcelableExtra<Book>(CreateBookActivityFragment.NEW_BOOK)
+            val book = data.getParcelableExtra<Book>(CreateBookFragment.NEW_BOOK)
 
-            booksAdapter.addBook(book)
+            presenter.newBookReceived(book)
         }
+    }
+
+    override fun startNewBookActivity() {
+        startActivityForResult(CreateBookActivity.getIntent(this.context!!), CREATE_BOOK_REQUEST)
+    }
+
+    override fun addBook(book: Book) {
+        booksAdapter.addBook(book)
     }
 
     private companion object {
