@@ -17,8 +17,4 @@ class BooksPresenter(private val booksDao: BookDao) : BooksContracts.Presenter {
     override fun detachView() {
         this.view = null
     }
-
-    override fun newBookButtonClicked() {
-        view?.startNewBookActivity()
-    }
 }

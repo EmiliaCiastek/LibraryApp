@@ -27,10 +27,6 @@ class BooksListFragment : Fragment(), BooksContracts.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        add_fab.setOnClickListener {
-            presenter.newBookButtonClicked()
-        }
-
         booksAdapter = BooksAdapter()
 
         books_recycler_view.adapter = booksAdapter
@@ -53,10 +49,6 @@ class BooksListFragment : Fragment(), BooksContracts.View {
         super.onDestroyView()
 
         presenter.detachView()
-    }
-
-    override fun startNewBookActivity() {
-        startActivity(CreateBookActivity.getIntent(this.context!!))
     }
 
     override fun addBook(book: Book) {

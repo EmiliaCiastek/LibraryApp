@@ -4,7 +4,6 @@ import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import com.ciastek.library.model.Book
-import com.ciastek.library.model.db.LibraryDatabase
 import junit.framework.Assert.assertEquals
 import org.junit.After
 import org.junit.Before

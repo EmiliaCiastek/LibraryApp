@@ -1,5 +1,6 @@
 package com.ciastek.library.view
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
@@ -16,16 +17,27 @@ import kotlinx.android.synthetic.main.fragment_create_book.*
 class CreateBookFragment : Fragment(), CreateBookContract.View {
     private lateinit var presenter: CreateBookContract.Presenter
     private lateinit var errorDialog: AlertDialog
+    private lateinit var listener: OnBookAddedListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_create_book, container, false)
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        if (context is OnBookAddedListener) {
+            listener = context
+        } else {
+            throw ClassCastException(context.toString() + " must implement CreateBookFragment.OnBookAddedListener")
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter = CreateBookPresenter(LibraryDatabase.getInstance(context!!).bookDao())
+        presenter = CreateBookPresenter(LibraryDatabase.getInstance(context!!).bookDao()) //TODO: add Dagger
         presenter.attachView(this)
 
         save_book_fab.setOnClickListener {
@@ -56,6 +68,10 @@ class CreateBookFragment : Fragment(), CreateBookContract.View {
     }
 
     override fun setBookCreated(book: Book) {
-        activity!!.finish()
+        listener.onBookAdded(book)
+    }
+
+    interface OnBookAddedListener {
+        fun onBookAdded(book: Book)
     }
 }
