@@ -1,15 +1,14 @@
 package com.ciastek.library.model
 
-import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "books")
+@Parcelize
 data class Book(
         @PrimaryKey(autoGenerate = true) val id: Long? = null,
-        @ColumnInfo val title: String,
-        @ColumnInfo val author: String) {
-
-    @ColumnInfo
-    var isRead: Boolean = false
-}
+        val title: String,
+        val author: String,
+        var isRead: Boolean = false) : Parcelable

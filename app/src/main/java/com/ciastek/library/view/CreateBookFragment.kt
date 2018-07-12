@@ -12,16 +12,16 @@ import com.ciastek.library.R
 import com.ciastek.library.model.Book
 import com.ciastek.library.model.db.LibraryDatabase
 import com.ciastek.library.presenter.CreateBookPresenter
-import kotlinx.android.synthetic.main.fragment_create_book.*
+import kotlinx.android.synthetic.main.fragment_create_details_book.*
 
 class CreateBookFragment : Fragment(), CreateBookContract.View {
     private lateinit var presenter: CreateBookContract.Presenter
     private lateinit var errorDialog: AlertDialog
-    private lateinit var listener: OnBookAddedListener
+    private var listener: OnBookAddedListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_create_book, container, false)
+        return inflater.inflate(R.layout.fragment_create_details_book, container, false)
     }
 
     override fun onAttach(context: Context?) {
@@ -68,7 +68,13 @@ class CreateBookFragment : Fragment(), CreateBookContract.View {
     }
 
     override fun setBookCreated(book: Book) {
-        listener.onBookAdded(book)
+        listener?.onBookAdded(book)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        listener = null
     }
 
     interface OnBookAddedListener {

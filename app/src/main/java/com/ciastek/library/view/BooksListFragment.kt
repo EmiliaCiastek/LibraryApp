@@ -1,5 +1,6 @@
 package com.ciastek.library.view
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -18,6 +19,17 @@ import kotlinx.android.synthetic.main.fragment_books.*
 class BooksListFragment : Fragment(), BooksContracts.View {
     private lateinit var booksAdapter: BooksAdapter
     private lateinit var presenter: Presenter
+    private var listener: OnBookSelectedListener? = null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        if (context is OnBookSelectedListener) {
+            listener = context
+        } else {
+            throw ClassCastException(context.toString() + " must implement BooksListFragment.OnBookSelectedListener")
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -27,7 +39,7 @@ class BooksListFragment : Fragment(), BooksContracts.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        booksAdapter = BooksAdapter()
+        booksAdapter = BooksAdapter { position -> listener?.onBookSelected(booksAdapter.getBook(position)) }
 
         books_recycler_view.adapter = booksAdapter
         books_recycler_view.layoutManager = LinearLayoutManager(context)
@@ -57,5 +69,14 @@ class BooksListFragment : Fragment(), BooksContracts.View {
 
     override fun setBooks(books: List<Book>) {
         booksAdapter.setBooks(books)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    interface OnBookSelectedListener {
+        fun onBookSelected(book: Book)
     }
 }
