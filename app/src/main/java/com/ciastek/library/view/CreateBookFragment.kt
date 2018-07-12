@@ -40,7 +40,7 @@ class CreateBookFragment : Fragment(), CreateBookContract.View {
         presenter = CreateBookPresenter(LibraryDatabase.getInstance(context!!).bookDao()) //TODO: add Dagger
         presenter.attachView(this)
 
-        save_book_fab.setOnClickListener {
+        save_book_button.setOnClickListener {
             val book = Book(title = title_editText.text.toString(), author = author_editText.text.toString())
             book.isRead = is_read.isChecked
 

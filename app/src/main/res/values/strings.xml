@@ -7,4 +7,5 @@
     <string name="books_read">Is read</string>
     <string name="empty_fields_message">Fields can\'t be empty</string>
     <string name="empty_fields_title">Empty Fields</string>
+    <string name="add_book">Add Book</string>
 </resources>

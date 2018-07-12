@@ -22,13 +22,13 @@ class BooksListActivityTest {
 
     @Test
     fun shouldDisplayAddButton() {
-        onView(withId(R.id.add_fab)).check(matches(isDisplayed()))
+        onView(withId(R.id.add_book_button)).check(matches(isDisplayed()))
     }
 
     @Test
     fun shouldDisplaySaveButton_WhenAddButtonClicked() {
-        onView(withId(R.id.add_fab)).perform(click())
-        onView(withId(R.id.save_book_fab)).check(matches(isDisplayed()))
+        onView(withId(R.id.add_book_button)).perform(click())
+        onView(withId(R.id.save_book_button)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -36,18 +36,18 @@ class BooksListActivityTest {
         val randomSuffix = Random().nextInt()
         val fakeValue = "something$randomSuffix"
 
-        onView(withId(R.id.add_fab)).perform(click())
+        onView(withId(R.id.add_book_button)).perform(click())
         onView(withId(R.id.author_editText)).perform(click()).perform(typeText(fakeValue), closeSoftKeyboard())
         onView(withId(R.id.title_editText)).perform(click()).perform(typeText(fakeValue), closeSoftKeyboard())
-        onView(withId(R.id.save_book_fab)).perform(click())
+        onView(withId(R.id.save_book_button)).perform(click())
 
         onView(withId(R.id.books_recycler_view)).perform(RecyclerViewActions.scrollTo<BookViewHolder>(hasDescendant(withText(fakeValue)))) //TODO: move to extension function scrollTo(index)
     }
 
     @Test
     fun shouldShowError_WhenSaveButtonClicked_withEmptyBook() {
-        onView(withId(R.id.add_fab)).perform(click())
-        onView(withId(R.id.save_book_fab)).perform(click())
+        onView(withId(R.id.add_book_button)).perform(click())
+        onView(withId(R.id.save_book_button)).perform(click())
 
         onView(withText(R.string.empty_fields_message)).check(matches(isDisplayed()))
     }

@@ -2,7 +2,9 @@ package com.ciastek.library.view
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import com.ciastek.library.R
 import com.ciastek.library.model.Book
 import kotlinx.android.synthetic.main.activity_books.*
@@ -22,28 +24,54 @@ class BooksListActivity : AppCompatActivity(), CreateBookFragment.OnBookAddedLis
                     .add(R.id.fragment_container, BooksListFragment(), LIST_FRAGMENT_TAG)
                     .addToBackStack(null)
                     .commit()
-
-            add_fab!!.setOnClickListener {
-                it.visibility = View.INVISIBLE
-
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, CreateBookFragment())
-                        .commit()
-            }
+        } else {
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.details_create_container, CreateBookFragment(), CREATE_FRAGMENT_TAG)
+                    .addToBackStack(null)
+                    .commit()
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+
+        menuInflater.inflate(R.menu.list_activity_menu, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        super.onOptionsItemSelected(item)
+
+        if (item?.itemId == R.id.add_book_button) {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, CreateBookFragment())
+                    .commit()
+            return true
+        }
+
+        return false
+    }
+
     override fun onBookAdded(book: Book) {
-        val listFragment = (supportFragmentManager.findFragmentByTag(LIST_FRAGMENT_TAG)) as BooksListFragment
+        val listFragment = if (isDualPane) {
+            (supportFragmentManager.findFragmentById(R.id.books_list_fragment)) as BooksListFragment
+        } else {
+            (supportFragmentManager.findFragmentByTag(LIST_FRAGMENT_TAG)) as BooksListFragment
+        }
+
         listFragment.addBook(book)
         if (!isDualPane) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, listFragment)
                     .commit()
+        } else {
+            //TODO: display new book details
         }
     }
 
     private companion object {
         private const val LIST_FRAGMENT_TAG = "ListFragment"
+        private const val CREATE_FRAGMENT_TAG = "CreateFragment"
     }
 }
