@@ -17,11 +17,12 @@ class BooksListActivity : AppCompatActivity(), CreateBookFragment.OnBookAddedLis
         setSupportActionBar(toolbar)
 
         isDualPane = details_create_container != null
-
-        if (!isDualPane) {
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, BooksListFragment(), LIST_FRAGMENT_TAG)
-                    .commit()
+        if (savedInstanceState == null) {
+            if (!isDualPane) {
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.fragment_container, BooksListFragment(), LIST_FRAGMENT_TAG)
+                        .commit()
+            }
         }
     }
 
