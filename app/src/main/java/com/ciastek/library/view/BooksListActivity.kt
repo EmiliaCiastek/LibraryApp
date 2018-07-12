@@ -44,9 +44,12 @@ class BooksListActivity : AppCompatActivity(), CreateBookFragment.OnBookAddedLis
         super.onOptionsItemSelected(item)
 
         if (item?.itemId == R.id.add_book_button) {
+            if(!isDualPane) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, CreateBookFragment())
                     .commit()
+            }
+
             return true
         }
 
