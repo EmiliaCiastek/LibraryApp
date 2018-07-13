@@ -52,11 +52,6 @@ class BooksListFragment : Fragment(), BooksContracts.View {
         presenter.attachView(this)
     }
 
-    override fun onStart() {
-        super.onStart()
-        presenter.loadData()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
 

@@ -4,7 +4,6 @@ import com.ciastek.library.model.Book
 
 object BooksContracts {
     interface Presenter : Attachable<BooksContracts.View> {
-        fun loadData()
     }
 
     interface View {

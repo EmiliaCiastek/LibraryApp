@@ -1,5 +1,7 @@
 package com.ciastek.library.view
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -38,20 +40,7 @@ class BooksListActivity : AppCompatActivity(), CreateBookFragment.OnBookAddedLis
         super.onOptionsItemSelected(item)
 
         if (item?.itemId == R.id.add_book_button) {
-            if (!isDualPane) {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, CreateBookFragment())
-                        .addToBackStack(null)
-                        .commit()
-            } else {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.details_create_container, CreateBookFragment(), CREATE_FRAGMENT_TAG)
-                        .addToBackStack(null)
-                        .commit()
-            }
-
-            item.isVisible = false
-
+            startActivityForResult(CreateBookActivity.newInstance(this), CREATE_BOOK_REQUEST_CODE)
             return true
         }
 
@@ -87,8 +76,34 @@ class BooksListActivity : AppCompatActivity(), CreateBookFragment.OnBookAddedLis
                 .commit()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK && requestCode == CREATE_BOOK_REQUEST_CODE) {
+            val book = data!!.getParcelableExtra<Book>(CreateBookActivity.CREATED_BOOK)
+
+            val listFragment = if (isDualPane) {
+                (supportFragmentManager.findFragmentById(R.id.books_list_fragment)) as BooksListFragment
+            } else {
+                (supportFragmentManager.findFragmentByTag(LIST_FRAGMENT_TAG)) as BooksListFragment
+            }
+
+            listFragment.addBook(book)
+            if (!isDualPane) {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, listFragment)
+                        .commit()
+            } else {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.details_create_container, EditBookFragment.newInstance(book))
+                        .addToBackStack(null)
+                        .commit()
+            }
+        }
+    }
+
     private companion object {
         private const val LIST_FRAGMENT_TAG = "ListFragment"
-        private const val CREATE_FRAGMENT_TAG = "CreateFragment"
+        private const val CREATE_BOOK_REQUEST_CODE = 0
     }
 }

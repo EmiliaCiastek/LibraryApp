@@ -46,7 +46,10 @@ class BooksListActivityTest {
 
     @Test
     fun shouldShowError_WhenSaveButtonClicked_withEmptyBook() {
+        val randomSuffix = Random().nextInt()
+        val fakeValue = "something$randomSuffix"
         onView(withId(R.id.add_book_button)).perform(click())
+        onView(withId(R.id.author_editText)).perform(click()).perform(typeText(fakeValue), closeSoftKeyboard())
         onView(withId(R.id.save_book_button)).perform(click())
 
         onView(withText(R.string.empty_fields_message)).check(matches(isDisplayed()))
