@@ -31,7 +31,7 @@ class DbTest {
 
     @Test
     fun shouldAddNewBookToDatabase() {
-        val book = Book(title = "title", author = "author")
+        val book = Book(title = "title", author = "author", isbn = "123456")
         bookDao.addBook(book)
 
         val actualBooks = bookDao.getBooks()

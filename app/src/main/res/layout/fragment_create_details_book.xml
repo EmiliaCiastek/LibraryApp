@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.CreateBookFragment">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/save_book_button"
@@ -14,7 +13,7 @@
         android:layout_marginEnd="@dimen/fab_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_save_white_24dp" />
+        app:srcCompat="@drawable/ic_save_white_24dp"/>
 
     <CheckBox
         android:id="@+id/is_read"
@@ -24,7 +23,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/books_read"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/author_InputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/author_InputLayout"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/title_InputLayout"
@@ -42,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
-            android:hint="@string/books_title" />
+            android:hint="@string/books_title"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -60,6 +59,25 @@
             android:id="@+id/author_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/books_author" />
+            android:hint="@string/books_author"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/isbn_InputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/is_read">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/isbn_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/isbn_book"
+            android:inputType="number"/>
     </android.support.design.widget.TextInputLayout>
 </android.support.constraint.ConstraintLayout>

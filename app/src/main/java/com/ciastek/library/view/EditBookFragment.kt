@@ -1,6 +1,5 @@
 package com.ciastek.library.view
 
-
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
@@ -34,6 +33,7 @@ class EditBookFragment : Fragment() {
         is_read.isChecked = book.isRead
         title_editText.setText(book.title)
         author_editText.setText(book.author)
+        isbn_editText.setText(book.isbn)
     }
 
     companion object {

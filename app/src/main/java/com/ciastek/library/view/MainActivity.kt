@@ -10,22 +10,29 @@ import com.ciastek.library.R
 import com.ciastek.library.model.Book
 import kotlinx.android.synthetic.main.activity_books.*
 
-class BooksListActivity : AppCompatActivity(), CreateBookFragment.OnBookAddedListener, BooksListFragment.OnBookSelectedListener {
+class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListener {
     private var isDualPane = false
+    private var isSinglePane = true
+    private lateinit var listFragment: BooksListFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_books)
         setSupportActionBar(toolbar)
 
+        isSinglePane = fragment_container != null
         isDualPane = details_create_container != null
-        if (savedInstanceState == null) {
-            if (!isDualPane) {
-                supportFragmentManager.beginTransaction()
-                        .add(R.id.fragment_container, BooksListFragment(), LIST_FRAGMENT_TAG)
-                        .commit()
-            }
+
+        if (isSinglePane) {
+            listFragment = BooksListFragment()
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.fragment_container, listFragment, LIST_FRAGMENT_TAG)
+                    .commit()
+        } else {
+            listFragment = supportFragmentManager.findFragmentById(R.id.books_list_fragment) as BooksListFragment
         }
+
+        listFragment.setOnBookSelectedListener(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -47,32 +54,11 @@ class BooksListActivity : AppCompatActivity(), CreateBookFragment.OnBookAddedLis
         return false
     }
 
-    override fun onBookAdded(book: Book) {
-        val listFragment = if (isDualPane) {
-            (supportFragmentManager.findFragmentById(R.id.books_list_fragment)) as BooksListFragment
-        } else {
-            (supportFragmentManager.findFragmentByTag(LIST_FRAGMENT_TAG)) as BooksListFragment
-        }
-
-        listFragment.addBook(book)
-        if (!isDualPane) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, listFragment)
-                    .commit()
-        } else {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.details_create_container, EditBookFragment.newInstance(book))
-                    .addToBackStack(null)
-                    .commit()
-        }
-    }
-
     override fun onBookSelected(book: Book) {
         val containerId = if (isDualPane) R.id.details_create_container else R.id.fragment_container
 
         supportFragmentManager.beginTransaction()
                 .replace(containerId, EditBookFragment.newInstance(book))
-                .addToBackStack(null)
                 .commit()
     }
 
@@ -81,19 +67,9 @@ class BooksListActivity : AppCompatActivity(), CreateBookFragment.OnBookAddedLis
 
         if (resultCode == Activity.RESULT_OK && requestCode == CREATE_BOOK_REQUEST_CODE) {
             val book = data!!.getParcelableExtra<Book>(CreateBookActivity.CREATED_BOOK)
-
-            val listFragment = if (isDualPane) {
-                (supportFragmentManager.findFragmentById(R.id.books_list_fragment)) as BooksListFragment
-            } else {
-                (supportFragmentManager.findFragmentByTag(LIST_FRAGMENT_TAG)) as BooksListFragment
-            }
-
             listFragment.addBook(book)
-            if (!isDualPane) {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, listFragment)
-                        .commit()
-            } else {
+
+            if (!isSinglePane) {
                 supportFragmentManager.beginTransaction()
                         .replace(R.id.details_create_container, EditBookFragment.newInstance(book))
                         .addToBackStack(null)

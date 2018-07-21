@@ -13,7 +13,7 @@ class CreateBookPresenterTest {
     private lateinit var presenter: CreateBookPresenter
     private lateinit var bookDao: BookDao
 
-    private val fakeBook = Book(title = "title", author = "author")
+    private val fakeBook = Book(title = "title", author = "author", isbn = "123456")
 
     @Before
     fun setUp() {
@@ -32,11 +32,9 @@ class CreateBookPresenterTest {
 
     @Test
     fun shouldDisplayError_whenSaveBookButtonClickedAndBookIsNotValid() {
-        val notValidBook = Book(author = "", title = "")
+        val notValidBook = Book(author = "", title = "", isbn = "")
         presenter.saveBookButtonClicked(notValidBook)
 
         verify(view).showError()
     }
-
-
 }

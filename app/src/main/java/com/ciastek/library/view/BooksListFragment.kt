@@ -1,6 +1,5 @@
 package com.ciastek.library.view
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -20,16 +19,6 @@ class BooksListFragment : Fragment(), BooksContracts.View {
     private lateinit var booksAdapter: BooksAdapter
     private lateinit var presenter: Presenter
     private var listener: OnBookSelectedListener? = null
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-
-        if (context is OnBookSelectedListener) {
-            listener = context
-        } else {
-            throw ClassCastException(context.toString() + " must implement BooksListFragment.OnBookSelectedListener")
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -69,6 +58,10 @@ class BooksListFragment : Fragment(), BooksContracts.View {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    fun setOnBookSelectedListener(listener: OnBookSelectedListener) {
+        this.listener = listener
     }
 
     interface OnBookSelectedListener {

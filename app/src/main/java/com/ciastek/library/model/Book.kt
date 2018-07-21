@@ -12,6 +12,7 @@ data class Book(
         @PrimaryKey(autoGenerate = true) val bookId: Long? = null,
         val title: String,
         val author: String,
+        val isbn: String,
         var isRead: Boolean = false) : Parcelable {
 
     override fun equals(other: Any?): Boolean = other is Book && other.bookId == bookId ?: false

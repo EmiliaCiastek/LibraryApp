@@ -33,7 +33,7 @@ class CreateBookActivity : AppCompatActivity(), CreateBookContract.View {
         presenter.attachView(this)
 
         save_book_button.setOnClickListener {
-            val book = Book(title = title_editText.text.toString(), author = author_editText.text.toString())
+            val book = Book(title = title_editText.text.toString(), author = author_editText.text.toString(), isbn = isbn_editText.text.toString())
             book.isRead = is_read.isChecked
 
             presenter.saveBookButtonClicked(book)
