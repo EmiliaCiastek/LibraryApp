@@ -10,8 +10,7 @@ import com.ciastek.library.R
 import com.ciastek.library.model.Book
 import kotlinx.android.synthetic.main.activity_books.*
 
-class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListener {
-    private var isDualPane = false
+class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListener, EditBookFragment.OnBookEditedListener {
     private var isSinglePane = true
     private lateinit var listFragment: BooksListFragment
 
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
         setSupportActionBar(toolbar)
 
         isSinglePane = fragment_container != null
-        isDualPane = details_create_container != null
 
         if (isSinglePane) {
             listFragment = BooksListFragment()
@@ -55,10 +53,11 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
     }
 
     override fun onBookSelected(book: Book) {
-        val containerId = if (isDualPane) R.id.details_create_container else R.id.fragment_container
+        val containerId = if (isSinglePane) R.id.fragment_container else R.id.details_create_container
 
         supportFragmentManager.beginTransaction()
-                .replace(containerId, EditBookFragment.newInstance(book))
+                .replace(containerId, EditBookFragment.newInstance(book, this), DETAILS_FRAGMENT_TAG)
+                .addToBackStack(null)
                 .commit()
     }
 
@@ -71,15 +70,35 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
 
             if (!isSinglePane) {
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.details_create_container, EditBookFragment.newInstance(book))
+                        .replace(R.id.details_create_container, EditBookFragment.newInstance(book, this), DETAILS_FRAGMENT_TAG)
                         .addToBackStack(null)
                         .commit()
             }
         }
     }
 
+    override fun onBookSaved(book: Book) {
+        listFragment.updateBook(book)
+
+        if (isSinglePane)
+            supportFragmentManager.popBackStack()
+    }
+
+    override fun onBookRemoved(book: Book) {
+        listFragment.removeBook(book)
+
+        if (isSinglePane)
+            supportFragmentManager.popBackStack()
+        else {
+            supportFragmentManager.beginTransaction()
+                    .remove(supportFragmentManager.findFragmentByTag(DETAILS_FRAGMENT_TAG))
+                    .commit()
+        }
+    }
+
     private companion object {
         private const val LIST_FRAGMENT_TAG = "ListFragment"
+        private const val DETAILS_FRAGMENT_TAG = "EditFragment"
         private const val CREATE_BOOK_REQUEST_CODE = 0
     }
 }

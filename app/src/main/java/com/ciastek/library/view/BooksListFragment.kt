@@ -51,6 +51,14 @@ class BooksListFragment : Fragment(), BooksContracts.View {
         booksAdapter.addBook(book)
     }
 
+    fun updateBook(book: Book) {
+        booksAdapter.updateBook(book)
+    }
+
+    fun removeBook(book: Book) {
+        booksAdapter.removeBook(book)
+    }
+
     override fun setBooks(books: List<Book>) {
         booksAdapter.setBooks(books)
     }

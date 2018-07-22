@@ -9,13 +9,13 @@ import java.util.*
 @Entity(tableName = "books")
 @Parcelize
 data class Book(
-        @PrimaryKey(autoGenerate = true) val bookId: Long? = null,
+        @PrimaryKey(autoGenerate = true) val id: Long? = null,
         val title: String,
         val author: String,
         val isbn: String,
         var isRead: Boolean = false) : Parcelable {
 
-    override fun equals(other: Any?): Boolean = other is Book && other.bookId == bookId ?: false
+    override fun equals(other: Any?): Boolean = other is Book && other.id == id ?: false
 
-    override fun hashCode(): Int = Objects.hashCode(bookId)
+    override fun hashCode(): Int = Objects.hashCode(id)
 }

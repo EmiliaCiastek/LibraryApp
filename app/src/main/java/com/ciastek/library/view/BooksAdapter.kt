@@ -33,4 +33,20 @@ class BooksAdapter(private val listener: (Int) -> Unit) : RecyclerView.Adapter<B
     }
 
     fun getBook(position: Int) = books[position]
+
+    fun updateBook(book: Book) {
+        val index = books.indexOf(book)
+        if (index != -1) {
+            books[index] = book
+            notifyItemChanged(index)
+        }
+    }
+
+    fun removeBook(book: Book) {
+        val index = books.indexOf(book)
+        if (index >= 0) {
+            books.remove(book)
+            notifyItemRemoved(index)
+        }
+    }
 }
