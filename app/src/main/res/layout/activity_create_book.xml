@@ -23,7 +23,7 @@
     <include layout="@layout/content_create_book" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/save_book_button"
+        android:id="@+id/save_new_book_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

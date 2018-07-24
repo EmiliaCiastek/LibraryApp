@@ -87,13 +87,9 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
     override fun onBookRemoved(book: Book) {
         listFragment.removeBook(book)
 
-        if (isSinglePane)
-            supportFragmentManager.popBackStack()
-        else {
-            supportFragmentManager.beginTransaction()
-                    .remove(supportFragmentManager.findFragmentByTag(DETAILS_FRAGMENT_TAG))
-                    .commit()
-        }
+        supportFragmentManager.beginTransaction()
+                .remove(supportFragmentManager.findFragmentByTag(DETAILS_FRAGMENT_TAG))
+                .commit()
     }
 
     private companion object {

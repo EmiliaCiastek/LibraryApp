@@ -32,9 +32,9 @@ class CreateBookActivity : AppCompatActivity(), CreateBookContract.View {
         presenter = CreateBookPresenter(LibraryDatabase.getInstance(this).bookDao()) //TODO: add Dagger
         presenter.attachView(this)
 
-        save_book_button.setOnClickListener {
-            val book = Book(title = title_editText.text.toString(), author = author_editText.text.toString(), isbn = isbn_editText.text.toString())
-            book.isRead = is_read.isChecked
+        save_new_book_button.setOnClickListener {
+            val book = Book(title = title_create_editText.text.toString(), author = author_create_editText.text.toString(), isbn = isbn_create_editText.text.toString())
+            book.isRead = is_read_create.isChecked
 
             presenter.saveBookButtonClicked(book)
         }
