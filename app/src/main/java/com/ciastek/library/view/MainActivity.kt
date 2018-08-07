@@ -1,7 +1,5 @@
 package com.ciastek.library.view
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -55,31 +53,12 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
                 .commit()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK && requestCode == CREATE_BOOK_REQUEST_CODE) {
-            val book = data!!.getParcelableExtra<Book>(CreateBookActivity.CREATED_BOOK)
-            getBooksListFragment().addBook(book)
-
-            if (!isSinglePane) {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.edit_book_container, EditBookFragment.newInstance(book), DETAILS_FRAGMENT_TAG)
-                        .commit()
-            }
-        }
-    }
-
-    override fun onBookSaved(book: Book) {
-        getBooksListFragment().updateBook(book)
-
+    override fun onBookSaved() {
         if (isSinglePane)
             supportFragmentManager.popBackStack()
     }
 
-    override fun onBookRemoved(book: Book) {
-        getBooksListFragment().removeBook(book)
-
+    override fun onBookRemoved() {
         if (isSinglePane) {
             supportFragmentManager.popBackStack()
         } else {
@@ -89,19 +68,7 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
         }
     }
 
-    private fun getBooksListFragment() = supportFragmentManager.findFragmentByTag(LIST_FRAGMENT_TAG) as BooksListFragment
     private fun getEditBookFragment() = supportFragmentManager.findFragmentByTag(DETAILS_FRAGMENT_TAG) as? EditBookFragment
-
-    private fun displayEditBookFragment(book: Book) {
-        val editBookFragment = EditBookFragment.newInstance(book)
-        supportFragmentManager.beginTransaction().apply {
-            if (isSinglePane) {
-                replace(R.id.fragment_container, editBookFragment, DETAILS_FRAGMENT_TAG)
-                addToBackStack(null)
-            } else
-                replace(R.id.edit_book_container, editBookFragment, DETAILS_FRAGMENT_TAG)
-        }.commit()
-    }
 
     private companion object {
         private const val LIST_FRAGMENT_TAG = "ListFragment"

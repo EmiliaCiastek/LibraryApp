@@ -6,6 +6,7 @@ import com.ciastek.library.model.db.BookDao
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
+import io.reactivex.schedulers.Schedulers
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -15,13 +16,14 @@ class EditBookPresenterTest {
     private lateinit var dao: BookDao
     private lateinit var presenter: EditBookPresenter
     private val fakeBook = Book(0, "title", "author", "123456")
+    private val mockedScheduler = Schedulers.trampoline()
 
     @Before
     fun setUp() {
         view = mock()
         dao = mock()
 
-        presenter = EditBookPresenter(fakeBook, dao)
+        presenter = EditBookPresenter(fakeBook, dao, mockedScheduler, mockedScheduler)
     }
 
     @After
@@ -52,7 +54,7 @@ class EditBookPresenterTest {
         presenter.attachView(view)
         presenter.onSaveBookClicked("new title", "new author", "789", true)
 
-        verify(view).bookSaved(any())
+        verify(view).bookSaved()
     }
 
     @Test
@@ -68,6 +70,6 @@ class EditBookPresenterTest {
         presenter.attachView(view)
         presenter.onRemoveBookClicked()
 
-        verify(view).bookDeleted(fakeBook)
+        verify(view).bookDeleted()
     }
 }

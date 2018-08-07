@@ -1,7 +1,5 @@
 package com.ciastek.library
 
-import com.ciastek.library.model.Book
-
 interface EditBookContract {
     interface Presenter : Attachable<View> {
         fun onSaveBookClicked(title: String, author: String, isbn: String, isRead: Boolean)
@@ -10,9 +8,9 @@ interface EditBookContract {
     }
 
     interface View {
-        fun bookSaved(book: Book)
+        fun bookSaved()
 
-        fun bookDeleted(book: Book)
+        fun bookDeleted()
 
         fun setTitle(title: String)
 

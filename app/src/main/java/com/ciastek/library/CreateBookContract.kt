@@ -10,6 +10,6 @@ object CreateBookContract {
     interface View {
         fun showError()
 
-        fun setBookCreated(book: Book)
+        fun setBookCreated()
     }
 }

@@ -3,21 +3,38 @@ package com.ciastek.library.presenter
 import com.ciastek.library.EditBookContract
 import com.ciastek.library.model.Book
 import com.ciastek.library.model.db.BookDao
+import io.reactivex.Completable
+import io.reactivex.Scheduler
+import io.reactivex.disposables.CompositeDisposable
 
-class EditBookPresenter(private val book: Book, private val bookDao: BookDao) : EditBookContract.Presenter {
+class EditBookPresenter(private val book: Book,
+                        private val bookDao: BookDao,
+                        private val subscriptionScheduler: Scheduler,
+                        private val observationScheduler: Scheduler) : EditBookContract.Presenter {
     private var view: EditBookContract.View? = null
+    private val compositeDisposable = CompositeDisposable()
 
     //TODO: add book validator
     override fun onSaveBookClicked(title: String, author: String, isbn: String, isRead: Boolean) {
-        val changedBook = Book(book.id, title, author, isbn, isRead)
-        bookDao.updateBook(changedBook)
-        view?.bookSaved(changedBook)
+        Completable.fromAction {
+            bookDao.updateBook(Book(book.id, title, author, isbn, isRead))
+        }
+                .subscribeOn(subscriptionScheduler)
+                .observeOn(observationScheduler)
+                .subscribe {
+                    view?.bookSaved()
+                }.let(compositeDisposable::add)
     }
 
     override fun onRemoveBookClicked() {
         //TODO: add dialog
-        bookDao.deleteBook(book)
-        view?.bookDeleted(book)
+        Completable.fromAction {
+            bookDao.deleteBook(book)
+        }
+                .subscribeOn(subscriptionScheduler)
+                .observeOn(observationScheduler)
+                .subscribe { view?.bookDeleted() }
+                .let(compositeDisposable::add)
     }
 
     override fun attachView(view: EditBookContract.View) {
@@ -27,6 +44,7 @@ class EditBookPresenter(private val book: Book, private val bookDao: BookDao) : 
 
     override fun detachView() {
         view = null
+        compositeDisposable.dispose()
     }
 
     private fun setBook() {

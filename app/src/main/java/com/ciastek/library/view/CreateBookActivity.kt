@@ -10,6 +10,8 @@ import com.ciastek.library.R
 import com.ciastek.library.model.Book
 import com.ciastek.library.model.db.LibraryDatabase
 import com.ciastek.library.presenter.CreateBookPresenter
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_create_book.*
 
 class CreateBookActivity : AppCompatActivity(), CreateBookContract.View {
@@ -27,7 +29,7 @@ class CreateBookActivity : AppCompatActivity(), CreateBookContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_book) //TODO: create custom view for create/details Book
 
-        presenter = CreateBookPresenter(LibraryDatabase.getInstance(this).bookDao()) //TODO: add Dagger
+        presenter = CreateBookPresenter(LibraryDatabase.getInstance(this).bookDao(), Schedulers.io(), AndroidSchedulers.mainThread()) //TODO: add Dagger
         presenter.attachView(this)
 
         save_new_book_button.setOnClickListener {
@@ -49,8 +51,8 @@ class CreateBookActivity : AppCompatActivity(), CreateBookContract.View {
         errorDialog.show()
     }
 
-    override fun setBookCreated(book: Book) {
-        setResult(RESULT_OK, Intent().putExtra(CREATED_BOOK, book))
+    override fun setBookCreated() {
+        setResult(RESULT_OK)
         finish()
     }
 

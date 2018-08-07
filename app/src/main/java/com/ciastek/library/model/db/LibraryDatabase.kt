@@ -17,7 +17,6 @@ abstract class LibraryDatabase : RoomDatabase() {
             if (instance == null) {
                 instance = Room.databaseBuilder(context.applicationContext,
                         LibraryDatabase::class.java, "library.db")
-                        .allowMainThreadQueries() //TODO: add thread!!!
                         .build()
             }
 

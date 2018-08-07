@@ -9,6 +9,8 @@ import com.ciastek.library.R
 import com.ciastek.library.model.Book
 import com.ciastek.library.model.db.LibraryDatabase
 import com.ciastek.library.presenter.EditBookPresenter
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_create_details_book.*
 
 class EditBookFragment : Fragment(), EditBookContract.View {
@@ -51,7 +53,10 @@ class EditBookFragment : Fragment(), EditBookContract.View {
             val isRead = is_read.isChecked
             presenter.onSaveBookClicked(title, author, isbn, isRead)
         }
-        presenter = EditBookPresenter(arguments!!.getParcelable(BOOK_TO_EDIT), LibraryDatabase.getInstance(context!!).bookDao())
+        presenter = EditBookPresenter(arguments!!.getParcelable(BOOK_TO_EDIT),
+                LibraryDatabase.getInstance(context!!).bookDao(),
+                Schedulers.io(),
+                AndroidSchedulers.mainThread())
         presenter.attachView(this)
     }
 
@@ -63,12 +68,12 @@ class EditBookFragment : Fragment(), EditBookContract.View {
         return false
     }
 
-    override fun bookSaved(book: Book) {
-        listener?.onBookSaved(book)
+    override fun bookSaved() {
+        listener?.onBookSaved()
     }
 
-    override fun bookDeleted(book: Book) {
-        listener?.onBookRemoved(book)
+    override fun bookDeleted() {
+        listener?.onBookRemoved()
     }
 
     override fun setTitle(title: String) {
@@ -88,9 +93,9 @@ class EditBookFragment : Fragment(), EditBookContract.View {
     }
 
     interface OnBookChangedListener {
-        fun onBookSaved(book: Book)
+        fun onBookSaved()
 
-        fun onBookRemoved(book: Book)
+        fun onBookRemoved()
     }
 
     override fun onDetach() {

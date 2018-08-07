@@ -8,15 +8,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ciastek.library.BooksContracts
-import com.ciastek.library.BooksContracts.Presenter
+import com.ciastek.library.BooksContract
+import com.ciastek.library.BooksContract.Presenter
 import com.ciastek.library.R
 import com.ciastek.library.model.Book
 import com.ciastek.library.model.db.LibraryDatabase
 import com.ciastek.library.presenter.BooksPresenter
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_books.*
 
-class BooksListFragment : Fragment(), BooksContracts.View {
+class BooksListFragment : Fragment(), BooksContract.View {
     private lateinit var booksAdapter: BooksAdapter
     private lateinit var presenter: Presenter
     private var listener: OnBookSelectedListener? = null
@@ -48,7 +50,7 @@ class BooksListFragment : Fragment(), BooksContracts.View {
                 (books_recycler_view.layoutManager as LinearLayoutManager).orientation)
         books_recycler_view.addItemDecoration(dividerItemDecoration)
 
-        presenter = BooksPresenter(LibraryDatabase.getInstance(context!!).bookDao())
+        presenter = BooksPresenter(LibraryDatabase.getInstance(context!!).bookDao(), Schedulers.io(), AndroidSchedulers.mainThread())
         presenter.attachView(this)
     }
 
@@ -60,14 +62,6 @@ class BooksListFragment : Fragment(), BooksContracts.View {
 
     override fun addBook(book: Book) {
         booksAdapter.addBook(book)
-    }
-
-    fun updateBook(book: Book) {
-        booksAdapter.updateBook(book)
-    }
-
-    fun removeBook(book: Book) {
-        booksAdapter.removeBook(book)
     }
 
     override fun setBooks(books: List<Book>) {
