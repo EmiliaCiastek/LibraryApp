@@ -7,7 +7,7 @@ import com.ciastek.library.model.Book
 @Dao
 interface BookDao {
     @Insert(onConflict = REPLACE)
-    fun addBook(book: Book)
+    fun addBook(book: Book): Long
 
     @Query("Select * from books")
     fun getBooks(): List<Book>

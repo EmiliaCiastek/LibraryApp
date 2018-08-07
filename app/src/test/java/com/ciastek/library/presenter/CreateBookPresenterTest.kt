@@ -5,8 +5,7 @@ import com.ciastek.library.model.Book
 import com.ciastek.library.model.db.BookDao
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 
 class CreateBookPresenterTest {
     private lateinit var view: CreateBookContract.View
@@ -25,9 +24,12 @@ class CreateBookPresenterTest {
 
     @Test
     fun shouldSetBookCreatedOnView_whenSaveBookButtonClickedAndBookIsValid() {
+        val id = 0L
+        `when`(bookDao.addBook(fakeBook)).thenReturn(id)
         presenter.saveBookButtonClicked(fakeBook)
 
-        verify(view).setBookCreated(fakeBook)
+
+        verify(view).setBookCreated(Book(id, fakeBook.title, fakeBook.author, fakeBook.isbn, fakeBook.isRead))
     }
 
     @Test

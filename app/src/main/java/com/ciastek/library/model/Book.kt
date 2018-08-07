@@ -13,7 +13,7 @@ data class Book(
         val title: String,
         val author: String,
         val isbn: String,
-        var isRead: Boolean = false) : Parcelable {
+        val isRead: Boolean = false) : Parcelable {
 
     override fun equals(other: Any?): Boolean = other is Book && other.id == id ?: false
 

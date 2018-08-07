@@ -11,7 +11,6 @@ import com.ciastek.library.model.Book
 import com.ciastek.library.model.db.LibraryDatabase
 import com.ciastek.library.presenter.CreateBookPresenter
 import kotlinx.android.synthetic.main.activity_create_book.*
-import kotlinx.android.synthetic.main.content_create_book.*
 
 class CreateBookActivity : AppCompatActivity(), CreateBookContract.View {
     private lateinit var presenter: CreateBookContract.Presenter
@@ -27,14 +26,15 @@ class CreateBookActivity : AppCompatActivity(), CreateBookContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_book) //TODO: create custom view for create/details Book
-        setSupportActionBar(toolbar)
 
         presenter = CreateBookPresenter(LibraryDatabase.getInstance(this).bookDao()) //TODO: add Dagger
         presenter.attachView(this)
 
         save_new_book_button.setOnClickListener {
-            val book = Book(title = title_create_editText.text.toString(), author = author_create_editText.text.toString(), isbn = isbn_create_editText.text.toString())
-            book.isRead = is_read_create.isChecked
+            val book = Book(title = title_create_editText.text.toString(),
+                    author = author_create_editText.text.toString(),
+                    isbn = isbn_create_editText.text.toString(),
+                    isRead = is_read_create.isChecked)
 
             presenter.saveBookButtonClicked(book)
         }

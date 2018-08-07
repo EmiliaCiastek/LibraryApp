@@ -11,7 +11,6 @@ import android.support.test.runner.AndroidJUnit4
 import com.ciastek.library.R
 import com.ciastek.library.model.Book
 import com.forkingcode.espresso.contrib.DescendantViewActions
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,7 +23,7 @@ class MainActivityTest {
     val activity = ActivityTestRule<MainActivity>(MainActivity::class.java)
 
     @Test
-    fun shouldDisplaySaveButton_WhenAddButtonClicked() {
+    fun shouldDisplaySaveButton_whenAddButtonClicked() {
         onView(withId(R.id.add_book_button)).perform(click())
         onView(withId(R.id.save_new_book_button)).check(matches(isDisplayed()))
     }
@@ -39,7 +38,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun shouldShowNewBookOnTheList_WhenSaveButtonClicked() {
+    fun shouldShowNewBookOnTheList_whenSaveButtonClicked() {
         val sampleBook = sampleBooks[1]
         addNewBook(sampleBook)
 
@@ -47,15 +46,15 @@ class MainActivityTest {
     }
 
     @Test
-    fun shouldShowError_WhenSaveButtonClicked_withEmptyBook() {
+    fun shouldShowError_whenSaveButtonClicked_withEmptyBook() {
         onView(withId(R.id.add_book_button)).perform(click())
+        onView(withId(R.id.title_create_editText)).perform(click()).perform(typeText(" "), closeSoftKeyboard())
         onView(withId(R.id.save_new_book_button)).perform(click())
 
         onView(withText(R.string.empty_fields_message)).check(matches(isDisplayed()))
     }
 
     @Test
-    @Ignore
     fun shouldRemoveBookFromBooksView() {
         val sampleBook = sampleBooks[3]
 
@@ -67,7 +66,6 @@ class MainActivityTest {
     }
 
     @Test
-    @Ignore
     fun shouldUpdateBook_whenSaveButtonClicked() {
         val sampleBook = sampleBooks[4]
         addNewBook(sampleBook)
@@ -84,7 +82,11 @@ class MainActivityTest {
         onView(withId(R.id.title_create_editText)).perform(click()).perform(typeText(book.title), closeSoftKeyboard())
         onView(withId(R.id.author_create_editText)).perform(click()).perform(typeText(book.author), closeSoftKeyboard())
         onView(withId(R.id.isbn_create_editText)).perform(click()).perform(typeText(book.isbn), closeSoftKeyboard())
-        if (book.isRead) onView(withId(R.id.is_read_create)).perform(click())
+
+        if (book.isRead) {
+            onView(withId(R.id.is_read_create)).perform(click())
+        }
+
         onView(withId(R.id.save_new_book_button)).perform(click())
     }
 

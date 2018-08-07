@@ -11,8 +11,9 @@ class CreateBookPresenter(private val booksDao: BookDao) : CreateBookContract.Pr
 
     override fun saveBookButtonClicked(book: Book) {
         if (book.isValid()) {
-            booksDao.addBook(book)
-            view?.setBookCreated(book)
+            val id = booksDao.addBook(book)
+            val savedBook = Book(id, book.title, book.author, book.isbn, book.isRead)
+            view?.setBookCreated(savedBook)
         } else
             view?.showError()
     }

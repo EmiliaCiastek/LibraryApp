@@ -1,5 +1,6 @@
 package com.ciastek.library.view
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.*
@@ -12,12 +13,21 @@ import kotlinx.android.synthetic.main.fragment_create_details_book.*
 
 class EditBookFragment : Fragment(), EditBookContract.View {
     private lateinit var presenter: EditBookContract.Presenter
-    private var listener: EditBookFragment.OnBookEditedListener? = null
-
+    private var listener: EditBookFragment.OnBookChangedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        if (context is OnBookChangedListener) {
+            listener = context
+        } else {
+            throw IllegalArgumentException("$context should implement EditBookFragment.OnBookChangedListener")
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -77,7 +87,7 @@ class EditBookFragment : Fragment(), EditBookContract.View {
         is_read.isChecked = isRead
     }
 
-    interface OnBookEditedListener {
+    interface OnBookChangedListener {
         fun onBookSaved(book: Book)
 
         fun onBookRemoved(book: Book)
@@ -90,9 +100,8 @@ class EditBookFragment : Fragment(), EditBookContract.View {
 
     companion object {
         private const val BOOK_TO_EDIT = "Book to edit"
-        fun newInstance(book: Book, listener: OnBookEditedListener) = EditBookFragment().apply {
+        fun newInstance(book: Book) = EditBookFragment().apply {
             arguments = Bundle().apply { putParcelable(BOOK_TO_EDIT, book) }
-            this.listener = listener
         }
     }
 }

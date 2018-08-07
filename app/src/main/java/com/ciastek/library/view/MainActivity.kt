@@ -10,27 +10,18 @@ import com.ciastek.library.R
 import com.ciastek.library.model.Book
 import kotlinx.android.synthetic.main.activity_books.*
 
-class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListener, EditBookFragment.OnBookEditedListener {
+class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListener, EditBookFragment.OnBookChangedListener {
     private var isSinglePane = true
-    private lateinit var listFragment: BooksListFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_books)
-        setSupportActionBar(toolbar)
 
-        isSinglePane = fragment_container != null
+        isSinglePane = edit_book_container == null
 
-        if (isSinglePane) {
-            listFragment = BooksListFragment()
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, listFragment, LIST_FRAGMENT_TAG)
-                    .commit()
-        } else {
-            listFragment = supportFragmentManager.findFragmentById(R.id.books_list_fragment) as BooksListFragment
-        }
-
-        listFragment.setOnBookSelectedListener(this)
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, BooksListFragment(), LIST_FRAGMENT_TAG)
+                .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -53,11 +44,14 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
     }
 
     override fun onBookSelected(book: Book) {
-        val containerId = if (isSinglePane) R.id.fragment_container else R.id.details_create_container
+        val containerId = if (isSinglePane) R.id.fragment_container else R.id.edit_book_container
 
         supportFragmentManager.beginTransaction()
-                .replace(containerId, EditBookFragment.newInstance(book, this), DETAILS_FRAGMENT_TAG)
-                .addToBackStack(null)
+                .replace(containerId, EditBookFragment.newInstance(book), DETAILS_FRAGMENT_TAG)
+                .apply {
+                    if (isSinglePane)
+                        addToBackStack(null)
+                }
                 .commit()
     }
 
@@ -66,30 +60,47 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
 
         if (resultCode == Activity.RESULT_OK && requestCode == CREATE_BOOK_REQUEST_CODE) {
             val book = data!!.getParcelableExtra<Book>(CreateBookActivity.CREATED_BOOK)
-            listFragment.addBook(book)
+            getBooksListFragment().addBook(book)
 
             if (!isSinglePane) {
                 supportFragmentManager.beginTransaction()
-                        .replace(R.id.details_create_container, EditBookFragment.newInstance(book, this), DETAILS_FRAGMENT_TAG)
-                        .addToBackStack(null)
+                        .replace(R.id.edit_book_container, EditBookFragment.newInstance(book), DETAILS_FRAGMENT_TAG)
                         .commit()
             }
         }
     }
 
     override fun onBookSaved(book: Book) {
-        listFragment.updateBook(book)
+        getBooksListFragment().updateBook(book)
 
         if (isSinglePane)
             supportFragmentManager.popBackStack()
     }
 
     override fun onBookRemoved(book: Book) {
-        listFragment.removeBook(book)
+        getBooksListFragment().removeBook(book)
 
-        supportFragmentManager.beginTransaction()
-                .remove(supportFragmentManager.findFragmentByTag(DETAILS_FRAGMENT_TAG))
-                .commit()
+        if (isSinglePane) {
+            supportFragmentManager.popBackStack()
+        } else {
+            supportFragmentManager.beginTransaction()
+                    .remove(getEditBookFragment())
+                    .commit()
+        }
+    }
+
+    private fun getBooksListFragment() = supportFragmentManager.findFragmentByTag(LIST_FRAGMENT_TAG) as BooksListFragment
+    private fun getEditBookFragment() = supportFragmentManager.findFragmentByTag(DETAILS_FRAGMENT_TAG) as? EditBookFragment
+
+    private fun displayEditBookFragment(book: Book) {
+        val editBookFragment = EditBookFragment.newInstance(book)
+        supportFragmentManager.beginTransaction().apply {
+            if (isSinglePane) {
+                replace(R.id.fragment_container, editBookFragment, DETAILS_FRAGMENT_TAG)
+                addToBackStack(null)
+            } else
+                replace(R.id.edit_book_container, editBookFragment, DETAILS_FRAGMENT_TAG)
+        }.commit()
     }
 
     private companion object {
