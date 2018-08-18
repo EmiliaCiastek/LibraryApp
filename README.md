@@ -2,7 +2,7 @@
 
 ## LibraryApp
 ToDo:
-- [ ] Add Dagger DI
+- [x] Add Dagger DI
 - [x] Add RxJava for retrieving data from database
 - [ ] Add retrofit for getting more info about books from Rest Api
 - [ ] Add filtering and sorting books

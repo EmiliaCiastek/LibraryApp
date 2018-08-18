@@ -11,16 +11,15 @@ import android.view.ViewGroup
 import com.ciastek.library.BooksContract
 import com.ciastek.library.BooksContract.Presenter
 import com.ciastek.library.R
+import com.ciastek.library.di.components.BooksComponent
 import com.ciastek.library.model.Book
-import com.ciastek.library.model.db.LibraryDatabase
-import com.ciastek.library.presenter.BooksPresenter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_books.*
+import javax.inject.Inject
 
 class BooksListFragment : Fragment(), BooksContract.View {
+    @Inject
+    lateinit var presenter: Presenter
     private lateinit var booksAdapter: BooksAdapter
-    private lateinit var presenter: Presenter
     private var listener: OnBookSelectedListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +40,8 @@ class BooksListFragment : Fragment(), BooksContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        injectDependencies()
+
         booksAdapter = BooksAdapter { position -> listener?.onBookSelected(booksAdapter.getBook(position)) }
 
         books_recycler_view.adapter = booksAdapter
@@ -50,7 +51,6 @@ class BooksListFragment : Fragment(), BooksContract.View {
                 (books_recycler_view.layoutManager as LinearLayoutManager).orientation)
         books_recycler_view.addItemDecoration(dividerItemDecoration)
 
-        presenter = BooksPresenter(LibraryDatabase.getInstance(context!!).bookDao(), Schedulers.io(), AndroidSchedulers.mainThread())
         presenter.attachView(this)
     }
 
@@ -71,6 +71,10 @@ class BooksListFragment : Fragment(), BooksContract.View {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    private fun injectDependencies() {
+        BooksComponent.create(context!!).inject(this)
     }
 
     interface OnBookSelectedListener {

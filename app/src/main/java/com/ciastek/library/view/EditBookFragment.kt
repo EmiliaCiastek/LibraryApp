@@ -6,15 +6,14 @@ import android.support.v4.app.Fragment
 import android.view.*
 import com.ciastek.library.EditBookContract
 import com.ciastek.library.R
+import com.ciastek.library.di.components.EditBookComponent
 import com.ciastek.library.model.Book
-import com.ciastek.library.model.db.LibraryDatabase
-import com.ciastek.library.presenter.EditBookPresenter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_create_details_book.*
+import javax.inject.Inject
 
 class EditBookFragment : Fragment(), EditBookContract.View {
-    private lateinit var presenter: EditBookContract.Presenter
+    @Inject
+    lateinit var presenter: EditBookContract.Presenter
     private var listener: EditBookFragment.OnBookChangedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +45,8 @@ class EditBookFragment : Fragment(), EditBookContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        injectDependencies(arguments!!.getParcelable(BOOK_TO_EDIT))
+
         save_book_button.setOnClickListener {
             val title = title_editText.text.toString()
             val author = author_editText.text.toString()
@@ -53,10 +54,7 @@ class EditBookFragment : Fragment(), EditBookContract.View {
             val isRead = is_read.isChecked
             presenter.onSaveBookClicked(title, author, isbn, isRead)
         }
-        presenter = EditBookPresenter(arguments!!.getParcelable(BOOK_TO_EDIT),
-                LibraryDatabase.getInstance(context!!).bookDao(),
-                Schedulers.io(),
-                AndroidSchedulers.mainThread())
+
         presenter.attachView(this)
     }
 
@@ -101,6 +99,11 @@ class EditBookFragment : Fragment(), EditBookContract.View {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    private fun injectDependencies(book: Book) {
+        EditBookComponent.create(context!!, book)
+                .inject(this)
     }
 
     companion object {

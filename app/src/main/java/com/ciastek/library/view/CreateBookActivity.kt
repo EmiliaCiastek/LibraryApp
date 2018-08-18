@@ -7,15 +7,14 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import com.ciastek.library.CreateBookContract
 import com.ciastek.library.R
+import com.ciastek.library.di.components.NewBookComponent
 import com.ciastek.library.model.Book
-import com.ciastek.library.model.db.LibraryDatabase
-import com.ciastek.library.presenter.CreateBookPresenter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_create_book.*
+import javax.inject.Inject
 
 class CreateBookActivity : AppCompatActivity(), CreateBookContract.View {
-    private lateinit var presenter: CreateBookContract.Presenter
+    @Inject
+    lateinit var presenter: CreateBookContract.Presenter
     private val errorDialog: AlertDialog by lazy {
         AlertDialog.Builder(this) //TODO: move to extension function
                 .apply {
@@ -29,7 +28,8 @@ class CreateBookActivity : AppCompatActivity(), CreateBookContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_book) //TODO: create custom view for create/details Book
 
-        presenter = CreateBookPresenter(LibraryDatabase.getInstance(this).bookDao(), Schedulers.io(), AndroidSchedulers.mainThread()) //TODO: add Dagger
+        injectDependencies()
+
         presenter.attachView(this)
 
         save_new_book_button.setOnClickListener {
@@ -56,8 +56,11 @@ class CreateBookActivity : AppCompatActivity(), CreateBookContract.View {
         finish()
     }
 
+    private fun injectDependencies() {
+        NewBookComponent.create(this).inject(this)
+    }
+
     companion object {
-        const val CREATED_BOOK = "Created Book"
         fun newInstance(context: Context): Intent =
                 Intent(context, CreateBookActivity::class.java)
     }
