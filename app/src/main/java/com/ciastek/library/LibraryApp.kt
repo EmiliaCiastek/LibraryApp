@@ -6,18 +6,21 @@ import com.ciastek.library.di.components.AppComponent
 import com.ciastek.library.di.components.DaggerAppComponent
 import com.ciastek.library.di.modules.AppModule
 
-class LibraryApp : Application() {
+open class LibraryApp : Application() {
     private lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
 
-        appComponent = DaggerAppComponent.builder()
-                .appModule(AppModule(this))
-                .build()
+        appComponent = createAppComponent()
     }
 
     fun getAppComponent() = appComponent
+
+    protected open fun createAppComponent() =
+            DaggerAppComponent.builder()
+                    .appModule(AppModule(this))
+                    .build()
 
     companion object {
         fun get(context: Context) = context.applicationContext as LibraryApp
