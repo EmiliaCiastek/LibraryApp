@@ -43,6 +43,8 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$versions.rxJava2Android"
     implementation "android.arch.persistence.room:rxjava2:$versions.room"
     implementation "com.google.dagger:dagger:$versions.dagger"
+//    implementation 'com.google.firebase:firebase-firestore:21.3.0'
+//    implementation 'com.google.firebase:firebase-auth:19.1.0'
 
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
     kapt "android.arch.persistence.room:compiler:$versions.room"
@@ -62,3 +64,5 @@ dependencies {
 
     androidTestUtil "com.android.support.test:orchestrator:$versions.support_test"
 }
+
+apply plugin: 'com.google.gms.google-services'
