@@ -7,5 +7,5 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/basic_margin"
     android:orientation="horizontal"
-    tools:context=".view.MainActivity" />
+    tools:context=".view.ListActivity" />
 

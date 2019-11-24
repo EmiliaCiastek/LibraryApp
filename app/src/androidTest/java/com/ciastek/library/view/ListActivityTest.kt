@@ -16,11 +16,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MainActivityTest {
+class ListActivityTest {
 
     @Rule
     @JvmField
-    val activity = ActivityTestRule<MainActivity>(MainActivity::class.java)
+    val activity = ActivityTestRule<ListActivity>(ListActivity::class.java)
 
     @Test
     fun shouldDisplaySaveButton_whenAddButtonClicked() {
