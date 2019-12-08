@@ -7,6 +7,7 @@ env:
     - TARGET_API_LEVEL=28
     - MIN_API_LEVEL=21
     - BUILD_TOOLS_VERSION=28.0.3
+    - DEVICE_API=25
     - ADB_INSTALL_TIMEOUT=30
     - ANDROID_ABI=armeabi-v7a
     - ANDROID_TAG=google_apis
@@ -19,10 +20,11 @@ android:
     - build-tools-$BUILD_TOOLS_VERSION
     - android-$TARGET_API_LEVEL
     - android-$MIN_API_LEVEL
+    - android-$DEVICE_API
     - extra-android-support
     - extra-google-m2repository
     - extra-android-m2repository
-    - sys-img-$ANDROID_ABI-google_apis-25
+    - sys-img-$ANDROID_ABI-google_apis-$DEVICE_API
 
 licenses:
   - android-sdk-license-.+
@@ -38,7 +40,7 @@ before_script:
   - chmod +x gradlew
 
 script:
-  - echo no | android create avd --force -n test -t "android-"$TARGET_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
+  - echo no | android create avd --force -n test -t "android-"$DEVICEAPI --abi $ANDROID_ABI --tag $ANDROID_TAG
   - emulator -avd test -no-window &
   - android-wait-for-emulator
   - ./gradlew test
