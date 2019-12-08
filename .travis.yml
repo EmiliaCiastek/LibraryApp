@@ -22,7 +22,7 @@ android:
     - extra-android-support
     - extra-google-m2repository
     - extra-android-m2repository
-    - sys-img-$ANDROID_ABI-google_apis-$MIN_API_LEVEL
+    - sys-img-$ANDROID_ABI-google_apis-TARGET_API_LEVEL
 
 licenses:
   - android-sdk-license-.+
@@ -38,7 +38,7 @@ before_script:
   - chmod +x gradlew
 
 script:
-  - echo no | android create avd --force -n test -t "android-"$MIN_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
+  - echo no | android create avd --force -n test -t "android-"$TARGET_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
   - emulator -avd test -no-window &
   - android-wait-for-emulator
   - ./gradlew test
