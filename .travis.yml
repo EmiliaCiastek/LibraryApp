@@ -42,6 +42,6 @@ before_script:
 script:
   - echo no | android create avd --force -n test -t "android-"$DEVICE_API --abi $ANDROID_ABI --tag $ANDROID_TAG
   - emulator -avd test -no-window &
-  - android-wait-for-emulator
+  - travis_wait android-wait-for-emulator
   - ./gradlew test
   - ./gradlew connectedAndroidTest
