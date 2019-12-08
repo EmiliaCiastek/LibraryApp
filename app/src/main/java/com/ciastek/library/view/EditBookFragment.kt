@@ -3,7 +3,12 @@ package com.ciastek.library.view
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import com.ciastek.library.EditBookContract
 import com.ciastek.library.R
 import com.ciastek.library.di.components.EditBookComponent
@@ -45,7 +50,7 @@ class EditBookFragment : Fragment(), EditBookContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        injectDependencies(arguments!!.getParcelable(BOOK_TO_EDIT))
+        injectDependencies(book = arguments!!.getParcelable<Book>(BOOK_TO_EDIT) as Book)
 
         save_book_button.setOnClickListener {
             val title = title_editText.text.toString()
