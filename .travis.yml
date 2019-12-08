@@ -22,7 +22,7 @@ android:
     - extra-android-support
     - extra-google-m2repository
     - extra-android-m2repository
-    - sys-img-$ANDROID_ABI-google_apis-TARGET_API_LEVEL
+    - sys-img-$ANDROID_ABI-google_apis-25
 
 licenses:
   - android-sdk-license-.+
