@@ -1,6 +1,6 @@
 package com.ciastek.library.view
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.ciastek.library.model.Book
 import kotlinx.android.synthetic.main.book_item_layout.view.*

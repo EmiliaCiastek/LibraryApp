@@ -1,7 +1,7 @@
 package com.ciastek.library.model.db
 
-import android.arch.persistence.room.*
-import android.arch.persistence.room.OnConflictStrategy.REPLACE
+import androidx.room.*
+import androidx.room.OnConflictStrategy.REPLACE
 import com.ciastek.library.model.Book
 import io.reactivex.Flowable
 
