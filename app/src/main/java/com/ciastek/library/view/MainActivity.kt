@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.ciastek.library.R
 import com.ciastek.library.model.Book
+import com.ciastek.library.remote.view.RemoteLibraryActivity
 import kotlinx.android.synthetic.main.activity_books.*
 
 class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListener, EditBookFragment.OnBookChangedListener {
@@ -30,15 +31,20 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         super.onOptionsItemSelected(item)
 
-        if (item?.itemId == R.id.add_book_button) {
-            startActivityForResult(CreateBookActivity.newInstance(this), CREATE_BOOK_REQUEST_CODE)
-            return true
+        return when (item.itemId) {
+            R.id.add_book_button -> {
+                startActivityForResult(CreateBookActivity.newInstance(this), CREATE_BOOK_REQUEST_CODE)
+                true
+            }
+            R.id.show_remote_library -> {
+                startActivity(RemoteLibraryActivity.newIntent(this))
+                true
+            }
+            else -> false
         }
-
-        return false
     }
 
     override fun onBookSelected(book: Book) {

@@ -3,8 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/add_book_button"
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/add_book"
-        app:showAsAction="ifRoom" />
+    android:id="@+id/add_book_button"
+    android:icon="@drawable/ic_add_white_24dp"
+    android:title="@string/add_book"
+    app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/show_remote_library"
+        android:icon="@drawable/ic_library_books_white_24dp"
+        android:title="@string/show_remote_library"
+        app:showAsAction="ifRoom|withText" />
+
 </menu>

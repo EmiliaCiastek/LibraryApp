@@ -10,4 +10,6 @@
     <string name="add_book">Add Book</string>
     <string name="delete_book">Delete Book</string>
     <string name="isbn_book">Isbn</string>
+    <string name="remote_library">Remote Library</string>
+    <string name="show_remote_library">Show remote library</string>
 </resources>
