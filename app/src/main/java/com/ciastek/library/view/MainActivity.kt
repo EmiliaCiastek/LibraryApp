@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
         }
     }
 
-    private fun getEditBookFragment() = supportFragmentManager.findFragmentByTag(DETAILS_FRAGMENT_TAG) as? EditBookFragment
+    private fun getEditBookFragment(): EditBookFragment = supportFragmentManager.findFragmentByTag(DETAILS_FRAGMENT_TAG) as EditBookFragment
 
     private companion object {
         private const val LIST_FRAGMENT_TAG = "ListFragment"
