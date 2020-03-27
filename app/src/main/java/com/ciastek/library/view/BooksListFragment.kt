@@ -27,7 +27,7 @@ class BooksListFragment : Fragment(), BooksContract.View {
         return inflater.inflate(R.layout.fragment_books, container, false)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         if (context is OnBookSelectedListener) {

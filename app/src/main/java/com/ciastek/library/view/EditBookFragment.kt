@@ -21,7 +21,7 @@ class EditBookFragment : Fragment(), EditBookContract.View {
         setHasOptionsMenu(true)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         if (context is OnBookChangedListener) {
@@ -31,10 +31,10 @@ class EditBookFragment : Fragment(), EditBookContract.View {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
-        inflater?.inflate(R.menu.menu_edit_book, menu)
+        inflater.inflate(R.menu.menu_edit_book, menu)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -58,8 +58,8 @@ class EditBookFragment : Fragment(), EditBookContract.View {
         presenter.attachView(this)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.delete_book) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.delete_book) {
             presenter.onRemoveBookClicked()
         }
 
