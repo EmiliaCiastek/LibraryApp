@@ -21,7 +21,7 @@ class MainActivity2 : AppCompatActivity() {
         setContentView(R.layout.activity_main2)
         setSupportActionBar(toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.main_nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(setOf(
                 R.id.nav_home, R.id.nav_library, R.id.nav_settings), drawer)
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -29,7 +29,7 @@ class MainActivity2 : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.main_nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
