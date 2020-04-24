@@ -1,42 +1,44 @@
 package com.ciastek.library.remote.view
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
 import com.ciastek.library.remote.di.BooksViewModelFactory
 import com.ciastek.library.remote.repository.RemoteBooksRepositoryImpl
 import com.ciastek.library.remote.repository.RemoteBooksService
-import kotlinx.android.synthetic.main.activity_remote_library.books_list as booksList
+import kotlinx.android.synthetic.main.fragment_remote_library.books_list as booksList
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Properties
 
 
-class RemoteLibraryActivity : AppCompatActivity() {
-
-    companion object {
-
-        fun newIntent(context: Context) = Intent(context, RemoteLibraryActivity::class.java)
-    }
+class RemoteLibraryFragment : Fragment() {
 
     private val booksViewModel: BooksViewModel by viewModels {
         BooksViewModelFactory(RemoteBooksRepositoryImpl(getBooksService()))
     }
     private val booksAdapter = BooksAdapter()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_remote_library)
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+
+        return inflater.inflate(R.layout.fragment_remote_library, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         booksList.adapter = booksAdapter
-        booksList.layoutManager = LinearLayoutManager(this)
+        booksList.layoutManager = LinearLayoutManager(context)
 
-        booksViewModel.books.observe(this, Observer {
+        booksViewModel.books.observe(viewLifecycleOwner, Observer {
             booksAdapter.setBooks(it)
         })
     }

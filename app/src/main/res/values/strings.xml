@@ -22,6 +22,9 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="settings_fragment_placeholder">This is Settings fragment placeholder</string>
+    <string name="logout">Logout</string>
+    <string name="my_books">My books</string>
 
     <string name="home_second">Home Second</string>
 </resources>

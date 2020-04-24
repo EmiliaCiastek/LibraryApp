@@ -6,7 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.ciastek.library.R
 import com.ciastek.library.model.Book
-import com.ciastek.library.remote.view.RemoteLibraryActivity
+import com.ciastek.library.remote.view.RemoteLibraryFragment
 import kotlinx.android.synthetic.main.activity_books.*
 
 class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListener, EditBookFragment.OnBookChangedListener {
@@ -39,10 +39,10 @@ class MainActivity : AppCompatActivity(), BooksListFragment.OnBookSelectedListen
                 startActivityForResult(CreateBookActivity.newInstance(this), CREATE_BOOK_REQUEST_CODE)
                 true
             }
-            R.id.show_remote_library -> {
-                startActivity(RemoteLibraryActivity.newIntent(this))
-                true
-            }
+//            R.id.show_remote_library -> {
+//                startActivity(RemoteLibraryFragment.newIntent(this))
+//                true
+//            }
             else -> false
         }
     }

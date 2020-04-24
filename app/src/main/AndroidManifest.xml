@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".remote.view.RemoteLibraryActivity"
+            android:name=".remote.view.RemoteLibraryFragment"
             android:label="@string/remote_library"
             android:parentActivityName=".view.MainActivity" />
         <activity
