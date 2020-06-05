@@ -2,14 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    android:id="@+id/drawer_navigation"
+    app:startDestination="@+id/nav_my_library">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.ciastek.library.newlayout.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home">
+        android:id="@+id/nav_my_library"
+        android:name="com.ciastek.library.mine.view.MyLibraryFragment"
+        android:label="@string/my_books"
+        tools:layout="@layout/fragment_my_library">
     </fragment>
 
     <fragment

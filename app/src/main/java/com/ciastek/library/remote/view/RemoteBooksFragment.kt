@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
 import com.ciastek.library.remote.di.BooksViewModelFactory
+import com.ciastek.library.remote.repository.FakeRemoteBooksRepository
 import com.ciastek.library.remote.repository.RemoteBooksRepositoryImpl
 import com.ciastek.library.remote.repository.RemoteBooksService
 import kotlinx.android.synthetic.main.fragment_remote_books.books_list as booksList
@@ -20,7 +21,7 @@ import java.util.Properties
 class RemoteBooksFragment : Fragment() {
 
     private val booksViewModel: BooksViewModel by viewModels {
-        BooksViewModelFactory(RemoteBooksRepositoryImpl(getBooksService()))
+        BooksViewModelFactory(FakeRemoteBooksRepository())
     }
     private val booksAdapter = BooksAdapter()
 

@@ -3,4 +3,12 @@
     <color name="colorPrimary">#37474f</color>
     <color name="colorPrimaryDark">#263238</color>
     <color name="colorAccent">#ffc400</color>
+
+
+    <color name="colorPrimaryLight">#3F494E</color>
+    <color name="colorEndSideNav">#FF9800</color>
+    <color name="colorStartSideNav">#FFEB3B</color>
+    <color name="colorBottomNavButtonInactive">#A1FFC400</color>
+
+    <color name="colorWhite">#FFFFFF</color>
 </resources>
