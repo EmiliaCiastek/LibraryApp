@@ -65,7 +65,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$versions.rxJava2Android"
     implementation "com.google.dagger:dagger:$versions.dagger"
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
-    implementation "com.squareup.retrofit2:adapter-rxjava:$versions.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
 
