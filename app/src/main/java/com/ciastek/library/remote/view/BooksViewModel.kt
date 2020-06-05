@@ -1,8 +1,8 @@
 package com.ciastek.library.remote.view
 
 import androidx.lifecycle.*
-import com.ciastek.library.remote.Author
-import com.ciastek.library.remote.Book
+import com.ciastek.library.remote.model.Author
+import com.ciastek.library.remote.model.Book
 import com.ciastek.library.remote.repository.RemoteBooksRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

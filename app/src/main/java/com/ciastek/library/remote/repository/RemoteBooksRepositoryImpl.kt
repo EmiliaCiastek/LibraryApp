@@ -1,7 +1,10 @@
 package com.ciastek.library.remote.repository
 
-import com.ciastek.library.remote.Author
-import com.ciastek.library.remote.Book
+import com.ciastek.library.remote.model.Author
+import com.ciastek.library.remote.model.Book
+import com.ciastek.library.remote.model.BookWithAuthor
+import io.reactivex.Observable
+import io.reactivex.Observable.error
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,4 +19,7 @@ class RemoteBooksRepositoryImpl(private val booksService: RemoteBooksService) : 
                 }
     }
             .flowOn(Dispatchers.IO)
+
+    override fun getBooks2(): Observable<List<BookWithAuthor>> =
+            error(NotImplementedError())
 }
