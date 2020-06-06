@@ -1,11 +1,11 @@
-package com.ciastek.library.remote.authors.di
+package com.ciastek.library.remote.authors.list.di
 
 import com.ciastek.library.di.BackgroundScheduler
 import com.ciastek.library.di.UiScheduler
-import com.ciastek.library.remote.authors.repository.AuthorsRepository
-import com.ciastek.library.remote.authors.repository.RemoteAuthorsRepository
-import com.ciastek.library.remote.authors.repository.RemoteAuthorsService
-import com.ciastek.library.remote.authors.view.AuthorsViewModel
+import com.ciastek.library.remote.authors.list.repository.AuthorsRepository
+import com.ciastek.library.remote.authors.list.repository.RemoteAuthorsRepository
+import com.ciastek.library.remote.authors.list.repository.RemoteAuthorsService
+import com.ciastek.library.remote.authors.list.view.AuthorsViewModel
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler

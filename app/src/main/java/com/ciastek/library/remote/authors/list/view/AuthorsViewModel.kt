@@ -1,14 +1,13 @@
-package com.ciastek.library.remote.authors.view
+package com.ciastek.library.remote.authors.list.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.ciastek.library.remote.authors.repository.Author
-import com.ciastek.library.remote.authors.repository.AuthorsRepository
+import com.ciastek.library.remote.authors.list.repository.Author
+import com.ciastek.library.remote.authors.list.repository.AuthorsRepository
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
-import kotlin.random.Random
 
 class AuthorsViewModel(private val authorsRepository: AuthorsRepository,
                        private val schedulerUi: Scheduler) : ViewModel() {
@@ -17,7 +16,8 @@ class AuthorsViewModel(private val authorsRepository: AuthorsRepository,
     private val mutableAuthors: MutableLiveData<List<Author>> = MutableLiveData()
     val authors: LiveData<List<AuthorModel>> = Transformations.map(mutableAuthors) {
         it.map { author ->
-            AuthorModel(name = author.name,
+            AuthorModel(id = author.id,
+                        name = author.name,
                         lastName = author.lastName,
                         numberOfBooks = author.numberOfBooks)
         }

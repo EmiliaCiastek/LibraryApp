@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_authors"
-        android:name="com.ciastek.library.remote.authors.view.RemoteAuthorsFragment"
+        android:name="com.ciastek.library.remote.authors.list.view.RemoteAuthorsFragment"
         android:label="@string/authors"
         tools:layout="@layout/fragment_remote_authors"/>
 

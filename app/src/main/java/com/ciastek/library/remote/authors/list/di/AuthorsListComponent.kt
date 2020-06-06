@@ -1,8 +1,8 @@
-package com.ciastek.library.remote.authors.di
+package com.ciastek.library.remote.authors.list.di
 
 import android.content.Context
 import com.ciastek.library.LibraryApp
-import com.ciastek.library.remote.authors.view.RemoteAuthorsFragment
+import com.ciastek.library.remote.authors.list.view.RemoteAuthorsFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = [AuthorsListModule::class])

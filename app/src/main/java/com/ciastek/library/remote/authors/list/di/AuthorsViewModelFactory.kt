@@ -1,9 +1,9 @@
-package com.ciastek.library.remote.authors.di
+package com.ciastek.library.remote.authors.list.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.ciastek.library.remote.authors.repository.AuthorsRepository
-import com.ciastek.library.remote.authors.view.AuthorsViewModel
+import com.ciastek.library.remote.authors.list.repository.AuthorsRepository
+import com.ciastek.library.remote.authors.list.view.AuthorsViewModel
 import io.reactivex.Scheduler
 
 class AuthorsViewModelFactory(private val authorsRepository: AuthorsRepository,

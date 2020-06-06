@@ -1,17 +1,18 @@
-package com.ciastek.library.remote.authors.view
+package com.ciastek.library.remote.authors.list.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ciastek.library.R
 
-class AuthorsAdapter : RecyclerView.Adapter<AuthorViewHolder>() {
+class AuthorsAdapter(private val authorClicked: (Long) -> Unit) : RecyclerView.Adapter<AuthorViewHolder>() {
 
     private val authors = mutableListOf<AuthorModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuthorViewHolder =
             AuthorViewHolder(LayoutInflater.from(parent.context)
-                                     .inflate(R.layout.author_item_layout, parent, false))
+                                     .inflate(R.layout.author_item_layout, parent, false),
+                             authorClicked)
 
     override fun getItemCount(): Int = authors.size
 

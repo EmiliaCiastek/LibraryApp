@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.authors.repository
+package com.ciastek.library.remote.authors.list.repository
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

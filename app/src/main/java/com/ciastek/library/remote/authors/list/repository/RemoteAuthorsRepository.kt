@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.authors.repository
+package com.ciastek.library.remote.authors.list.repository
 
 import com.ciastek.library.di.BackgroundScheduler
 import io.reactivex.Scheduler
