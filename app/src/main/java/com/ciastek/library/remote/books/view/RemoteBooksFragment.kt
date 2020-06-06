@@ -52,7 +52,7 @@ class RemoteBooksFragment : Fragment() {
     }
 
     private fun showErrorMessage() {
-        Toast.makeText(context, getString(R.string.fetching_error_message), Toast.LENGTH_LONG).show()
+        Toast.makeText(context, getString(R.string.not_user_friendly_error_message), Toast.LENGTH_LONG).show()
     }
 
     override fun onStart() {

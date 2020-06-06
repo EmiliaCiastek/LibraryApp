@@ -7,37 +7,36 @@
     android:layout_margin="@dimen/basic_margin">
 
     <TextView
-        android:id="@+id/book_title"
+        android:id="@+id/authorName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/basic_margin"
-        android:layout_marginEnd="@dimen/basic_margin"
-        android:text="TextView"
+        android:text="@string/author_data_placeholder"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/book_author"
-        app:layout_constraintEnd_toStartOf="@+id/book_cover"
+        android:layout_marginStart="@dimen/basic_margin"
+        android:layout_marginEnd="@dimen/basic_margin"
+        app:layout_constraintEnd_toStartOf="@+id/authorPhoto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/book_author"
+        android:id="@+id/numberOfBooks"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/number_of_books"
         android:layout_marginStart="@dimen/basic_margin"
         android:layout_marginEnd="@dimen/basic_margin"
-        android:text="@string/author_data_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/book_cover"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/authorPhoto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authorName" />
 
     <ImageView
-        android:id="@+id/book_cover"
+        android:id="@+id/authorPhoto"
         android:layout_width="@dimen/thumbnail_size"
         android:layout_height="@dimen/thumbnail_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
