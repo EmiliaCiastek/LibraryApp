@@ -16,11 +16,21 @@
         android:id="@+id/nav_library"
         android:name="com.ciastek.library.remote.RemoteLibraryFragment"
         android:label="@string/remote_library"
-        tools:layout="@layout/fragment_remote_library" />
+        tools:layout="@layout/fragment_remote_library">
+        <action
+            android:id="@+id/action_remote_library_fragment_to_book_details_fragment"
+            app:destination="@+id/book_details_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.ciastek.library.newlayout.SettingsFragment"
         android:label="@string/action_settings"
         tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/book_details_fragment"
+        android:name="com.ciastek.library.remote.books.details.view.BookDetailsFragment"
+        android:label="@string/book_details"
+        tools:layout="@layout/book_details_fragment" />
 </navigation>

@@ -1,11 +1,11 @@
-package com.ciastek.library.remote.books.di
+package com.ciastek.library.remote.books.list.di
 
 import com.ciastek.library.di.BackgroundScheduler
 import com.ciastek.library.di.UiScheduler
-import com.ciastek.library.remote.books.repository.BooksRepository
-import com.ciastek.library.remote.books.repository.RemoteBooksRepository
-import com.ciastek.library.remote.books.repository.RemoteBooksService
-import com.ciastek.library.remote.books.view.BooksViewModel
+import com.ciastek.library.remote.books.list.repository.BooksRepository
+import com.ciastek.library.remote.books.list.repository.RemoteBooksRepository
+import com.ciastek.library.remote.books.list.repository.RemoteBooksService
+import com.ciastek.library.remote.books.list.view.BooksViewModel
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler

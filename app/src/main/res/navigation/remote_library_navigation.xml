@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_books"
-        android:name="com.ciastek.library.remote.books.view.RemoteBooksFragment"
+        android:name="com.ciastek.library.remote.books.list.view.RemoteBooksFragment"
         android:label="@string/books"
         tools:layout="@layout/fragment_remote_books"/>
 

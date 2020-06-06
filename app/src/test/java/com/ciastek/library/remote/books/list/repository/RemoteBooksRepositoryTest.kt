@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.books.repository
+package com.ciastek.library.remote.books.list.repository
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

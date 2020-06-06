@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.books.repository
+package com.ciastek.library.remote.books.list.repository
 
 import io.reactivex.Single
 import retrofit2.http.GET

@@ -6,7 +6,7 @@ import com.ciastek.library.di.modules.DatabaseModule
 import com.ciastek.library.di.modules.NetworkModule
 import com.ciastek.library.di.modules.RxModule
 import com.ciastek.library.remote.authors.di.AuthorsListComponent
-import com.ciastek.library.remote.books.di.BooksListComponent
+import com.ciastek.library.remote.books.list.di.BooksListComponent
 import dagger.Component
 import javax.inject.Singleton
 

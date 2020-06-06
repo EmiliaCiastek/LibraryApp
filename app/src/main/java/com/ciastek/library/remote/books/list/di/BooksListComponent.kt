@@ -1,8 +1,8 @@
-package com.ciastek.library.remote.books.di
+package com.ciastek.library.remote.books.list.di
 
 import android.content.Context
 import com.ciastek.library.LibraryApp
-import com.ciastek.library.remote.books.view.RemoteBooksFragment
+import com.ciastek.library.remote.books.list.view.RemoteBooksFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = [BooksListModule::class])

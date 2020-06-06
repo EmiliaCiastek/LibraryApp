@@ -1,9 +1,9 @@
-package com.ciastek.library.remote.books.di
+package com.ciastek.library.remote.books.list.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.ciastek.library.remote.books.repository.BooksRepository
-import com.ciastek.library.remote.books.view.BooksViewModel
+import com.ciastek.library.remote.books.list.repository.BooksRepository
+import com.ciastek.library.remote.books.list.view.BooksViewModel
 import io.reactivex.Scheduler
 
 class BooksViewModelFactory(private val booksRepository: BooksRepository,
