@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_my_books"
-        android:name="com.ciastek.library.mine.view.MyBooksFragment"
+        android:name="com.ciastek.library.user.view.MyBooksFragment"
         android:label="@string/books"
         tools:layout="@layout/fragment_my_books"/>
 
     <fragment
         android:id="@+id/nav_my_authors"
-        android:name="com.ciastek.library.mine.view.MyAuthorsFragment"
+        android:name="com.ciastek.library.user.view.MyAuthorsFragment"
         android:label="@string/authors"
         tools:layout="@layout/fragment_my_authors"/>
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ciastek.library.mine.view.MyLibraryFragment">
+    tools:context="com.ciastek.library.user.view.MyLibraryFragment">
 
     <fragment
         android:id="@+id/my_library_nav_host_fragment"

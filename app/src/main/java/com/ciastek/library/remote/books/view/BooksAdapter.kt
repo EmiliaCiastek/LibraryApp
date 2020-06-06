@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.view
+package com.ciastek.library.remote.books.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

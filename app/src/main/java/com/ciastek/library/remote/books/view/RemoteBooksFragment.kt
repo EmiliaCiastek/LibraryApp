@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.view
+package com.ciastek.library.remote.books.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
-import com.ciastek.library.remote.di.BooksViewModelFactory
-import com.ciastek.library.remote.repository.RemoteBooksRepositoryImpl
-import com.ciastek.library.remote.repository.RemoteBooksService
+import com.ciastek.library.remote.books.di.BooksViewModelFactory
+import com.ciastek.library.remote.books.repository.RemoteBooksRepositoryImpl
+import com.ciastek.library.remote.books.repository.RemoteBooksService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_remote_books.books_list as booksList

@@ -7,14 +7,14 @@
 
     <fragment
         android:id="@+id/nav_my_library"
-        android:name="com.ciastek.library.mine.view.MyLibraryFragment"
+        android:name="com.ciastek.library.user.view.MyLibraryFragment"
         android:label="@string/my_books"
         tools:layout="@layout/fragment_my_library">
     </fragment>
 
     <fragment
         android:id="@+id/nav_library"
-        android:name="com.ciastek.library.remote.view.RemoteLibraryFragment"
+        android:name="com.ciastek.library.remote.RemoteLibraryFragment"
         android:label="@string/remote_library"
         tools:layout="@layout/fragment_remote_library" />
 

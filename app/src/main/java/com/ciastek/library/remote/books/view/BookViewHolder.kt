@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.view
+package com.ciastek.library.remote.books.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

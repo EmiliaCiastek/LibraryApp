@@ -1,4 +1,4 @@
-package com.ciastek.library.newlayout
+package com.ciastek.library
 
 import android.os.Bundle
 import androidx.navigation.findNavController
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.app_bar_main2.toolbar
 import kotlinx.android.synthetic.main.activity_main2.drawer_layout as drawer
 import kotlinx.android.synthetic.main.activity_main2.nav_view as navView
 
-class MainActivity2 : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 

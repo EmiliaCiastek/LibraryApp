@@ -1,6 +1,5 @@
-package com.ciastek.library.remote.repository
+package com.ciastek.library.remote.books.repository
 
-import com.ciastek.library.remote.model.BookWithAuthor
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -15,11 +14,21 @@ internal class RemoteBooksRepositoryImplTest {
     private lateinit var repository: RemoteBooksRepositoryImpl
     private val scheduler = Schedulers.trampoline()
     private val books = listOf(
-            BookWithAuthor("Wicked", "Gregory Maguire", 1L),
-            BookWithAuthor("Out of Oz", "Gregory Maguire", 2L),
-            BookWithAuthor("Looking for Alaska", "John Green", 3L),
-            BookWithAuthor("The fault in our stars", "John Green", 4L),
-            BookWithAuthor("All the bright places", "Jennifer Niven", 5L)
+            Book("Wicked",
+                 "Gregory Maguire",
+                 1L),
+            Book("Out of Oz",
+                 "Gregory Maguire",
+                 2L),
+            Book("Looking for Alaska",
+                 "John Green",
+                 3L),
+            Book("The fault in our stars",
+                 "John Green",
+                 4L),
+            Book("All the bright places",
+                 "Jennifer Niven",
+                 5L)
     )
 
     @BeforeEach

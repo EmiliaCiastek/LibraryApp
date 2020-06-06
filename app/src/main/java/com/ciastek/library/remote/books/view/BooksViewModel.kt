@@ -1,12 +1,12 @@
-package com.ciastek.library.remote.view
+package com.ciastek.library.remote.books.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ciastek.library.remote.model.BookWithAuthor
-import com.ciastek.library.remote.repository.RemoteBooksRepository
+import com.ciastek.library.remote.books.repository.Book
+import com.ciastek.library.remote.books.repository.RemoteBooksRepository
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class BooksViewModel(private val booksRepository: RemoteBooksRepository,
                      private val schedulerUi: Scheduler) : ViewModel() {
 
-    private val mutableBooks: MutableLiveData<List<BookWithAuthor>> = MutableLiveData()
+    private val mutableBooks: MutableLiveData<List<Book>> = MutableLiveData()
     val books: LiveData<List<BookModel>> = Transformations.map(mutableBooks) {
         it.map { book -> BookModel(book.title, book.author) }
     }
