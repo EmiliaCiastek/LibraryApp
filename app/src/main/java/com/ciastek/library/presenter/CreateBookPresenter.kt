@@ -1,6 +1,7 @@
 package com.ciastek.library.presenter
 
 import com.ciastek.library.CreateBookContract
+import com.ciastek.library.di.BackgroundScheduler
 import com.ciastek.library.di.UiScheduler
 import com.ciastek.library.isValid
 import com.ciastek.library.model.Book
@@ -11,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class CreateBookPresenter @Inject constructor(private val booksDao: BookDao,
-                                              private val subscriptionScheduler: Scheduler,
+                                              @BackgroundScheduler private val subscriptionScheduler: Scheduler,
                                               @UiScheduler private val observationScheduler: Scheduler) : CreateBookContract.Presenter {
     private var view: CreateBookContract.View? = null
     private val compositeDisposable = CompositeDisposable()

@@ -1,6 +1,7 @@
 package com.ciastek.library.presenter
 
 import com.ciastek.library.EditBookContract
+import com.ciastek.library.di.BackgroundScheduler
 import com.ciastek.library.di.UiScheduler
 import com.ciastek.library.model.Book
 import com.ciastek.library.model.db.BookDao
@@ -11,7 +12,7 @@ import javax.inject.Inject
 
 class EditBookPresenter @Inject constructor(private val book: Book,
                                             private val bookDao: BookDao,
-                                            private val subscriptionScheduler: Scheduler,
+                                            @BackgroundScheduler private val subscriptionScheduler: Scheduler,
                                             @UiScheduler private val observationScheduler: Scheduler) : EditBookContract.Presenter {
 
     private var view: EditBookContract.View? = null

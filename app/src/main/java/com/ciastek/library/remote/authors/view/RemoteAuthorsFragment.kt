@@ -1,33 +1,24 @@
 package com.ciastek.library.remote.authors.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.ciastek.library.R
-import com.ciastek.library.getApiUrl
-import com.ciastek.library.remote.authors.di.AuthorsViewModelFactory
-import com.ciastek.library.remote.authors.repository.RemoteAuthorsRepository
-import com.ciastek.library.remote.authors.repository.RemoteAuthorsService
+import com.ciastek.library.remote.authors.di.AuthorsListComponent
 import com.ciastek.library.showErrorMessage
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_remote_authors.*
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 class RemoteAuthorsFragment : Fragment() {
 
+    @Inject
+    lateinit var authorsViewModel: AuthorsViewModel
+
     private val authorsAdapter = AuthorsAdapter()
-    private val authorsViewModel: AuthorsViewModel by viewModels {
-        AuthorsViewModelFactory(RemoteAuthorsRepository(getAuthorsService(), Schedulers.io()), AndroidSchedulers.mainThread())
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,6 +27,8 @@ class RemoteAuthorsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        injectDependencies()
 
         authorsList.apply {
             adapter = authorsAdapter
@@ -56,13 +49,8 @@ class RemoteAuthorsFragment : Fragment() {
         authorsViewModel.fetchAuthors()
     }
 
-    private fun getAuthorsService(): RemoteAuthorsService {
-        val retrofit = Retrofit.Builder()
-                .baseUrl(getApiUrl(resources))
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-
-        return retrofit.create(RemoteAuthorsService::class.java)
+    private fun injectDependencies() {
+        AuthorsListComponent.create(requireContext())
+                .inject(this)
     }
 }
