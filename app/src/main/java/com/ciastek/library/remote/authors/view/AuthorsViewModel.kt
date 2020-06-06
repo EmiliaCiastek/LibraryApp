@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.ciastek.library.remote.authors.repository.Author
-import com.ciastek.library.remote.authors.repository.RemoteAuthorsRepository
+import com.ciastek.library.remote.authors.repository.AuthorsRepository
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import kotlin.random.Random
 
-class AuthorsViewModel(private val authorsRepository: RemoteAuthorsRepository,
+class AuthorsViewModel(private val authorsRepository: AuthorsRepository,
                        private val schedulerUi: Scheduler) : ViewModel() {
 
     private val disposable = CompositeDisposable()
@@ -19,12 +19,9 @@ class AuthorsViewModel(private val authorsRepository: RemoteAuthorsRepository,
         it.map { author ->
             AuthorModel(name = author.name,
                         lastName = author.lastName,
-                        numberOfBooks = getFakeNumberOfBooks())
+                        numberOfBooks = author.numberOfBooks)
         }
     }
-
-    private fun getFakeNumberOfBooks() =
-            Random.nextInt(1, 100)
 
     fun fetchAuthors() {
         authorsRepository.getAuthors()

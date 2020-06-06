@@ -1,8 +1,12 @@
 package com.ciastek.library.remote.authors.repository
 
+import io.reactivex.Scheduler
 import io.reactivex.Single
 
-interface RemoteAuthorsRepository {
+class RemoteAuthorsRepository(private val authorsService: RemoteAuthorsService,
+                              private val backgroundScheduler: Scheduler) : AuthorsRepository {
 
-    fun getAuthors(): Single<List<Author>>
+    override fun getAuthors(): Single<List<Author>> =
+            authorsService.getAuthors()
+                    .subscribeOn(backgroundScheduler)
 }

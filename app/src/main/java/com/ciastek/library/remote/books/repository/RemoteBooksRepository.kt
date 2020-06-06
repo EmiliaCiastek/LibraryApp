@@ -1,8 +1,12 @@
 package com.ciastek.library.remote.books.repository
 
+import io.reactivex.Scheduler
 import io.reactivex.Single
 
-interface RemoteBooksRepository {
+class RemoteBooksRepository(private val booksService: RemoteBooksService,
+                            private val backgroundScheduler: Scheduler) : BooksRepository {
 
-    fun getBooks(): Single<List<Book>>
+    override fun getBooks(): Single<List<Book>> =
+            booksService.getBooks()
+                    .subscribeOn(backgroundScheduler)
 }

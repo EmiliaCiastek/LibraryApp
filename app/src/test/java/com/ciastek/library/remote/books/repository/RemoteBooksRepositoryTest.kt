@@ -8,10 +8,10 @@ import io.reactivex.schedulers.Schedulers
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-internal class RemoteBooksRepositoryImplTest {
+internal class RemoteBooksRepositoryTest {
 
     private val booksService: RemoteBooksService = mock()
-    private lateinit var repository: RemoteBooksRepositoryImpl
+    private lateinit var repository: RemoteBooksRepository
     private val scheduler = Schedulers.trampoline()
     private val books = listOf(
             Book("Wicked",
@@ -33,7 +33,7 @@ internal class RemoteBooksRepositoryImplTest {
 
     @BeforeEach
     fun setUp() {
-        repository = RemoteBooksRepositoryImpl(booksService, scheduler)
+        repository = RemoteBooksRepository(booksService, scheduler)
         whenever(booksService.getBooks()).thenReturn(Single.just(books))
     }
 

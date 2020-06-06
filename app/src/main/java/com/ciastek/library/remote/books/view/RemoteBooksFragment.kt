@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
 import com.ciastek.library.remote.books.di.BooksViewModelFactory
-import com.ciastek.library.remote.books.repository.RemoteBooksRepositoryImpl
+import com.ciastek.library.remote.books.repository.RemoteBooksRepository
 import com.ciastek.library.remote.books.repository.RemoteBooksService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +24,7 @@ import java.util.Properties
 class RemoteBooksFragment : Fragment() {
 
     private val booksViewModel: BooksViewModel by viewModels {
-        BooksViewModelFactory(RemoteBooksRepositoryImpl(getBooksService(), Schedulers.io()),
+        BooksViewModelFactory(RemoteBooksRepository(getBooksService(), Schedulers.io()),
                               AndroidSchedulers.mainThread())
     }
     private val booksAdapter = BooksAdapter()

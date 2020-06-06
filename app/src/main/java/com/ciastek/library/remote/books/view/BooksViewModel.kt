@@ -6,12 +6,12 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ciastek.library.remote.books.repository.Book
-import com.ciastek.library.remote.books.repository.RemoteBooksRepository
+import com.ciastek.library.remote.books.repository.BooksRepository
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.launch
 
-class BooksViewModel(private val booksRepository: RemoteBooksRepository,
+class BooksViewModel(private val booksRepository: BooksRepository,
                      private val schedulerUi: Scheduler) : ViewModel() {
 
     private val mutableBooks: MutableLiveData<List<Book>> = MutableLiveData()

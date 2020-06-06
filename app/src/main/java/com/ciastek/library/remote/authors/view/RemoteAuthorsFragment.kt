@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
 import com.ciastek.library.getApiUrl
 import com.ciastek.library.remote.authors.di.AuthorsViewModelFactory
-import com.ciastek.library.remote.authors.repository.FakeRemoteAuthorsRepository
+import com.ciastek.library.remote.authors.repository.RemoteAuthorsRepository
 import com.ciastek.library.remote.authors.repository.RemoteAuthorsService
-import com.ciastek.library.remote.books.repository.RemoteBooksService
 import com.ciastek.library.showErrorMessage
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_remote_authors.*
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -26,7 +26,7 @@ class RemoteAuthorsFragment : Fragment() {
 
     private val authorsAdapter = AuthorsAdapter()
     private val authorsViewModel: AuthorsViewModel by viewModels {
-        AuthorsViewModelFactory(FakeRemoteAuthorsRepository(), AndroidSchedulers.mainThread())
+        AuthorsViewModelFactory(RemoteAuthorsRepository(getAuthorsService(), Schedulers.io()), AndroidSchedulers.mainThread())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
