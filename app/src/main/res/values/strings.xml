@@ -39,4 +39,16 @@
     <string name="number_of_books">Number of books: %1$d</string>
     <string name="book_details">Book details</string>
     <string name="author_details">Author details</string>
+
+    <string name="book_description_placeholder">
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales imperdiet tortor, in sollicitudin est scelerisque eu. Nulla ac pellentesque leo. Vivamus vitae sagittis dui. Nullam massa nulla, pretium id semper gravida, faucibus nec tortor. Vestibulum in ullamcorper dui. Vestibulum libero sem, scelerisque ut nibh quis, maximus accumsan risus. Aliquam porttitor in ante et pharetra. Cras tincidunt tellus eu magna efficitur lacinia. Maecenas nec sem vehicula leo volutpat sodales at id libero. Sed condimentum rhoncus venenatis.\n
+
+Fusce mauris urna, pellentesque vel lobortis vitae, consequat eu nisl. Aliquam nec nulla magna. Nullam vulputate, ex vitae eleifend dictum, enim sem convallis odio, at maximus erat risus at ipsum. Vestibulum diam lorem, iaculis nec efficitur vitae, lacinia sed purus. Proin at ligula lobortis massa semper tempus id pulvinar tortor. Aliquam nunc felis, ultricies eu metus id, lacinia lobortis lacus. Suspendisse eu felis tempor, suscipit justo sit amet, efficitur libero. Donec cursus est nec dapibus ornare. Vestibulum porta sapien ac lorem sagittis, vulputate cursus velit ultricies. Etiam iaculis commodo ex non ultricies. Sed sapien urna, tincidunt nec placerat a, suscipit eget diam. Suspendisse volutpat vitae leo vel porta.\n
+
+Maecenas ullamcorper iaculis leo. In at augue vestibulum, euismod orci eget, accumsan urna. Etiam dignissim porta ultrices. Curabitur sed aliquam massa. Proin nisi lorem, faucibus a posuere et, gravida et leo. Aenean feugiat et elit mattis dapibus. Nulla quis orci dolor. Aliquam ornare neque in lectus mattis varius. Sed porttitor rutrum pulvinar. Duis eu sapien ac odio bibendum eleifend pulvinar dapibus felis. Morbi in cursus nisl, tempus elementum felis.\n
+
+Nunc ut eros ac nunc maximus fringilla. Donec facilisis mauris in erat malesuada maximus. Integer facilisis finibus viverra. Phasellus posuere dapibus dolor porta volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque congue, ipsum porttitor facilisis ornare, sem tortor luctus lorem, et dictum neque metus ac metus. Nam ac vestibulum elit, eget faucibus purus.\n
+
+Donec at enim suscipit, posuere ligula eu, faucibus sem. Ut fermentum lorem eget aliquam suscipit. Duis tellus magna, aliquam non lacus eu, mollis sollicitudin erat. Pellentesque eros nunc, pretium id lacinia non, feugiat quis sapien. Mauris luctus tempor dolor at sodales. Pellentesque eros nunc, molestie at nibh non, vehicula accumsan nulla. Integer in mollis ligula. In dapibus lectus vel pretium lobortis. Morbi hendrerit tempus interdum. Integer dapibus dui id eros lacinia pulvinar. Donec vestibulum arcu eget bibendum molestie. </string>
 </resources>
