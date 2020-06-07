@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ciastek.library.R
 
-class BooksAdapter(private val bookClicked: (bookId: Long) -> Unit) : RecyclerView.Adapter<BookViewHolder>() {
+class BooksAdapter(private val bookClicked: (book: BookModel) -> Unit) : RecyclerView.Adapter<BookViewHolder>() {
 
     private var books = listOf<BookModel>()
 

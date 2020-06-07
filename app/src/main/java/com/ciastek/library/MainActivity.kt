@@ -7,10 +7,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
-import com.ciastek.library.R
-import kotlinx.android.synthetic.main.app_bar_main2.toolbar
-import kotlinx.android.synthetic.main.activity_main2.drawer_layout as drawer
-import kotlinx.android.synthetic.main.activity_main2.nav_view as navView
+import kotlinx.android.synthetic.main.app_bar_main.toolbar
+import kotlinx.android.synthetic.main.activity_main.drawer_layout as drawer
+import kotlinx.android.synthetic.main.activity_main.nav_view as navView
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main2)
+        setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
         val navController = findNavController(R.id.main_nav_host_fragment)

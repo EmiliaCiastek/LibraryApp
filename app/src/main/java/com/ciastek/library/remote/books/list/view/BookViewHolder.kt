@@ -7,14 +7,14 @@ import kotlinx.android.synthetic.main.remote_book_item_layout.view.book_title as
 import kotlinx.android.synthetic.main.remote_book_item_layout.view.book_cover as cover
 import kotlinx.android.synthetic.main.remote_book_item_layout.view.book_author as author
 
-class BookViewHolder(itemView: View, private val itemClicked: (bookId: Long) -> Unit): RecyclerView.ViewHolder(itemView) {
+class BookViewHolder(itemView: View, private val itemClicked: (book: BookModel) -> Unit): RecyclerView.ViewHolder(itemView) {
 
     fun bind (book: BookModel) {
         itemView.title.text = book.title
         itemView.author.text = book.author
         itemView.cover.setBackgroundResource(R.drawable.cover_placeholder)
         itemView.setOnClickListener {
-            itemClicked(book.id)
+            itemClicked(book)
         }
     }
 }
