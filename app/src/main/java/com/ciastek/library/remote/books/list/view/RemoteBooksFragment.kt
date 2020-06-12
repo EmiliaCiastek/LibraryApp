@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
-import com.ciastek.library.remote.books.details.view.BookDetailsActivity.Companion.BOOK
+import com.ciastek.library.remote.RemoteLibraryFragmentDirections.Companion.actionShowRemoteBookDetails
 import com.ciastek.library.remote.books.list.di.BooksListComponent
 import com.ciastek.library.showErrorMessage
 import javax.inject.Inject
@@ -62,9 +62,8 @@ class RemoteBooksFragment : Fragment() {
     }
 
     private fun navigateToBookDetails(book: BookModel) {
-        val extras = Bundle()
-                .apply { putParcelable(BOOK, book) }
+        val action = actionShowRemoteBookDetails(book.id, book.title, book.author)
         requireActivity().findNavController(R.id.main_nav_host_fragment)
-                .navigate(R.id.book_details_activity, extras)
+                .navigate(action)
     }
 }

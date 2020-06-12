@@ -18,10 +18,10 @@
         android:label="@string/remote_library"
         tools:layout="@layout/fragment_remote_library">
         <action
-            android:id="@+id/action_remote_library_fragment_to_book_details_activity"
+            android:id="@+id/action_show_remote_book_details"
             app:destination="@+id/book_details_activity" />
         <action
-            android:id="@+id/action_remote_library_fragment_to_author_details_fragment"
+            android:id="@+id/action_show_remote_author_details"
             app:destination="@+id/author_details_fragment" />
     </fragment>
 
@@ -35,7 +35,17 @@
         android:id="@+id/book_details_activity"
         android:name="com.ciastek.library.remote.books.details.view.BookDetailsActivity"
         android:label="@string/book_details"
-        tools:layout="@layout/activity_book_details" />
+        tools:layout="@layout/activity_book_details" >
+        <argument
+            android:name="bookId"
+            app:argType="long"/>
+        <argument
+            android:name="bookTitle"
+            app:argType="string" />
+        <argument
+            android:name="bookAuthor"
+            app:argType="string" />
+    </activity>
 
     <fragment
         android:id="@+id/author_details_fragment"

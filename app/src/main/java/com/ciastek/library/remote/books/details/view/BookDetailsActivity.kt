@@ -2,18 +2,15 @@ package com.ciastek.library.remote.books.details.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.navArgs
 import com.ciastek.library.R
-import com.ciastek.library.remote.books.list.view.BookModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import kotlinx.android.synthetic.main.activity_book_details.*
 import kotlinx.android.synthetic.main.details_header_layout.*
 
 class BookDetailsActivity : AppCompatActivity() {
 
-    companion object {
-
-        const val BOOK = "book"
-    }
+    private val args: BookDetailsActivityArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,14 +19,12 @@ class BookDetailsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        intent.extras?.getParcelable<BookModel>(BOOK)?.let { book ->
-            toolbar_layout.title = book.title
-            header_title.text = book.title
-            header_subtitle.text = book.author
-        }
+        toolbar_layout.title = args.bookTitle
+        header_title.text = args.bookTitle
+        header_subtitle.text = args.bookAuthor
 
         findViewById<ExtendedFloatingActionButton>(R.id.fab).addOnCheckedChangeListener { button, isChecked ->
-            if(isChecked) {
+            if (isChecked) {
                 //TODO: Add to user library
             }
         }
