@@ -37,6 +37,10 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="authors_books_header">All books:</string>
+    <string name="authors_website_label">Website</string>
+    <string name="authors_genre_label">Genre</string>
+    <string name="authors_born_label">Born</string>
+    <string name="authors_died_label">Died</string>
     <string name="svetlana_bio">Svetlana Isakova has worked on the Kotlin language at JetBrains. She’s co-authored the books \'Kotlin in Action\' and \'AtomicKotlin\' and now is a Developer Advocate, where she spends her time teaching Kotlin and speaking at conferences worldwide. aaaaaa aaaa</string>
 
     <string name="large_text">
