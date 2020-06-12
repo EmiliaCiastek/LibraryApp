@@ -6,7 +6,7 @@ import com.ciastek.library.R
 import kotlinx.android.synthetic.main.author_item_layout.view.*
 
 class AuthorViewHolder(itemView: View,
-                       private val itemClicked: (Long) -> Unit) : RecyclerView.ViewHolder(itemView) {
+                       private val itemClicked: (AuthorModel) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(author: AuthorModel) {
         itemView.authorName.text = itemView.context.getString(R.string.author_data,
@@ -15,6 +15,6 @@ class AuthorViewHolder(itemView: View,
         itemView.numberOfBooks.text = itemView.context.getString(R.string.number_of_books,
                                                                  author.numberOfBooks)
         itemView.authorPhoto.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_author))
-        itemView.setOnClickListener { itemClicked(author.id) }
+        itemView.setOnClickListener { itemClicked(author) }
     }
 }

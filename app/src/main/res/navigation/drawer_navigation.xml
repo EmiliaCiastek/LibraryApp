@@ -9,8 +9,7 @@
         android:id="@+id/nav_my_library"
         android:name="com.ciastek.library.user.view.MyLibraryFragment"
         android:label="@string/my_books"
-        tools:layout="@layout/fragment_my_library">
-    </fragment>
+        tools:layout="@layout/fragment_my_library"/>
 
     <fragment
         android:id="@+id/nav_library"
@@ -35,10 +34,10 @@
         android:id="@+id/book_details_activity"
         android:name="com.ciastek.library.remote.books.details.view.BookDetailsActivity"
         android:label="@string/book_details"
-        tools:layout="@layout/activity_book_details" >
+        tools:layout="@layout/activity_book_details">
         <argument
             android:name="bookId"
-            app:argType="long"/>
+            app:argType="long" />
         <argument
             android:name="bookTitle"
             app:argType="string" />
@@ -50,6 +49,13 @@
     <fragment
         android:id="@+id/author_details_fragment"
         android:name="com.ciastek.library.remote.authors.details.view.AuthorDetailsFragment"
-        android:label="@string/author_details"
-        tools:layout="@layout/author_details_fragment" />
+        android:label="{authorName}"
+        tools:layout="@layout/author_details_fragment">
+        <argument
+            android:name="authorName"
+            app:argType="string" />
+        <argument
+            android:name="authorId"
+            app:argType="long" />
+    </fragment>
 </navigation>

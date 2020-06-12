@@ -34,10 +34,13 @@
     <string name="author_details">Author details</string>
     <string name="header_title_placeholder">Looking for Alaska</string>
     <string name="header_subtitle_placeholder">John Green</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="authors_books_header">All books:</string>
+    <string name="svetlana_bio">Svetlana Isakova has worked on the Kotlin language at JetBrains. She’s co-authored the books \'Kotlin in Action\' and \'AtomicKotlin\' and now is a Developer Advocate, where she spends her time teaching Kotlin and speaking at conferences worldwide. aaaaaa aaaa</string>
 
-   <string name="large_text">
-        "Material is the metaphor.\n\n"
-
+    <string name="large_text">
+        "Material is the metaphor."
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
         "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
         "technologically advanced and open to imagination and magic.\n"

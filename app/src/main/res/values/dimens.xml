@@ -10,7 +10,7 @@
     <dimen name="thumbnail_size">50dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="details_header_card_outer_size">105dp</dimen>
-    <dimen name="details_header_card_inner_size">100dp</dimen>
+    <dimen name="details_header_card_outer_size">125dp</dimen>
+    <dimen name="details_header_card_inner_size">120dp</dimen>
     <dimen name="details_header_card_corner_radius">15dp</dimen>
 </resources>

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ciastek.library.R
 
-class AuthorsAdapter(private val authorClicked: (Long) -> Unit) : RecyclerView.Adapter<AuthorViewHolder>() {
+class AuthorsAdapter(private val authorClicked: (AuthorModel) -> Unit) : RecyclerView.Adapter<AuthorViewHolder>() {
 
     private val authors = mutableListOf<AuthorModel>()
 

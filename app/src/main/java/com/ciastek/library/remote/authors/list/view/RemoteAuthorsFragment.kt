@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
-import com.ciastek.library.remote.authors.details.view.AuthorDetailsFragment.Companion.AUTHOR_ID
+import com.ciastek.library.remote.RemoteLibraryFragmentDirections.Companion.actionShowRemoteAuthorDetails
 import com.ciastek.library.remote.authors.list.di.AuthorsListComponent
 import com.ciastek.library.showErrorMessage
 import kotlinx.android.synthetic.main.fragment_remote_authors.*
@@ -58,9 +58,9 @@ class RemoteAuthorsFragment : Fragment() {
                 .inject(this)
     }
 
-    private fun navigateToAuthorDetails(authorId: Long) {
-        val extras = Bundle().apply { putLong(AUTHOR_ID, authorId) }
+    private fun navigateToAuthorDetails(author: AuthorModel) {
+        val action = actionShowRemoteAuthorDetails("${author.lastName} ${author.name}", author.id)
         requireActivity().findNavController(R.id.main_nav_host_fragment)
-                .navigate(R.id.author_details_fragment, extras)
+                .navigate(action)
     }
 }

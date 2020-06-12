@@ -15,23 +15,10 @@
         android:ellipsize="end"
         android:text="TextView"
         android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/book_author"
+        app:layout_constraintBottom_toBottomOf="@+id/book_cover"
         app:layout_constraintEnd_toStartOf="@+id/book_cover"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/book_author"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/basic_margin"
-        android:layout_marginEnd="@dimen/basic_margin"
-        android:ellipsize="end"
-        android:text="@string/author_data_placeholder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/book_cover"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/book_cover"
