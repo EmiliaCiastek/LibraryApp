@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_remote_library">
         <action
             android:id="@+id/action_show_remote_book_details"
-            app:destination="@+id/book_details_activity" />
+            app:destination="@+id/book_details_fragment" />
         <action
             android:id="@+id/action_show_remote_author_details"
             app:destination="@+id/author_details_fragment" />
@@ -30,11 +30,11 @@
         android:label="@string/action_settings"
         tools:layout="@layout/fragment_settings" />
 
-    <activity
-        android:id="@+id/book_details_activity"
-        android:name="com.ciastek.library.remote.books.details.view.BookDetailsActivity"
-        android:label="@string/book_details"
-        tools:layout="@layout/activity_book_details">
+    <fragment
+        android:id="@+id/book_details_fragment"
+        android:name="com.ciastek.library.remote.books.details.view.BookDetailsFragment"
+        android:label="{bookTitle}"
+        tools:layout="@layout/fragment_book_details">
         <argument
             android:name="bookId"
             app:argType="long" />
@@ -44,7 +44,7 @@
         <argument
             android:name="bookAuthor"
             app:argType="string" />
-    </activity>
+    </fragment>
 
     <fragment
         android:id="@+id/author_details_fragment"
@@ -59,6 +59,6 @@
             app:argType="long" />
         <action
             android:id="@+id/action_show_remote_book_details"
-            app:destination="@+id/book_details_activity" />
+            app:destination="@+id/book_details_fragment" />
     </fragment>
 </navigation>
