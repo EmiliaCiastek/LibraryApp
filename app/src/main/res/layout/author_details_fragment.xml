@@ -11,7 +11,7 @@
         android:layout_width="@dimen/details_header_card_outer_size"
         android:layout_height="@dimen/details_header_card_outer_size"
         android:layout_margin="@dimen/basic_margin"
-        app:cardBackgroundColor="@android:color/transparent"
+        app:cardBackgroundColor="@color/colorWhite"
         app:cardCornerRadius="@dimen/details_header_card_corner_radius"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,7 +21,8 @@
                 android:layout_width="@dimen/details_header_card_outer_size"
                 android:layout_height="@dimen/details_header_card_outer_size"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/svetlana_isakowa" />
+                android:background="@color/colorWhite"
+                android:src="@drawable/ic_author" />
 
     </androidx.cardview.widget.CardView>
 
@@ -34,21 +35,11 @@
         android:layout_marginEnd="@dimen/basic_margin"
         android:ellipsize="end"
         android:maxLength="256"
-        android:text="@string/svetlana_bio"
+        android:text="@string/author_description_placeholder"
         app:layout_constraintBottom_toBottomOf="@+id/outer_card_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/outer_card_view"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/basic_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authors_books_header"
-        tools:listitem="@layout/author_book_item_layout" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
@@ -159,7 +150,7 @@
         app:layout_constraintTop_toTopOf="@+id/born_label" />
 
     <TextView
-        android:id="@+id/author_dead"
+        android:id="@+id/author_death"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/basic_margin"
@@ -199,5 +190,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/genre_label" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/authors_books_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/basic_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authors_books_header"
+        tools:listitem="@layout/remote_book_item_layout" />
+
+    <TextView
+        android:id="@+id/no_books_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/basic_margin"
+        android:text="@string/no_books_info"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authors_books_header" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import com.ciastek.library.di.modules.BookModule
 import com.ciastek.library.di.modules.DatabaseModule
 import com.ciastek.library.di.modules.NetworkModule
 import com.ciastek.library.di.modules.RxModule
+import com.ciastek.library.remote.authors.details.di.AuthorDetailsComponent
 import com.ciastek.library.remote.authors.list.di.AuthorsListComponent
 import com.ciastek.library.remote.books.list.di.BooksListComponent
 import dagger.Component
@@ -22,4 +23,6 @@ interface AppComponent {
     fun createAuthorsListComponent(): AuthorsListComponent
 
     fun createBooksListComponent(): BooksListComponent
+
+    fun createAuthorDetailsComponent(): AuthorDetailsComponent
 }
