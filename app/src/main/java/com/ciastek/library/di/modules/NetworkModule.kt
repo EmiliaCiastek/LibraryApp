@@ -3,6 +3,7 @@ package com.ciastek.library.di.modules
 import android.content.Context
 import com.ciastek.library.R
 import com.ciastek.library.remote.authors.RemoteAuthorsService
+import com.ciastek.library.remote.books.RemoteBooksService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -24,6 +25,10 @@ class NetworkModule {
     @Provides
     fun provideAuthorsService(retrofit: Retrofit): RemoteAuthorsService =
             retrofit.create(RemoteAuthorsService::class.java)
+
+    @Provides
+    fun provideBooksService(retrofit: Retrofit): RemoteBooksService =
+            retrofit.create(RemoteBooksService::class.java)
 
     private fun getApiUrl(context: Context): String {
         context.resources.openRawResource(R.raw.config).use { rawConfig ->

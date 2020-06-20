@@ -1,5 +1,6 @@
 package com.ciastek.library.remote.books.list.repository
 
+import com.ciastek.library.remote.books.RemoteBooksService
 import io.reactivex.Scheduler
 import io.reactivex.Single
 

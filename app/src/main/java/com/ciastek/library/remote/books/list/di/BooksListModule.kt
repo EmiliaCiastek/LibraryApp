@@ -4,7 +4,7 @@ import com.ciastek.library.di.BackgroundScheduler
 import com.ciastek.library.di.UiScheduler
 import com.ciastek.library.remote.books.list.repository.BooksRepository
 import com.ciastek.library.remote.books.list.repository.RemoteBooksRepository
-import com.ciastek.library.remote.books.list.repository.RemoteBooksService
+import com.ciastek.library.remote.books.RemoteBooksService
 import com.ciastek.library.remote.books.list.view.BooksViewModel
 import dagger.Module
 import dagger.Provides
@@ -19,10 +19,6 @@ class BooksListModule {
                               @UiScheduler uiScheduler: Scheduler) =
             BooksViewModelFactory(booksRepository, uiScheduler)
                     .create(BooksViewModel::class.java)
-
-    @Provides
-    fun provideBooksService(retrofit: Retrofit): RemoteBooksService =
-            retrofit.create(RemoteBooksService::class.java)
 
     @Provides
     fun provideBooksRepository(booksService: RemoteBooksService,

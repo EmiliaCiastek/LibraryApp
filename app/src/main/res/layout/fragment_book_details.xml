@@ -21,7 +21,7 @@
             android:layout_height="@dimen/details_header_card_outer_size"
             android:background="@color/colorWhite"
             android:scaleType="centerCrop"
-            android:src="@mipmap/alaska" />
+            android:src="@drawable/cover_placeholder" />
 
     </androidx.cardview.widget.CardView>
 
@@ -51,8 +51,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/outer_card_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/outer_card_view"
-        app:layout_constraintTop_toBottomOf="@+id/book_title" />
+        app:layout_constraintStart_toEndOf="@+id/outer_card_view" />
 
     <RatingBar
         android:id="@+id/ratingBar"

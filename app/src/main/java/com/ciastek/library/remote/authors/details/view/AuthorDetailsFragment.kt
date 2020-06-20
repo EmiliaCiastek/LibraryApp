@@ -54,7 +54,7 @@ class AuthorDetailsFragment : Fragment() {
                 showErrorMessage(context)
             }
 
-            authorDetails.showAuthorDetails()
+            authorDetails.show()
         })
     }
 
@@ -64,7 +64,7 @@ class AuthorDetailsFragment : Fragment() {
         authorDetailsViewModel.getAuthorDetails(args.authorId)
     }
 
-    private fun AuthorDetailsView.showAuthorDetails() {
+    private fun AuthorDetailsView.show() {
         showBooks()
         showBirth()
         showDeath()

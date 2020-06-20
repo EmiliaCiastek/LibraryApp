@@ -1,5 +1,6 @@
 package com.ciastek.library.remote.books.list.repository
 
+import com.ciastek.library.remote.books.RemoteBooksService
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
