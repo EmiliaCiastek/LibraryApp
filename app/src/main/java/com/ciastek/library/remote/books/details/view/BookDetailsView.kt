@@ -5,7 +5,8 @@ data class BookDetailsView(val id: Long,
                            val author: String,
                            val rating: Double,
                            val coverUrl: String,
-                           val description: String) {
+                           val description: String,
+                           val isFavourite: Boolean) {
 
     fun isEmpty() = id == -1L
 }

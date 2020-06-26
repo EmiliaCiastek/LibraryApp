@@ -7,8 +7,12 @@ data class BookDetails(val id: Long,
                        val coverUrl: String,
                        val description: String) {
 
+    fun isEmpty() = id == EMPTY_ID
+
     companion object {
 
-        fun empty() = BookDetails(-1L, "", "", 0.0, "", "")
+        private const val EMPTY_ID = -1L
+
+        fun empty() = BookDetails(EMPTY_ID, "", "", 0.0, "", "")
     }
 }

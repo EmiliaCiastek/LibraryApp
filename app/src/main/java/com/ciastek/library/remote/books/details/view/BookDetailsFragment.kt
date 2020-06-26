@@ -41,6 +41,14 @@ class BookDetailsFragment : Fragment() {
 
             bookDetails.show()
         })
+
+        favourite_button.addOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) {
+                bookDetailsViewModel.addBookToUserLibrary()
+            } else {
+                bookDetailsViewModel.removeBookFromUserLibrary()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -59,6 +67,7 @@ class BookDetailsFragment : Fragment() {
         book_title.text = title
         author_name.text = author
         ratingBar.rating = rating.toFloat()
+        favourite_button.isChecked = isFavourite
         if(description.isNotEmpty()) {
             book_description.text = description
         }
