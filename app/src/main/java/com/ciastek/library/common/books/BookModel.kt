@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.books.list.view
+package com.ciastek.library.common.books
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

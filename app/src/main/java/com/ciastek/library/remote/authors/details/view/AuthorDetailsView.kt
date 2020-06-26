@@ -1,6 +1,6 @@
 package com.ciastek.library.remote.authors.details.view
 
-import com.ciastek.library.remote.books.list.view.BookModel
+import com.ciastek.library.common.books.BookModel
 
 data class AuthorDetailsView(val id: Long,
                              val name: String,

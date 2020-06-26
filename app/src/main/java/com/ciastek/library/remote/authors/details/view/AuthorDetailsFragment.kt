@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
 import com.ciastek.library.remote.RemoteLibraryFragmentDirections
 import com.ciastek.library.remote.authors.details.di.AuthorDetailsComponent
-import com.ciastek.library.remote.books.list.view.BookModel
-import com.ciastek.library.remote.books.list.view.BooksAdapter
+import com.ciastek.library.common.books.BookModel
+import com.ciastek.library.common.books.BooksAdapter
 import com.ciastek.library.showErrorMessage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.author_details_fragment.*
@@ -43,7 +43,9 @@ class AuthorDetailsFragment : Fragment() {
 
         setHasOptionsMenu(true)
         injectDependencies()
-        booksAdapter = BooksAdapter { navigateToBookDetails(it) }
+        booksAdapter = BooksAdapter {
+            navigateToBookDetails(it)
+        }
         authors_books_list.apply {
             adapter = booksAdapter
             layoutManager = LinearLayoutManager(context)

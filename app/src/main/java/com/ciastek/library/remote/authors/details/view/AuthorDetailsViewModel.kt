@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.ciastek.library.di.UiScheduler
 import com.ciastek.library.remote.authors.details.reporitory.AuthorDetails
 import com.ciastek.library.remote.authors.details.reporitory.AuthorDetailsRepository
-import com.ciastek.library.remote.books.list.view.BookModel
+import com.ciastek.library.common.books.BookModel
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 
@@ -27,7 +27,9 @@ class AuthorDetailsViewModel(private val authorDetailsRepository: AuthorDetailsR
                           it.photoUrl,
                           it.description,
                           it.books.map { book ->
-                              BookModel(book.id!!, book.title, "")
+                              BookModel(book.id!!,
+                                                                                            book.title,
+                                                                                            "")
                           }
         )
     }

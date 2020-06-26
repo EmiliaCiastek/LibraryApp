@@ -1,4 +1,4 @@
-package com.ciastek.library.user.view
+package com.ciastek.library.user.authors
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,7 @@ class MyAuthorsFragment: Fragment() {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_my_authors, container, false)
+        return inflater.inflate(R.layout.fragment_user_authors, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

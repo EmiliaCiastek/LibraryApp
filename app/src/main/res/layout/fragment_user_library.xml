@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ciastek.library.user.view.MyLibraryFragment">
+    tools:context="com.ciastek.library.user.UserLibraryFragment">
 
     <fragment
         android:id="@+id/my_library_nav_host_fragment"
@@ -17,7 +17,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/my_library_navigation" />
+        app:navGraph="@navigation/user_library_navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/myLibraryBottonNav"

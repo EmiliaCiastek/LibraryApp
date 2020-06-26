@@ -11,7 +11,7 @@ class BooksAdapter(private val listener: (Int) -> Unit) : RecyclerView.Adapter<B
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.book_item_layout, parent, false)
+                .inflate(R.layout.old_book_item_layout, parent, false)
 
         return BookViewHolder(view, listener)
     }

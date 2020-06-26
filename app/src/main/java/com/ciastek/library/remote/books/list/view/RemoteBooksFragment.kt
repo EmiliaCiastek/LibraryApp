@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
+import com.ciastek.library.common.books.BooksAdapter
+import com.ciastek.library.common.books.BookModel
 import com.ciastek.library.remote.RemoteLibraryFragmentDirections.Companion.actionShowRemoteBookDetails
 import com.ciastek.library.remote.books.list.di.BooksListComponent
 import com.ciastek.library.showErrorMessage
@@ -34,7 +36,9 @@ class RemoteBooksFragment : Fragment() {
 
         injectDependencies()
 
-        booksAdapter = BooksAdapter { navigateToBookDetails(it) }
+        booksAdapter = BooksAdapter {
+            navigateToBookDetails(it)
+        }
 
         booksList.apply {
             adapter = booksAdapter

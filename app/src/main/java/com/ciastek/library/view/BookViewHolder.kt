@@ -3,7 +3,7 @@ package com.ciastek.library.view
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.ciastek.library.model.Book
-import kotlinx.android.synthetic.main.book_item_layout.view.*
+import kotlinx.android.synthetic.main.old_book_item_layout.view.*
 
 class BookViewHolder(itemView: View, private inline val listener: (Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
     init {
