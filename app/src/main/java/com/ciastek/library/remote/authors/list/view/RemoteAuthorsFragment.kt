@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
+import com.ciastek.library.common.authors.AuthorModel
+import com.ciastek.library.common.authors.AuthorsAdapter
 import com.ciastek.library.remote.RemoteLibraryFragmentDirections.Companion.actionShowRemoteAuthorDetails
 import com.ciastek.library.remote.authors.list.di.AuthorsListComponent
 import com.ciastek.library.showErrorMessage
@@ -32,7 +34,9 @@ class RemoteAuthorsFragment : Fragment() {
 
         injectDependencies()
 
-        authorsAdapter = AuthorsAdapter { navigateToAuthorDetails(it) }
+        authorsAdapter = AuthorsAdapter {
+            navigateToAuthorDetails(it)
+        }
 
         authorsList.apply {
             adapter = authorsAdapter

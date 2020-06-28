@@ -13,8 +13,12 @@ data class AuthorDetails(val id: Long,
                          val description: String,
                          val books: List<Book>) {
 
+    fun isEmpty() = id == EMPTY_ID
+
     companion object {
 
-        fun empty() = AuthorDetails(-1, "", "", "", "", "", "", "", "", emptyList())
+        private const val EMPTY_ID = -1L
+
+        fun empty() = AuthorDetails(EMPTY_ID, "", "", "", "", "", "", "", "", emptyList())
     }
 }

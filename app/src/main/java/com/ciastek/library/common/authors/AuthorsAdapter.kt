@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.authors.list.view
+package com.ciastek.library.common.authors
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,9 +10,13 @@ class AuthorsAdapter(private val authorClicked: (AuthorModel) -> Unit) : Recycle
     private val authors = mutableListOf<AuthorModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuthorViewHolder =
-            AuthorViewHolder(LayoutInflater.from(parent.context)
-                                     .inflate(R.layout.author_item_layout, parent, false),
-                             authorClicked)
+            AuthorViewHolder(LayoutInflater.from(
+                    parent.context)
+                                                                                           .inflate(
+                                                                                                   R.layout.author_item_layout,
+                                                                                                   parent,
+                                                                                                   false),
+                                                                                   authorClicked)
 
     override fun getItemCount(): Int = authors.size
 

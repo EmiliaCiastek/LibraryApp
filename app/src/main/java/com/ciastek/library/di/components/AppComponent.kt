@@ -8,6 +8,7 @@ import com.ciastek.library.remote.authors.details.di.AuthorDetailsComponent
 import com.ciastek.library.remote.authors.list.di.AuthorsListComponent
 import com.ciastek.library.remote.books.details.di.BookDetailsComponent
 import com.ciastek.library.remote.books.list.di.BooksListComponent
+import com.ciastek.library.user.authors.di.UserAuthorsComponent
 import com.ciastek.library.user.books.di.UserBooksComponent
 import dagger.Component
 import javax.inject.Singleton
@@ -25,4 +26,6 @@ interface AppComponent {
     fun createBookDetailsComponent(): BookDetailsComponent
 
     fun createUserBooksComponent(): UserBooksComponent
+
+    fun createUserAuthorsComponent(): UserAuthorsComponent
 }

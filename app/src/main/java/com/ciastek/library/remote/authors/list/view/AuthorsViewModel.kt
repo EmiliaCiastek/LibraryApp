@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.ciastek.library.common.authors.AuthorModel
 import com.ciastek.library.remote.authors.list.repository.Author
 import com.ciastek.library.remote.authors.list.repository.AuthorsRepository
 import io.reactivex.Scheduler
@@ -17,9 +18,8 @@ class AuthorsViewModel(private val authorsRepository: AuthorsRepository,
     val authors: LiveData<List<AuthorModel>> = Transformations.map(mutableAuthors) {
         it.map { author ->
             AuthorModel(id = author.id,
-                        name = author.name,
-                        lastName = author.lastName,
-                        numberOfBooks = author.numberOfBooks)
+                                                                              name = author.name,
+                                                                              lastName = author.lastName)
         }
     }
 

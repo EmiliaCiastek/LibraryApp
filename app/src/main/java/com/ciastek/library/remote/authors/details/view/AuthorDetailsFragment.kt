@@ -58,6 +58,14 @@ class AuthorDetailsFragment : Fragment() {
 
             authorDetails.show()
         })
+
+        author_favourite_button.addOnCheckedChangeListener { button, isChecked ->
+            if (isChecked) {
+                authorDetailsViewModel.addAuthorToUserLibrary()
+            } else {
+                authorDetailsViewModel.removeAuthorFromUserLibrary()
+            }
+        }
     }
 
     override fun onStart() {

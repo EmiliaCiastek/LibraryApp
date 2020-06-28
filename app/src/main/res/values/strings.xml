@@ -30,6 +30,7 @@
     <string name="author_data_placeholder">LastName FirstName</string>
     <string name="author_data">%1$s %2$s</string>
     <string name="number_of_books">Number of books: %1$d</string>
+    <string name="number_of_liked_books">Number of liked books: %1$d</string>
     <string name="book_details">Book details</string>
     <string name="author_details">Author details</string>
     <string name="book_title_placeholder">Book title</string>

@@ -57,9 +57,9 @@ class BookDetailsViewModel(private val bookDetailsRepository: BookDetailsReposit
         mutableBookDetails.value?.first?.let {
             if (it.isEmpty().not()) {
                 userBookRepository.isBookInFavourites(it.id)
-                        .observeOn(uiScheduler)
                         .filter { isInUserLibrary -> isInUserLibrary.not() }
                         .flatMapCompletable { _ -> userBookRepository.insertBook(it.toBookEntity()) }
+                        .observeOn(uiScheduler)
                         .subscribe {}
                         .apply {
                             disposable.add(this)

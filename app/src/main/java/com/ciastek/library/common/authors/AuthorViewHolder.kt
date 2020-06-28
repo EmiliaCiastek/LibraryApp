@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.authors.list.view
+package com.ciastek.library.common.authors
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +12,6 @@ class AuthorViewHolder(itemView: View,
         itemView.authorName.text = itemView.context.getString(R.string.author_data,
                                                               author.lastName,
                                                               author.name)
-        itemView.numberOfBooks.text = itemView.context.getString(R.string.number_of_books,
-                                                                 author.numberOfBooks)
         itemView.authorPhoto.setImageDrawable(itemView.context.getDrawable(R.drawable.ic_author))
         itemView.setOnClickListener { itemClicked(author) }
     }
