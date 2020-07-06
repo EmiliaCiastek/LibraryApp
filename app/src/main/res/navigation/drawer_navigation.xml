@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_navigation"
-    app:startDestination="@+id/nav_my_library">
+    app:startDestination="@+id/nav_user_library">
 
     <fragment
-        android:id="@+id/nav_my_library"
+        android:id="@+id/nav_user_library"
         android:name="com.ciastek.library.user.UserLibraryFragment"
         android:label="@string/my_books"
         tools:layout="@layout/fragment_user_library"/>
 
     <fragment
-        android:id="@+id/nav_library"
+        android:id="@+id/nav_remote_library"
         android:name="com.ciastek.library.remote.RemoteLibraryFragment"
         android:label="@string/remote_library"
         tools:layout="@layout/fragment_remote_library">

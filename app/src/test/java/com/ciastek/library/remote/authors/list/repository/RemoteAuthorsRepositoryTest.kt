@@ -15,11 +15,11 @@ internal class RemoteAuthorsRepositoryTest {
 
     private val authorsService: RemoteAuthorsService = mock()
     private val scheduler = Schedulers.trampoline()
-    private val fakeAuthors = listOf(Author("Tess", "Gerritsen", 1, 10),
-                                     Author("John", "Green", 2, 3),
-                                     Author("Jennifer", "Niven", 3, 1),
-                                     Author("George R.R.", "Martin", 4, 5),
-                                     Author("Robert C.", "Martin", 5, 3))
+    private val fakeAuthors = listOf(Author("Tess", "Gerritsen", 1),
+                                     Author("John", "Green", 2),
+                                     Author("Jennifer", "Niven", 3),
+                                     Author("George R.R.", "Martin", 4),
+                                     Author("Robert C.", "Martin", 5))
 
     @BeforeEach
     fun setUp() {

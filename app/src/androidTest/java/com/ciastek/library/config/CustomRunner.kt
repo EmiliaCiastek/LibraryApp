@@ -1,4 +1,4 @@
-package com.ciastek.library.view.config
+package com.ciastek.library.config
 
 import android.app.Application
 import android.app.Instrumentation

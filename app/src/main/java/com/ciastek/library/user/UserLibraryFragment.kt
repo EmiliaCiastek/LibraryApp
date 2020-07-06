@@ -21,6 +21,6 @@ class UserLibraryFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        myLibraryBottonNav.setupWithNavController(requireActivity().findNavController(R.id.my_library_nav_host_fragment))
+        userLibraryBottomNav.setupWithNavController(requireActivity().findNavController(R.id.my_library_nav_host_fragment))
     }
 }

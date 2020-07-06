@@ -1,4 +1,4 @@
-package com.ciastek.library.view.config
+package com.ciastek.library.config
 
 import com.ciastek.library.LibraryApp
 import com.ciastek.library.di.components.AppComponent
@@ -9,6 +9,7 @@ class TestLibraryApp : LibraryApp() {
     override fun createAppComponent(): AppComponent =
             DaggerAppComponent.builder()
                     .appModule(AppModule(this))
-                    .databaseModule(TestDataBaseModule())
+                    .databaseModule(TestDatabaseModule())
+                    .networkModule(TestNetworkModule())
                     .build()
 }

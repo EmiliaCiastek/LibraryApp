@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Properties
 
 @Module
-class NetworkModule {
+open class NetworkModule {
 
     @Provides
     fun provideRetrofit(context: Context): Retrofit =
@@ -23,11 +23,11 @@ class NetworkModule {
             .build()
 
     @Provides
-    fun provideAuthorsService(retrofit: Retrofit): RemoteAuthorsService =
+    internal open fun provideAuthorsService(retrofit: Retrofit): RemoteAuthorsService =
             retrofit.create(RemoteAuthorsService::class.java)
 
     @Provides
-    fun provideBooksService(retrofit: Retrofit): RemoteBooksService =
+    internal open fun provideBooksService(retrofit: Retrofit): RemoteBooksService =
             retrofit.create(RemoteBooksService::class.java)
 
     private fun getApiUrl(context: Context): String {
