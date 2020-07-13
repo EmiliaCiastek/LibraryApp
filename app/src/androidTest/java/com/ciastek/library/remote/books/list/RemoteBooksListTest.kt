@@ -1,4 +1,4 @@
-package com.ciastek.library.remote.books
+package com.ciastek.library.remote.books.list
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
@@ -6,6 +6,7 @@ import com.ciastek.library.MainActivity
 import com.ciastek.library.R
 import com.ciastek.library.common.BottomBarPage
 import com.ciastek.library.common.DrawerPage
+import com.ciastek.library.config.FakeRemoteBookService
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -18,6 +19,7 @@ class RemoteBooksListTest {
     private val bottomBarPage = BottomBarPage()
     private val bottomBarButtons = listOf(R.id.nav_books, R.id.nav_authors)
     private val booksListPage = RemoteBooksListPage()
+    private val fakeRemoteBookService = FakeRemoteBookService()
 
     @Rule
     @JvmField
@@ -38,6 +40,15 @@ class RemoteBooksListTest {
 
     @Test
     fun shouldDisplayBooksList() {
-        booksListPage.verifyBookVisibleOnList("Effective Java", "Joshua Bloch")
+        fakeRemoteBookService.mockBooks.forEach {
+            booksListPage.verifyBookVisibleOnList(it.title, it.author)
+        }
+    }
+
+    @Test
+    fun shouldOpenBookDetailsAfterClick() {
+        val book = fakeRemoteBookService.bookWithoutDescription
+        booksListPage.openBookDetails(book.title, book.author)
+        booksListPage.verifyBookDetailsVisible()
     }
 }

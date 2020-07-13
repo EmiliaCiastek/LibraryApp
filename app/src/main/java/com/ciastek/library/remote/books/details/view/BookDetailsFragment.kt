@@ -66,7 +66,7 @@ class BookDetailsFragment : Fragment() {
     private fun BookDetailsView.show() {
         book_title.text = title
         author_name.text = author
-        ratingBar.rating = rating.toFloat()
+        book_rate.rating = rating.toFloat()
         favourite_button.isChecked = isFavourite
         if(description.isNotEmpty()) {
             book_description.text = description
