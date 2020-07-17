@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.ciastek.library.newlayout.SettingsFragment"
+        android:name="com.ciastek.library.settings.SettingsFragment"
         android:label="@string/action_settings"
         tools:layout="@layout/fragment_settings" />
 

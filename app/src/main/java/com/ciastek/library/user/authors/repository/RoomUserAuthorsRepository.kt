@@ -20,4 +20,9 @@ class RoomUserAuthorsRepository @Inject constructor(private val authorDao: Autho
     override fun removeAuthor(author: AuthorEntity) =
             authorDao.deleteAuthor(author)
                     .subscribeOn(backgroundScheduler)
+
+    override fun isAuthorInFavourites(authorId: Long): Single<Boolean> =
+            authorDao.countAuthor(authorId)
+                    .map { it > 0 }
+                    .subscribeOn(backgroundScheduler)
 }

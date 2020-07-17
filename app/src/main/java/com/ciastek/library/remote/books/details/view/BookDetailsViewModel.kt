@@ -33,7 +33,7 @@ class BookDetailsViewModel(private val bookDetailsRepository: BookDetailsReposit
         bookDetailsRepository.getBook(bookId)
                 .zipWith(userBookRepository.isBookInFavourites(bookId),
                          BiFunction<BookDetails, Boolean, Pair<BookDetails, Boolean>>
-                         { t1, t2 -> Pair(t1, t2) }
+                         { bookDetails, isInFavourites -> Pair(bookDetails, isInFavourites) }
                 )
                 .observeOn(uiScheduler)
                 .subscribe({

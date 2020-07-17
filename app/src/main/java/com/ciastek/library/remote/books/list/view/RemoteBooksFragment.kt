@@ -13,7 +13,7 @@ import com.ciastek.library.common.books.BooksAdapter
 import com.ciastek.library.common.books.BookModel
 import com.ciastek.library.remote.RemoteLibraryFragmentDirections.Companion.actionShowRemoteBookDetails
 import com.ciastek.library.remote.books.list.di.BooksListComponent
-import com.ciastek.library.showErrorMessage
+import com.ciastek.library.common.showErrorMessage
 import kotlinx.android.synthetic.main.fragment_remote_books.refreshLayout
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_remote_books.books_list as booksList

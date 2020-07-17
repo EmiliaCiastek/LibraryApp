@@ -18,7 +18,7 @@ import com.ciastek.library.remote.RemoteLibraryFragmentDirections
 import com.ciastek.library.remote.authors.details.di.AuthorDetailsComponent
 import com.ciastek.library.common.books.BookModel
 import com.ciastek.library.common.books.BooksAdapter
-import com.ciastek.library.showErrorMessage
+import com.ciastek.library.common.showErrorMessage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.author_details_fragment.*
 import javax.inject.Inject
@@ -82,6 +82,7 @@ class AuthorDetailsFragment : Fragment() {
         showGenres()
         showDescription()
         showPhoto()
+        author_favourite_button.isChecked = isFavourite
     }
 
     private fun AuthorDetailsView.showBooks() {

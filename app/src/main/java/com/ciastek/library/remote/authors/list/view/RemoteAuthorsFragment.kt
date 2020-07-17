@@ -13,7 +13,7 @@ import com.ciastek.library.common.authors.AuthorModel
 import com.ciastek.library.common.authors.AuthorsAdapter
 import com.ciastek.library.remote.RemoteLibraryFragmentDirections.Companion.actionShowRemoteAuthorDetails
 import com.ciastek.library.remote.authors.list.di.AuthorsListComponent
-import com.ciastek.library.showErrorMessage
+import com.ciastek.library.common.showErrorMessage
 import kotlinx.android.synthetic.main.fragment_remote_authors.refreshLayout
 import kotlinx.android.synthetic.main.fragment_remote_authors.authorsList
 import javax.inject.Inject

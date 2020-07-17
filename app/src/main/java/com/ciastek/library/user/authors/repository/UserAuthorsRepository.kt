@@ -10,4 +10,6 @@ interface UserAuthorsRepository {
     fun addAuthor(author: AuthorEntity): Completable
 
     fun removeAuthor(author: AuthorEntity): Completable
+
+    fun isAuthorInFavourites(authorId: Long): Single<Boolean>
 }

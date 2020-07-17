@@ -1,4 +1,4 @@
-package com.ciastek.library.newlayout
+package com.ciastek.library.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater

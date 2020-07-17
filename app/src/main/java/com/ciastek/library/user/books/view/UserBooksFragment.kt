@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciastek.library.R
 import com.ciastek.library.common.books.BookModel
 import com.ciastek.library.common.books.BooksAdapter
-import com.ciastek.library.showErrorMessage
+import com.ciastek.library.common.showErrorMessage
 import com.ciastek.library.user.books.di.UserBooksComponent
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_user_books.user_books_list as userBooksList

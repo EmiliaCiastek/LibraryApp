@@ -13,6 +13,9 @@ interface AuthorDao {
     @Query("SELECT * FROM author")
     fun getAllAuthors(): Single<List<AuthorEntity>>
 
+    @Query("SELECT count(id) FROM author WHERE id = :id")
+    fun countAuthor(id: Long): Single<Int>
+
     @Insert
     fun insertAuthor(author: AuthorEntity): Completable
 

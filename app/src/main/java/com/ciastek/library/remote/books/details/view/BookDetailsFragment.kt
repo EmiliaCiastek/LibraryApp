@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.ciastek.library.R
 import com.ciastek.library.remote.books.details.di.BookDetailsComponent
-import com.ciastek.library.showErrorMessage
+import com.ciastek.library.common.showErrorMessage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_book_details.*
 import javax.inject.Inject

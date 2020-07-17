@@ -12,39 +12,40 @@ import com.ciastek.library.user.authors.repository.AuthorEntity
 import com.ciastek.library.user.authors.repository.UserAuthorsRepository
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.BiFunction
 
 class AuthorDetailsViewModel(private val authorDetailsRepository: AuthorDetailsRepository,
                              private val userAuthorsRepository: UserAuthorsRepository,
                              @UiScheduler private val uiScheduler: Scheduler) : ViewModel() {
 
     private val disposable = CompositeDisposable()
-    private val mutableAuthorDetails: MutableLiveData<AuthorDetails> = MutableLiveData()
+    private val mutableAuthorDetails: MutableLiveData<Pair<AuthorDetails, Boolean>> = MutableLiveData()
     val authorDetails: LiveData<AuthorDetailsView> = Transformations.map(mutableAuthorDetails) {
-        AuthorDetailsView(it.id,
-                          it.name,
-                          it.lastName,
-                          it.birthDate,
-                          it.deathDate,
-                          it.website,
-                          it.genres,
-                          it.photoUrl,
-                          it.description,
-                          it.books.map { book ->
-                              BookModel(book.id!!,
-                                        book.title,
-                                        "")
-                          }
-        )
+        AuthorDetailsView(it.first.id,
+                          it.first.name,
+                          it.first.lastName,
+                          it.first.birthDate,
+                          it.first.deathDate,
+                          it.first.website,
+                          it.first.genres,
+                          it.first.photoUrl,
+                          it.first.description,
+                          it.first.books.map { book -> BookModel(book.id!!, book.title, "") },
+                          it.second)
     }
 
     fun getAuthorDetails(authorId: Long) {
         authorDetailsRepository.getAuthor(authorId)
+                .zipWith(userAuthorsRepository.isAuthorInFavourites(authorId),
+                         BiFunction<AuthorDetails, Boolean, Pair<AuthorDetails, Boolean>>
+                         { authorDetails, isInFavourites -> Pair(authorDetails, isInFavourites) }
+                )
                 .observeOn(uiScheduler)
                 .subscribe({
                                mutableAuthorDetails.value = it
                            },
                            {
-                               mutableAuthorDetails.value = AuthorDetails.empty()
+                               mutableAuthorDetails.value = Pair(AuthorDetails.empty(), false)
                            })
                 .apply {
                     disposable.add(this)
@@ -58,9 +59,13 @@ class AuthorDetailsViewModel(private val authorDetailsRepository: AuthorDetailsR
     }
 
     fun addAuthorToUserLibrary() {
-        mutableAuthorDetails.value?.let {
+        mutableAuthorDetails.value?.first?.let {
             if (it.isEmpty().not()) {
-                userAuthorsRepository.addAuthor(it.toAuthorEntity())
+                userAuthorsRepository.isAuthorInFavourites(it.id)
+                        .filter { isInUserLibrary -> isInUserLibrary.not() }
+                        .flatMapCompletable { _ ->
+                            userAuthorsRepository.addAuthor(it.toAuthorEntity())
+                        }
                         .observeOn(uiScheduler)
                         .subscribe {}
                         .apply {
@@ -72,8 +77,8 @@ class AuthorDetailsViewModel(private val authorDetailsRepository: AuthorDetailsR
 
     fun removeAuthorFromUserLibrary() {
         mutableAuthorDetails.value?.let {
-            if (it.isEmpty().not()) {
-                userAuthorsRepository.removeAuthor(it.toAuthorEntity())
+            if (it.first.isEmpty().not()) {
+                userAuthorsRepository.removeAuthor(it.first.toAuthorEntity())
                         .observeOn(uiScheduler)
                         .subscribe {}
                         .apply {

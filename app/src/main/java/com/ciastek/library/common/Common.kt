@@ -1,7 +1,8 @@
-package com.ciastek.library
+package com.ciastek.library.common
 
 import android.content.Context
 import android.widget.Toast
+import com.ciastek.library.R
 
 fun showErrorMessage(context: Context?, message: String? = null) {
     context?.let {

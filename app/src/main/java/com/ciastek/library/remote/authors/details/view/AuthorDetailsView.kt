@@ -11,7 +11,8 @@ data class AuthorDetailsView(val id: Long,
                              val genres: String,
                              val photoUrl: String,
                              val description: String,
-                             val books: List<BookModel>) {
+                             val books: List<BookModel>,
+                             val isFavourite: Boolean) {
 
     fun isEmpty() = id == -1L
 }
