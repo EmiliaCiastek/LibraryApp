@@ -23,6 +23,19 @@ class RemoteLibraryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        remoteBottomNav.setupWithNavController(requireActivity().findNavController(R.id.remote_nav_host_fragment))
+        remoteBottomNav.setupWithNavController(getBottomNavController())
+
+        add_new_button.setOnClickListener {
+            val action = when (getBottomNavController().currentDestination?.id) {
+                R.id.nav_books -> RemoteLibraryFragmentDirections.actionAddNewBook()
+                R.id.nav_authors -> RemoteLibraryFragmentDirections.actionAddNewAuthor()
+                else -> throw IllegalStateException("You shouldn't be here!")
+            }
+
+            requireActivity().findNavController(R.id.main_nav_host_fragment).navigate(action)
+        }
     }
+
+    private fun getBottomNavController() =
+            requireActivity().findNavController(R.id.remote_nav_host_fragment)
 }

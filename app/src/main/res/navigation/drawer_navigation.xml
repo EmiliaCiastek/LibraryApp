@@ -9,7 +9,7 @@
         android:id="@+id/nav_user_library"
         android:name="com.ciastek.library.user.UserLibraryFragment"
         android:label="@string/my_books"
-        tools:layout="@layout/fragment_user_library"/>
+        tools:layout="@layout/fragment_user_library" />
 
     <fragment
         android:id="@+id/nav_remote_library"
@@ -22,6 +22,12 @@
         <action
             android:id="@+id/action_show_remote_author_details"
             app:destination="@+id/author_details_fragment" />
+        <action
+            android:id="@+id/action_add_new_book"
+            app:destination="@+id/new_book_fragment" />
+        <action
+            android:id="@+id/action_add_new_author"
+            app:destination="@+id/new_author_fragment" />
     </fragment>
 
     <fragment
@@ -61,4 +67,16 @@
             android:id="@+id/action_show_remote_book_details"
             app:destination="@+id/book_details_fragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/new_book_fragment"
+        android:name="com.ciastek.library.remote.books.add.NewBookFragment"
+        android:label="@string/new_book_label"
+        tools:layout="@layout/fragment_new_book" />
+
+    <fragment
+        android:id="@+id/new_author_fragment"
+        android:name="com.ciastek.library.remote.authors.add.NewAuthorFragment"
+        android:label="@string/new_author_label"
+        tools:layout="@layout/fragment_new_author" />
 </navigation>

@@ -27,4 +27,9 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
+    <style name="FloatingActionButtonStyle" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:backgroundTint">@color/colorAccent</item>
+        <item name="tint">@color/colorWhite</item>
+    </style>
+
 </resources>
