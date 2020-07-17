@@ -14,6 +14,7 @@ import com.ciastek.library.common.books.BookModel
 import com.ciastek.library.remote.RemoteLibraryFragmentDirections.Companion.actionShowRemoteBookDetails
 import com.ciastek.library.remote.books.list.di.BooksListComponent
 import com.ciastek.library.showErrorMessage
+import kotlinx.android.synthetic.main.fragment_remote_books.refreshLayout
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_remote_books.books_list as booksList
 
@@ -46,12 +47,14 @@ class RemoteBooksFragment : Fragment() {
         }
 
         booksViewModel.books.observe(viewLifecycleOwner, Observer {
+            refreshLayout.isRefreshing = false
             booksAdapter.setBooks(it)
             if (it.isEmpty()) {
                 showErrorMessage(context)
-                //TODO: Add swipe up to refresh
             }
         })
+
+        refreshLayout.setOnRefreshListener { booksViewModel.fetchBooks() }
     }
 
     override fun onStart() {

@@ -14,7 +14,8 @@ import com.ciastek.library.common.authors.AuthorsAdapter
 import com.ciastek.library.remote.RemoteLibraryFragmentDirections.Companion.actionShowRemoteAuthorDetails
 import com.ciastek.library.remote.authors.list.di.AuthorsListComponent
 import com.ciastek.library.showErrorMessage
-import kotlinx.android.synthetic.main.fragment_remote_authors.*
+import kotlinx.android.synthetic.main.fragment_remote_authors.refreshLayout
+import kotlinx.android.synthetic.main.fragment_remote_authors.authorsList
 import javax.inject.Inject
 
 class RemoteAuthorsFragment : Fragment() {
@@ -44,11 +45,14 @@ class RemoteAuthorsFragment : Fragment() {
         }
 
         authorsViewModel.authors.observe(viewLifecycleOwner, Observer {
+            refreshLayout.isRefreshing = false
             authorsAdapter.setAuthors(it)
             if (it.isEmpty()) {
                 showErrorMessage(context)
             }
         })
+
+        refreshLayout.setOnRefreshListener { authorsViewModel.fetchAuthors() }
     }
 
     override fun onStart() {
