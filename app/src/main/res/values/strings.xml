@@ -33,7 +33,7 @@
     <string name="book_details">Book details</string>
     <string name="author_details">Author details</string>
     <string name="book_title_placeholder">Book title</string>
-    <string name="author_name_placeholder">Book Author</string>
+    <string name="author_name_placeholder">Book author</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="authors_books_header">All books:</string>
@@ -46,6 +46,10 @@
     <string name="book_description_placeholder">We don\'t have any information about this book.\n You can some information by editing book details.</string>
     <string name="new_book_label">New book</string>
     <string name="new_author_label">New author</string>
+    <string name="book_description_label">Description</string>
+    <string name="book_title_label">Title</string>
+    <string name="book_author_label">Author</string>
+    <string name="book_cover_url_label">Cover url</string>
 
     <string name="large_text">
         "Material is the metaphor."
