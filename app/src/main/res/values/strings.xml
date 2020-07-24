@@ -50,6 +50,8 @@
     <string name="book_title_label">Title</string>
     <string name="book_author_label">Author</string>
     <string name="book_cover_url_label">Cover url</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 
     <string name="large_text">
         "Material is the metaphor."

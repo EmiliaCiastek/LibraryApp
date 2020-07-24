@@ -3,6 +3,8 @@ package com.ciastek.library.remote.books.add
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -23,6 +25,12 @@ class NewBookFragment : Fragment() {
                       "Jennifer Niven",
                       "Harlan Coben")
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_new_book, container, false)
@@ -42,6 +50,12 @@ class NewBookFragment : Fragment() {
                 .apply {
                     disposable.add(this)
                 }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.new_book_menu, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onStop() {
