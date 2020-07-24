@@ -68,10 +68,10 @@
         android:id="@+id/book_cover_url_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/basic_margin"
         android:layout_marginStart="@dimen/basic_margin"
+        android:layout_marginTop="@dimen/basic_margin"
         android:layout_marginEnd="@dimen/basic_margin"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/book_cover_thumbnail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/book_description_layout">
 
@@ -82,5 +82,26 @@
             android:backgroundTint="@color/colorWhite"
             android:hint="@string/book_cover_url_label" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/book_cover_thumbnail"
+        android:layout_width="@dimen/thumbnail_size"
+        android:layout_height="@dimen/thumbnail_size"
+        android:src="@drawable/cover_placeholder"
+        android:layout_marginEnd="@dimen/basic_margin"
+        app:layout_constraintBottom_toBottomOf="@+id/book_cover_url_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/book_cover_url_layout" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

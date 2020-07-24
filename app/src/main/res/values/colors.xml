@@ -11,4 +11,6 @@
     <color name="colorBottomNavButtonInactive">#A1FFC400</color>
 
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="red">#F44336</color>
 </resources>
