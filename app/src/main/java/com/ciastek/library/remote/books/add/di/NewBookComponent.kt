@@ -5,7 +5,7 @@ import com.ciastek.library.LibraryApp
 import com.ciastek.library.remote.books.add.NewBookFragment
 import dagger.Subcomponent
 
-@Subcomponent(modules = [NewBookModule::class])
+@Subcomponent(modules = [NewBookModule::class, NewBookRxModule::class])
 interface NewBookComponent {
 
     fun inject(fragment: NewBookFragment)

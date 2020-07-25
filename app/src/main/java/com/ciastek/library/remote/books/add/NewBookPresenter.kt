@@ -5,6 +5,8 @@ import com.ciastek.library.common.StringProvider
 import com.ciastek.library.di.BackgroundScheduler
 import com.ciastek.library.di.UiScheduler
 import com.ciastek.library.remote.authors.list.repository.AuthorsRepository
+import com.ciastek.library.remote.books.add.BookState.CanceledState
+import com.ciastek.library.remote.books.add.BookState.EditedState
 import com.ciastek.library.remote.books.add.BookState.EmptyState
 import com.ciastek.library.remote.books.add.BookState.ErrorState
 import com.ciastek.library.remote.books.add.NewBookContract.Presenter
@@ -37,6 +39,16 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
         subscribeToDescriptionChangedIntent(view)
         subscribeToAuthorPickedIntent(view)
         subscribeToCoverUrlChangedIntent(view)
+        subscribeToCancelIntent(view)
+    }
+
+    private fun subscribeToCancelIntent(view: View) {
+        view.cancelFormIntent()
+                .observeOn(uiScheduler)
+                .subscribe {
+                    view.renderBookState(CanceledState)
+                }
+                .apply { disposable.add(this) }
     }
 
     private fun subscribeToTitleChangedIntent(view: View) {
@@ -86,8 +98,8 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
                        description: String? = null,
                        coverUrl: String? = null,
                        pickedAuthorPosition: Int? = null): BookState =
-            if (previousState is BookState.EditedState) {
-                BookState.EditedState(title ?: previousState.title,
+            if (previousState is EditedState) {
+                EditedState(title ?: previousState.title,
                                       description ?: previousState.description,
                                       coverUrl ?: previousState.coverUrl,
                                       pickedAuthorPosition
@@ -95,7 +107,7 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
                     states.add(this)
                 }
             } else {
-                BookState.EditedState(title ?: "",
+                EditedState(title ?: "",
                                       description ?: "",
                                       coverUrl ?: "",
                                       pickedAuthorPosition ?: 0).apply {

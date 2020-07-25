@@ -12,4 +12,6 @@ sealed class BookState {
                       val authorPickedPosition: Int) : BookState()
 
     object LoadingState : BookState()
+
+    object CanceledState: BookState()
 }

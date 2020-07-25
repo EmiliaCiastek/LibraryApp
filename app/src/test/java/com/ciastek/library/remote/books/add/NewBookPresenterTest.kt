@@ -41,6 +41,7 @@ internal class NewBookPresenterTest {
         whenever(view.titleChangedIntent()).thenReturn(Observable.empty())
         whenever(view.descriptionChangedIntent()).thenReturn(Observable.empty())
         whenever(view.coverUrlChangedIntent()).thenReturn(Observable.empty())
+        whenever(view.cancelFormIntent()).thenReturn(Observable.empty())
 
         presenter = NewBookPresenter(authorsRepository, stringProvider, scheduler, scheduler)
     }
@@ -206,5 +207,14 @@ internal class NewBookPresenterTest {
                                                            description = description,
                                                            coverUrl = coverUrl,
                                                            authorPickedPosition = newAuthorPosition))
+    }
+
+    @Test
+    fun rendersCanceledStateWhenCancelIntent() {
+        whenever(view.cancelFormIntent()).thenReturn(Observable.just(Unit))
+
+        presenter.bindIntents(view)
+
+        verify(view).renderBookState(BookState.CanceledState)
     }
 }
