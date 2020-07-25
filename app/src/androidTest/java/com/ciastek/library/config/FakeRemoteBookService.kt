@@ -1,8 +1,10 @@
 package com.ciastek.library.config
 
 import com.ciastek.library.remote.books.RemoteBooksService
+import com.ciastek.library.remote.books.add.NewBook
 import com.ciastek.library.remote.books.details.reporitory.BookDetails
 import com.ciastek.library.remote.books.list.repository.Book
+import io.reactivex.Completable
 import io.reactivex.Single
 
 class FakeRemoteBookService : RemoteBooksService {
@@ -37,4 +39,7 @@ class FakeRemoteBookService : RemoteBooksService {
                     mockBooks.find { it.id == id }
                             ?: BookDetails.empty()
             )
+
+    override fun addBook(book: NewBook): Completable =
+            Completable.complete()
 }

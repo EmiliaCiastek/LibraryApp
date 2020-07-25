@@ -14,4 +14,6 @@ sealed class BookState {
     object LoadingState : BookState()
 
     object CanceledState: BookState()
+
+    object SavedState: BookState()
 }

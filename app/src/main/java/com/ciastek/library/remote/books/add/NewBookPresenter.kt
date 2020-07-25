@@ -5,10 +5,12 @@ import com.ciastek.library.common.StringProvider
 import com.ciastek.library.di.BackgroundScheduler
 import com.ciastek.library.di.UiScheduler
 import com.ciastek.library.remote.authors.list.repository.AuthorsRepository
+import com.ciastek.library.remote.books.RemoteBooksService
 import com.ciastek.library.remote.books.add.BookState.CanceledState
 import com.ciastek.library.remote.books.add.BookState.EditedState
 import com.ciastek.library.remote.books.add.BookState.EmptyState
 import com.ciastek.library.remote.books.add.BookState.ErrorState
+import com.ciastek.library.remote.books.add.BookState.LoadingState
 import com.ciastek.library.remote.books.add.NewBookContract.Presenter
 import com.ciastek.library.remote.books.add.NewBookContract.View
 import io.reactivex.Scheduler
@@ -17,6 +19,7 @@ import javax.inject.Inject
 
 class NewBookPresenter @Inject constructor(private val authorsRepository: AuthorsRepository,
                                            private val stringProvider: StringProvider,
+                                           private val booksService: RemoteBooksService,
                                            @BackgroundScheduler private val backgroundScheduler: Scheduler,
                                            @UiScheduler private val uiScheduler: Scheduler) : Presenter {
 
@@ -28,7 +31,7 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
     private val states = mutableListOf<BookState>()
 
     override fun bindIntents(view: View) {
-        BookState.LoadingState.let {
+        LoadingState.let {
             states.add(it)
             view.renderBookState(it)
         }
@@ -40,16 +43,54 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
         subscribeToAuthorPickedIntent(view)
         subscribeToCoverUrlChangedIntent(view)
         subscribeToCancelIntent(view)
+        subscribeToSaveIntent(view)
     }
 
     private fun subscribeToCancelIntent(view: View) {
         view.cancelFormIntent()
                 .observeOn(uiScheduler)
                 .subscribe {
+                    states.add(CanceledState)
                     view.renderBookState(CanceledState)
                 }
                 .apply { disposable.add(this) }
     }
+
+    private fun subscribeToSaveIntent(view: View) {
+        view.saveFormIntent()
+                .observeOn(uiScheduler)
+                .subscribe {
+                    states.add(LoadingState)
+                    view.renderBookState(LoadingState)
+                    booksService.addBook(getLastEditedBookState().toBook())
+                            .subscribeOn(backgroundScheduler)
+                            .observeOn(uiScheduler)
+                            .subscribe({
+                                           states.add(BookState.SavedState)
+                                           view.renderBookState(BookState.SavedState)
+                                       },
+                                       { exception ->
+                                           val errorState = ErrorState(exception.message.toString())
+                                           states.add(errorState)
+                                           view.renderBookState(errorState)
+                                       })
+                            .apply { disposable.add(this) }
+                }
+                .apply { disposable.add(this) }
+    }
+
+    private fun getLastEditedBookState(): EditedState =
+            states.findLast { it is EditedState } as EditedState
+
+    private fun EditedState.toBook() =
+            NewBook(title = title,
+                    authorId = findAuthor(authorPickedPosition),
+                    description = description,
+                    coverUrl = coverUrl,
+                    rating = 0.0)
+
+    private fun findAuthor(authorPickedPosition: Int): Long =
+            authors.getValue(authorNames[authorPickedPosition])
 
     private fun subscribeToTitleChangedIntent(view: View) {
         view.titleChangedIntent()
@@ -87,7 +128,10 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
     private fun subscribeToAuthorPickedIntent(view: View) {
         view.authorPickedIntent()
                 .observeOn(uiScheduler)
-                .subscribe { view.renderBookState(reduce(states.last(), pickedAuthorPosition = it)) }
+                .subscribe {
+                    view.renderBookState(reduce(states.last(),
+                                                pickedAuthorPosition = it))
+                }
                 .apply {
                     disposable.add(this)
                 }
@@ -100,17 +144,17 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
                        pickedAuthorPosition: Int? = null): BookState =
             if (previousState is EditedState) {
                 EditedState(title ?: previousState.title,
-                                      description ?: previousState.description,
-                                      coverUrl ?: previousState.coverUrl,
-                                      pickedAuthorPosition
-                                              ?: previousState.authorPickedPosition).apply {
+                            description ?: previousState.description,
+                            coverUrl ?: previousState.coverUrl,
+                            pickedAuthorPosition
+                                    ?: previousState.authorPickedPosition).apply {
                     states.add(this)
                 }
             } else {
                 EditedState(title ?: "",
-                                      description ?: "",
-                                      coverUrl ?: "",
-                                      pickedAuthorPosition ?: 0).apply {
+                            description ?: "",
+                            coverUrl ?: "",
+                            pickedAuthorPosition ?: 0).apply {
                     states.add(this)
                 }
             }

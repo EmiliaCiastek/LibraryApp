@@ -10,15 +10,19 @@ import javax.inject.Qualifier
 class NewBookRxModule {
 
     private val cancelButtonSubject = PublishSubject.create<Unit>()
+    private val saveButtonSubject = PublishSubject.create<Unit>()
 
     @Provides
     @CancelButton
     fun provideCancelButtonSubject(): Subject<Unit> = cancelButtonSubject
 
-//    @Provides
-//    @CancelButton
-//    fun provideCancelButtonObservable() = cancelButtonSubject.hide()
+    @Provides
+    @SaveButton
+    fun provideSaveButtonSubject(): Subject<Unit> = saveButtonSubject
 
     @Qualifier
     annotation class CancelButton
+
+    @Qualifier
+    annotation class SaveButton
 }

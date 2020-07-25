@@ -24,5 +24,7 @@ interface NewBookContract {
         fun descriptionChangedIntent(): Observable<String>
 
         fun cancelFormIntent(): Observable<Unit>
+
+        fun saveFormIntent(): Observable<Unit>
     }
 }

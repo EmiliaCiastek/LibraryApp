@@ -3,10 +3,12 @@ package com.ciastek.library.remote.books.add
 import com.ciastek.library.common.StringProvider
 import com.ciastek.library.remote.authors.list.repository.Author
 import com.ciastek.library.remote.authors.list.repository.AuthorsRepository
+import com.ciastek.library.remote.books.RemoteBooksService
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -22,6 +24,8 @@ internal class NewBookPresenterTest {
     private val scheduler = Schedulers.trampoline()
     private val authorsRepository: AuthorsRepository = mock()
     private val stringProvider: StringProvider = mock()
+    private val booksService: RemoteBooksService = mock()
+    private val errorMessage = "Error!!!!"
     private val mockString = "mock string"
     private val title = "book title"
     private val description = "book description"
@@ -42,8 +46,9 @@ internal class NewBookPresenterTest {
         whenever(view.descriptionChangedIntent()).thenReturn(Observable.empty())
         whenever(view.coverUrlChangedIntent()).thenReturn(Observable.empty())
         whenever(view.cancelFormIntent()).thenReturn(Observable.empty())
+        whenever(view.saveFormIntent()).thenReturn(Observable.empty())
 
-        presenter = NewBookPresenter(authorsRepository, stringProvider, scheduler, scheduler)
+        presenter = NewBookPresenter(authorsRepository, stringProvider, booksService, scheduler, scheduler)
     }
 
     @Test
@@ -55,7 +60,6 @@ internal class NewBookPresenterTest {
 
     @Test
     fun rendersErrorStateWhenErrorDuringFetchingAuthors() {
-        val errorMessage = "Error!!!!"
         whenever(authorsRepository.getAuthors()).thenReturn(Single.error(Exception(errorMessage)))
 
         presenter.bindIntents(view)
@@ -216,5 +220,33 @@ internal class NewBookPresenterTest {
         presenter.bindIntents(view)
 
         verify(view).renderBookState(BookState.CanceledState)
+    }
+
+    @Test
+    fun savesDataWhenSaveIntent() {
+        whenever(view.coverUrlChangedIntent()).thenReturn(Observable.just(coverUrl))
+        whenever(view.descriptionChangedIntent()).thenReturn(Observable.just(description))
+        whenever(view.titleChangedIntent()).thenReturn(Observable.just(title))
+        whenever(view.authorPickedIntent()).thenReturn(Observable.just(authorPosition))
+        whenever(view.saveFormIntent()).thenReturn(Observable.just(Unit))
+        whenever(booksService.addBook(any())).thenReturn(Completable.complete())
+
+        presenter.bindIntents(view)
+
+        verify(view).renderBookState(BookState.SavedState)
+    }
+
+    @Test
+    fun renderErrorWhenSavingData() {
+        whenever(view.coverUrlChangedIntent()).thenReturn(Observable.just(coverUrl))
+        whenever(view.descriptionChangedIntent()).thenReturn(Observable.just(description))
+        whenever(view.titleChangedIntent()).thenReturn(Observable.just(title))
+        whenever(view.authorPickedIntent()).thenReturn(Observable.just(authorPosition))
+        whenever(view.saveFormIntent()).thenReturn(Observable.just(Unit))
+        whenever(booksService.addBook(any())).thenReturn(Completable.error(Exception(errorMessage)))
+
+        presenter.bindIntents(view)
+
+        verify(view).renderBookState(BookState.ErrorState(errorMessage))
     }
 }

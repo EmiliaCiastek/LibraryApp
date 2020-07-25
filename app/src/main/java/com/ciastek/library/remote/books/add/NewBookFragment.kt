@@ -1,7 +1,6 @@
 package com.ciastek.library.remote.books.add
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,6 +15,7 @@ import com.ciastek.library.common.showErrorMessage
 import com.ciastek.library.remote.books.add.BookState.*
 import com.ciastek.library.remote.books.add.di.NewBookComponent
 import com.ciastek.library.remote.books.add.di.NewBookRxModule.CancelButton
+import com.ciastek.library.remote.books.add.di.NewBookRxModule.SaveButton
 import com.google.android.material.textfield.TextInputEditText
 import com.jakewharton.rxbinding3.widget.selectionEvents
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -41,10 +41,12 @@ class NewBookFragment : Fragment(), NewBookContract.View {
 
     @Inject
     lateinit var presenter: NewBookContract.Presenter
-
     @Inject
     @CancelButton
     lateinit var cancelButtonSubject: Subject<Unit>
+    @Inject
+    @SaveButton
+    lateinit var saveButtonSubject: Subject<Unit>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +76,10 @@ class NewBookFragment : Fragment(), NewBookContract.View {
                 cancelButtonSubject.onNext(Unit)
                 return true
             }
+            R.id.save -> {
+                saveButtonSubject.onNext(Unit)
+                return true
+            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -100,7 +106,7 @@ class NewBookFragment : Fragment(), NewBookContract.View {
                                                state.description,
                                                state.coverUrl,
                                                state.authorPickedPosition)
-            is CanceledState -> closeForm()
+            is CanceledState, SavedState -> closeForm()
         }
     }
 
@@ -133,7 +139,9 @@ class NewBookFragment : Fragment(), NewBookContract.View {
 
     override fun cancelFormIntent(): Observable<Unit> =
             cancelButtonSubject.hide()
-                    .doOnNext { Log.d("Lalalala", "cancel clicked!!!!") }
+
+    override fun saveFormIntent(): Observable<Unit> =
+            saveButtonSubject.hide()
 
     private fun injectDependencies() {
         NewBookComponent.create(requireContext())
