@@ -6,6 +6,7 @@ TODO:
 - [ ] Example of MVI pattern
 - [ ] Authentication with Firebase  
 - [ ] Add error handling for communication with backend
+- [ ] Add custom view for choosing author in new book form (replacing spinner)
 
 ## Dependencies: 
 * [Backend library api](https://github.com/EmiliaCiastek/LibraryAppBackend)

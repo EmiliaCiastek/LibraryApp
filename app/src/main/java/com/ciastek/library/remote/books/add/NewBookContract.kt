@@ -18,5 +18,9 @@ interface NewBookContract {
         fun authorPickedIntent(): Observable<Int>
 
         fun coverUrlChangedIntent(): Observable<String>
+
+        fun titleChangedIntent(): Observable<String>
+
+        fun descriptionChangedIntent(): Observable<String>
     }
 }

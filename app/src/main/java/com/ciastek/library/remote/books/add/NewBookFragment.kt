@@ -1,7 +1,6 @@
 package com.ciastek.library.remote.books.add
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,17 +12,27 @@ import com.ciastek.library.R
 import com.ciastek.library.common.showErrorMessage
 import com.ciastek.library.remote.books.add.BookState.*
 import com.ciastek.library.remote.books.add.di.NewBookComponent
+import com.google.android.material.textfield.TextInputEditText
 import com.jakewharton.rxbinding3.widget.selectionEvents
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.fragment_new_book.*
-import kotlinx.android.synthetic.main.fragment_new_book.book_description
-import kotlinx.android.synthetic.main.fragment_new_book.book_title
+import kotlinx.android.synthetic.main.fragment_new_book.book_cover_thumbnail as coverThumbnail
+import kotlinx.android.synthetic.main.fragment_new_book.book_description as bookDescription
+import kotlinx.android.synthetic.main.fragment_new_book.book_title as bookTitle
+import kotlinx.android.synthetic.main.fragment_new_book.book_cover_url as bookCoverUrl
+import kotlinx.android.synthetic.main.fragment_new_book.author_spinner as authorSpinner
+import kotlinx.android.synthetic.main.fragment_new_book.progress
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class NewBookFragment : Fragment(), NewBookContract.View {
+
+    companion object {
+
+        private const val DEBOUNCE_TIME = 500L
+        private const val COVER_TAG = "COVER"
+    }
 
     @Inject
     lateinit var presenter: NewBookContract.Presenter
@@ -72,21 +81,39 @@ class NewBookFragment : Fragment(), NewBookContract.View {
             is EmptyState -> renderEmptyBook(state.authors)
             is ErrorState -> renderErrorState(state.message)
             is LoadingState -> renderLoadingSate()
-            is EditedState -> renderEditedBook(state.title, state.description, state.coverUrl, state.authorPickedPosition)
+            is EditedState -> renderEditedBook(state.title,
+                                               state.description,
+                                               state.coverUrl,
+                                               state.authorPickedPosition)
         }
     }
 
     override fun authorPickedIntent(): Observable<Int> =
-        author_spinner.selectionEvents()
-                .skipInitialValue()
-                .map { it.view.selectedItemPosition }
+            authorSpinner.selectionEvents()
+                    .skipInitialValue()
+                    .map { it.view.selectedItemPosition }
 
     override fun coverUrlChangedIntent(): Observable<String> =
-        book_cover_url.textChanges()
-                .skipInitialValue()
-                .map { it.toString() }
-                .debounce(500, TimeUnit.MILLISECONDS)
-                .doOnNext { Log.d("Cover:", it.toString()) }
+            bookCoverUrl.textChanges()
+                    .skipInitialValue()
+                    .map { it.toString() }
+                    .debounce(DEBOUNCE_TIME, TimeUnit.MILLISECONDS)
+                    .distinctUntilChanged()
+
+    override fun titleChangedIntent(): Observable<String> =
+            bookTitle.textChanges()
+                    .skipInitialValue()
+                    .map { it.toString() }
+                    .debounce(DEBOUNCE_TIME, TimeUnit.MILLISECONDS)
+                    .distinctUntilChanged()
+
+
+    override fun descriptionChangedIntent(): Observable<String> =
+            bookDescription.textChanges()
+                    .skipInitialValue()
+                    .map { it.toString() }
+                    .debounce(DEBOUNCE_TIME, TimeUnit.MILLISECONDS)
+                    .distinctUntilChanged()
 
     private fun renderErrorState(message: String) {
         progress.visibility = View.GONE
@@ -101,39 +128,37 @@ class NewBookFragment : Fragment(), NewBookContract.View {
                                                android.R.layout.simple_spinner_item,
                                                authors)
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        author_spinner.adapter = dataAdapter
+        authorSpinner.adapter = dataAdapter
     }
 
     private fun renderEditedBook(title: String,
                                  description: String,
                                  coverUrl: String,
                                  authorPickedPosition: Int) {
-        if(author_spinner.selectedItemPosition != authorPickedPosition) {
-            author_spinner.setSelection(authorPickedPosition)
-        }
+        authorSpinner.setSelection(authorPickedPosition)
+        bookTitle.updateText(title)
+        bookDescription.updateText(description)
+        bookCoverUrl.updateText(coverUrl)
+        updateCoverThumbnail(coverUrl)
+    }
 
-        if(book_title.text.toString() != title) {
-            book_title.setText(title)
-        }
-
-        if(book_description.text.toString() != description) {
-            book_description.setText(description)
-        }
-
-        if(book_cover_url.text.toString() != coverUrl) {
-            book_cover_url.setText(coverUrl)
-        }
-
-        if(coverUrl.isNotEmpty()) {
+    private fun updateCoverThumbnail(coverUrl: String) {
+        if (coverUrl.isNotEmpty()) {
             Picasso.get()
                     .load(coverUrl)
-                    .placeholder(R.drawable.cover_placeholder)
+                    .tag(COVER_TAG)
+                    .placeholder(coverThumbnail.drawable)
                     .error(R.drawable.ic_sad)
-                    .into(book_cover_thumbnail)
+                    .into(coverThumbnail)
         }
     }
 
     private fun renderLoadingSate() {
         progress.visibility = View.VISIBLE
+    }
+
+    private fun TextInputEditText.updateText(text: String) {
+        setText(text)
+        setSelection(text.length)
     }
 }
