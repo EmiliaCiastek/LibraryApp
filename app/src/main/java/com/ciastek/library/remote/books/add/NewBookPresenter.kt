@@ -107,9 +107,7 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
         authorsRepository.getAuthors()
                 .map {
                     it.map { author ->
-                        Pair(stringProvider.getString(R.string.author_data,
-                                                      author.lastName,
-                                                      author.name), author.id)
+                        Pair("${author.lastName} ${author.name}", author.id)
                     }
                 }
                 .map { it.toMap() }
