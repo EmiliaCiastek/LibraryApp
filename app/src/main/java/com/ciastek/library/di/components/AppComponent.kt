@@ -4,6 +4,7 @@ import com.ciastek.library.di.modules.AppModule
 import com.ciastek.library.di.modules.DatabaseModule
 import com.ciastek.library.di.modules.NetworkModule
 import com.ciastek.library.di.modules.RxModule
+import com.ciastek.library.di.modules.StatesModule
 import com.ciastek.library.remote.authors.details.di.AuthorDetailsComponent
 import com.ciastek.library.remote.authors.list.di.AuthorsListComponent
 import com.ciastek.library.remote.books.add.di.NewBookComponent
@@ -15,7 +16,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, DatabaseModule::class, RxModule::class, NetworkModule::class])
+@Component(modules = [AppModule::class, DatabaseModule::class, RxModule::class, NetworkModule::class, StatesModule::class])
 interface AppComponent {
 
     fun createAuthorsListComponent(): AuthorsListComponent

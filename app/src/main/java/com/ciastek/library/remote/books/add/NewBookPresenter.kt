@@ -1,6 +1,7 @@
 package com.ciastek.library.remote.books.add
 
 import com.ciastek.library.R
+import com.ciastek.library.common.StateRepository
 import com.ciastek.library.common.StringProvider
 import com.ciastek.library.di.BackgroundScheduler
 import com.ciastek.library.di.UiScheduler
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class NewBookPresenter @Inject constructor(private val authorsRepository: AuthorsRepository,
                                            private val stringProvider: StringProvider,
                                            private val booksService: RemoteBooksService,
+                                           private val stateRepository: StateRepository<BookState>,
                                            @BackgroundScheduler private val backgroundScheduler: Scheduler,
                                            @UiScheduler private val uiScheduler: Scheduler) : Presenter {
 
@@ -28,15 +30,17 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
     private var authors = mapOf<String, Long>()
     private val authorNames = mutableListOf(stringProvider.getString(R.string.no_author))
 
-    private val states = mutableListOf<BookState>()
-
     override fun bindIntents(view: View) {
-        LoadingState.let {
-            states.add(it)
-            view.renderBookState(it)
-        }
+        if (stateRepository.isEmpty().not()) {
+            recreateState(view)
+        } else {
+            LoadingState.let {
+                stateRepository.add(it)
+                view.renderBookState(it)
+            }
 
-        fetchAuthors(view)
+            fetchAuthors(view)
+        }
 
         subscribeToTitleChangedIntent(view)
         subscribeToDescriptionChangedIntent(view)
@@ -46,11 +50,22 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
         subscribeToSaveIntent(view)
     }
 
+    private fun recreateState(view: View) {
+        when(val lastState = stateRepository.getLast()){
+            is EmptyState -> view.renderBookState(lastState)
+            is EditedState -> {
+                val lastEmpty = stateRepository.findLast { it is EmptyState }!!
+                view.renderBookState(lastEmpty)
+                view.renderBookState(lastState)
+            }
+        }
+    }
+
     private fun subscribeToCancelIntent(view: View) {
         view.cancelFormIntent()
                 .observeOn(uiScheduler)
                 .subscribe {
-                    states.add(CanceledState)
+                    stateRepository.clear()
                     view.renderBookState(CanceledState)
                 }
                 .apply { disposable.add(this) }
@@ -60,18 +75,18 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
         view.saveFormIntent()
                 .observeOn(uiScheduler)
                 .subscribe {
-                    states.add(LoadingState)
+                    stateRepository.add(LoadingState)
                     view.renderBookState(LoadingState)
                     booksService.addBook(getLastEditedBookState().toBook())
                             .subscribeOn(backgroundScheduler)
                             .observeOn(uiScheduler)
                             .subscribe({
-                                           states.add(BookState.SavedState)
+                                           stateRepository.clear()
                                            view.renderBookState(BookState.SavedState)
                                        },
                                        { exception ->
                                            val errorState = ErrorState(exception.message.toString())
-                                           states.add(errorState)
+                                           stateRepository.add(errorState)
                                            view.renderBookState(errorState)
                                        })
                             .apply { disposable.add(this) }
@@ -80,7 +95,7 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
     }
 
     private fun getLastEditedBookState(): EditedState =
-            states.findLast { it is EditedState } as EditedState
+            stateRepository.findLast { it is EditedState } as EditedState
 
     private fun EditedState.toBook() =
             NewBook(title = title,
@@ -96,7 +111,7 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
         view.titleChangedIntent()
                 .observeOn(uiScheduler)
                 .subscribe {
-                    view.renderBookState(reduce(states.last(), title = it))
+                    view.renderBookState(reduce(stateRepository.getLast(), title = it))
                 }
                 .apply {
                     disposable.add(this)
@@ -107,7 +122,7 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
         view.descriptionChangedIntent()
                 .observeOn(uiScheduler)
                 .subscribe {
-                    view.renderBookState(reduce(states.last(), description = it))
+                    view.renderBookState(reduce(stateRepository.getLast(), description = it))
                 }
                 .apply {
                     disposable.add(this)
@@ -118,7 +133,7 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
         view.coverUrlChangedIntent()
                 .observeOn(uiScheduler)
                 .subscribe {
-                    view.renderBookState(reduce(states.last(), coverUrl = it))
+                    view.renderBookState(reduce(stateRepository.getLast(), coverUrl = it))
                 }
                 .apply {
                     disposable.add(this)
@@ -129,7 +144,7 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
         view.authorPickedIntent()
                 .observeOn(uiScheduler)
                 .subscribe {
-                    view.renderBookState(reduce(states.last(),
+                    view.renderBookState(reduce(stateRepository.getLast(),
                                                 pickedAuthorPosition = it))
                 }
                 .apply {
@@ -148,14 +163,14 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
                             coverUrl ?: previousState.coverUrl,
                             pickedAuthorPosition
                                     ?: previousState.authorPickedPosition).apply {
-                    states.add(this)
+                    stateRepository.add(this)
                 }
             } else {
                 EditedState(title ?: "",
                             description ?: "",
                             coverUrl ?: "",
                             pickedAuthorPosition ?: 0).apply {
-                    states.add(this)
+                    stateRepository.add(this)
                 }
             }
 
@@ -173,12 +188,12 @@ class NewBookPresenter @Inject constructor(private val authorsRepository: Author
                                authors = it
                                authorNames.addAll(authors.keys.toList())
                                val state = EmptyState(authorNames)
-                               states.add(state)
+                               stateRepository.add(state)
                                view.renderBookState(state)
                            },
                            { exception ->
                                val state = ErrorState(exception.message.toString())
-                               states.add(state)
+                               stateRepository.add(state)
                                view.renderBookState(state)
                            })
                 .apply {

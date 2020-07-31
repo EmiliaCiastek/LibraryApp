@@ -1,9 +1,12 @@
 package com.ciastek.library.remote.books.add
 
+import com.ciastek.library.common.StateRepository
 import com.ciastek.library.common.StringProvider
 import com.ciastek.library.remote.authors.list.repository.Author
 import com.ciastek.library.remote.authors.list.repository.AuthorsRepository
 import com.ciastek.library.remote.books.RemoteBooksService
+import com.ciastek.library.remote.books.add.BookState.EditedState
+import com.ciastek.library.remote.books.add.BookState.EmptyState
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -25,6 +28,7 @@ internal class NewBookPresenterTest {
     private val authorsRepository: AuthorsRepository = mock()
     private val stringProvider: StringProvider = mock()
     private val booksService: RemoteBooksService = mock()
+    private val bookStateRepository: StateRepository<BookState> = mock()
     private val errorMessage = "Error!!!!"
     private val mockString = "mock string"
     private val title = "book title"
@@ -36,6 +40,10 @@ internal class NewBookPresenterTest {
                                      Author("Jennifer", "Niven", 3),
                                      Author("George R.R.", "Martin", 4),
                                      Author("Robert C.", "Martin", 5))
+    private val expectedAuthorsNames = mutableListOf(mockString)
+            .apply {
+                addAll(fakeAuthors.map { "${it.lastName} ${it.name}" })
+            }
 
     @BeforeEach
     fun setUp() {
@@ -47,8 +55,10 @@ internal class NewBookPresenterTest {
         whenever(view.coverUrlChangedIntent()).thenReturn(Observable.empty())
         whenever(view.cancelFormIntent()).thenReturn(Observable.empty())
         whenever(view.saveFormIntent()).thenReturn(Observable.empty())
+        whenever(bookStateRepository.isEmpty()).thenReturn(true)
+        whenever(bookStateRepository.getLast()).thenReturn(EmptyState(expectedAuthorsNames))
 
-        presenter = NewBookPresenter(authorsRepository, stringProvider, booksService, scheduler, scheduler)
+        presenter = NewBookPresenter(authorsRepository, stringProvider, booksService, bookStateRepository, scheduler, scheduler)
     }
 
     @Test
@@ -69,14 +79,9 @@ internal class NewBookPresenterTest {
 
     @Test
     fun rendersEmptyStateWhenAuthorsFetched() {
-        val expectedAuthorsNames = mutableListOf(mockString)
-                .apply {
-                    addAll(fakeAuthors.map { "${it.lastName} ${it.name}" })
-                }
-
         presenter.bindIntents(view)
 
-        verify(view).renderBookState(BookState.EmptyState(expectedAuthorsNames))
+        verify(view).renderBookState(EmptyState(expectedAuthorsNames))
     }
 
     @Test
@@ -85,10 +90,10 @@ internal class NewBookPresenterTest {
 
         presenter.bindIntents(view)
 
-        verify(view).renderBookState(BookState.EditedState(title = title,
-                                                           description = "",
-                                                           coverUrl = "",
-                                                           authorPickedPosition = 0))
+        verify(view).renderBookState(EditedState(title = title,
+                                                 description = "",
+                                                 coverUrl = "",
+                                                 authorPickedPosition = 0))
     }
 
     @Test
@@ -97,10 +102,10 @@ internal class NewBookPresenterTest {
 
         presenter.bindIntents(view)
 
-        verify(view).renderBookState(BookState.EditedState(title = "",
-                                                           description = description,
-                                                           coverUrl = "",
-                                                           authorPickedPosition = 0))
+        verify(view).renderBookState(EditedState(title = "",
+                                                 description = description,
+                                                 coverUrl = "",
+                                                 authorPickedPosition = 0))
     }
 
     @Test
@@ -109,10 +114,10 @@ internal class NewBookPresenterTest {
 
         presenter.bindIntents(view)
 
-        verify(view).renderBookState(BookState.EditedState(title = "",
-                                                           description = "",
-                                                           coverUrl = coverUrl,
-                                                           authorPickedPosition = 0))
+        verify(view).renderBookState(EditedState(title = "",
+                                                 description = "",
+                                                 coverUrl = coverUrl,
+                                                 authorPickedPosition = 0))
     }
 
     @Test
@@ -121,10 +126,10 @@ internal class NewBookPresenterTest {
 
         presenter.bindIntents(view)
 
-        verify(view).renderBookState(BookState.EditedState(title = "",
-                                                           description = "",
-                                                           coverUrl = "",
-                                                           authorPickedPosition = authorPosition))
+        verify(view).renderBookState(EditedState(title = "",
+                                                 description = "",
+                                                 coverUrl = "",
+                                                 authorPickedPosition = authorPosition))
     }
 
     @Test
@@ -133,19 +138,16 @@ internal class NewBookPresenterTest {
         val titleSubject = PublishSubject.create<String>()
         whenever(view.titleChangedIntent()).thenReturn(titleSubject.hide())
 
-        whenever(view.coverUrlChangedIntent()).thenReturn(Observable.just(coverUrl))
-        whenever(view.descriptionChangedIntent()).thenReturn(Observable.just(description))
-        whenever(view.authorPickedIntent()).thenReturn(Observable.just(authorPosition))
+        whenever(bookStateRepository.getLast()).thenReturn(EditedState(title, description, coverUrl, authorPosition))
 
         presenter.bindIntents(view)
-        titleSubject.onNext(title)
 
         titleSubject.onNext(newTitle)
 
-        verify(view).renderBookState(BookState.EditedState(title = newTitle,
-                                                           description = description,
-                                                           coverUrl = coverUrl,
-                                                           authorPickedPosition = authorPosition))
+        verify(view).renderBookState(EditedState(title = newTitle,
+                                                 description = description,
+                                                 coverUrl = coverUrl,
+                                                 authorPickedPosition = authorPosition))
     }
 
     @Test
@@ -154,19 +156,16 @@ internal class NewBookPresenterTest {
         val descriptionSubject = PublishSubject.create<String>()
         whenever(view.descriptionChangedIntent()).thenReturn(descriptionSubject.hide())
 
-        whenever(view.titleChangedIntent()).thenReturn(Observable.just(title))
-        whenever(view.coverUrlChangedIntent()).thenReturn(Observable.just(coverUrl))
-        whenever(view.authorPickedIntent()).thenReturn(Observable.just(authorPosition))
+        whenever(bookStateRepository.getLast()).thenReturn(EditedState(title, description, coverUrl, authorPosition))
 
         presenter.bindIntents(view)
-        descriptionSubject.onNext(description)
 
         descriptionSubject.onNext(newDescription)
 
-        verify(view).renderBookState(BookState.EditedState(title = title,
-                                                           description = newDescription,
-                                                           coverUrl = coverUrl,
-                                                           authorPickedPosition = authorPosition))
+        verify(view).renderBookState(EditedState(title = title,
+                                                 description = newDescription,
+                                                 coverUrl = coverUrl,
+                                                 authorPickedPosition = authorPosition))
     }
 
     @Test
@@ -175,20 +174,16 @@ internal class NewBookPresenterTest {
         val coverUrlSubject = PublishSubject.create<String>()
 
         whenever(view.coverUrlChangedIntent()).thenReturn(coverUrlSubject.hide())
-
-        whenever(view.descriptionChangedIntent()).thenReturn(Observable.just(description))
-        whenever(view.titleChangedIntent()).thenReturn(Observable.just(title))
-        whenever(view.authorPickedIntent()).thenReturn(Observable.just(authorPosition))
+        whenever(bookStateRepository.getLast()).thenReturn(EditedState(title, description, coverUrl, authorPosition))
 
         presenter.bindIntents(view)
-        coverUrlSubject.onNext(description)
 
         coverUrlSubject.onNext(newCoverUrl)
 
-        verify(view).renderBookState(BookState.EditedState(title = title,
-                                                           description = description,
-                                                           coverUrl = newCoverUrl,
-                                                           authorPickedPosition = authorPosition))
+        verify(view).renderBookState(EditedState(title = title,
+                                                 description = description,
+                                                 coverUrl = newCoverUrl,
+                                                 authorPickedPosition = authorPosition))
     }
 
     @Test
@@ -198,19 +193,16 @@ internal class NewBookPresenterTest {
 
         whenever(view.authorPickedIntent()).thenReturn(authorPositionSubject.hide())
 
-        whenever(view.coverUrlChangedIntent()).thenReturn(Observable.just(coverUrl))
-        whenever(view.descriptionChangedIntent()).thenReturn(Observable.just(description))
-        whenever(view.titleChangedIntent()).thenReturn(Observable.just(title))
+        whenever(bookStateRepository.getLast()).thenReturn(EditedState(title, description, coverUrl, authorPosition))
 
         presenter.bindIntents(view)
-        authorPositionSubject.onNext(authorPosition)
 
         authorPositionSubject.onNext(newAuthorPosition)
 
-        verify(view).renderBookState(BookState.EditedState(title = title,
-                                                           description = description,
-                                                           coverUrl = coverUrl,
-                                                           authorPickedPosition = newAuthorPosition))
+        verify(view).renderBookState(EditedState(title = title,
+                                                 description = description,
+                                                 coverUrl = coverUrl,
+                                                 authorPickedPosition = newAuthorPosition))
     }
 
     @Test
@@ -224,10 +216,7 @@ internal class NewBookPresenterTest {
 
     @Test
     fun savesDataWhenSaveIntent() {
-        whenever(view.coverUrlChangedIntent()).thenReturn(Observable.just(coverUrl))
-        whenever(view.descriptionChangedIntent()).thenReturn(Observable.just(description))
-        whenever(view.titleChangedIntent()).thenReturn(Observable.just(title))
-        whenever(view.authorPickedIntent()).thenReturn(Observable.just(authorPosition))
+        whenever(bookStateRepository.findLast(any())).thenReturn(EditedState(title, description, coverUrl, authorPosition))
         whenever(view.saveFormIntent()).thenReturn(Observable.just(Unit))
         whenever(booksService.addBook(any())).thenReturn(Completable.complete())
 
@@ -238,15 +227,55 @@ internal class NewBookPresenterTest {
 
     @Test
     fun renderErrorWhenSavingData() {
-        whenever(view.coverUrlChangedIntent()).thenReturn(Observable.just(coverUrl))
-        whenever(view.descriptionChangedIntent()).thenReturn(Observable.just(description))
-        whenever(view.titleChangedIntent()).thenReturn(Observable.just(title))
-        whenever(view.authorPickedIntent()).thenReturn(Observable.just(authorPosition))
+        whenever(bookStateRepository.findLast(any())).thenReturn(EditedState(title, description, coverUrl, authorPosition))
         whenever(view.saveFormIntent()).thenReturn(Observable.just(Unit))
         whenever(booksService.addBook(any())).thenReturn(Completable.error(Exception(errorMessage)))
 
         presenter.bindIntents(view)
 
         verify(view).renderBookState(BookState.ErrorState(errorMessage))
+    }
+
+    @Test
+    fun clearsStateRepositoryWhenCancel() {
+        whenever(view.cancelFormIntent()).thenReturn(Observable.just(Unit))
+
+        presenter.bindIntents(view)
+
+        verify(bookStateRepository).clear()
+    }
+
+    @Test
+    fun clearsStateRepositoryWhenBookSaved() {
+        whenever(bookStateRepository.findLast(any())).thenReturn(EditedState(title, description, coverUrl, authorPosition))
+        whenever(view.saveFormIntent()).thenReturn(Observable.just(Unit))
+        whenever(booksService.addBook(any())).thenReturn(Completable.complete())
+
+        presenter.bindIntents(view)
+
+        verify(bookStateRepository).clear()
+    }
+
+    @Test
+    fun rendersLastEmptyStateWhenStateRepositoryNotEmpty() {
+        whenever(bookStateRepository.isEmpty()).thenReturn(false)
+        whenever(bookStateRepository.getLast()).thenReturn(EmptyState(expectedAuthorsNames))
+
+        presenter.bindIntents(view)
+
+        verify(view).renderBookState(EmptyState(expectedAuthorsNames))
+    }
+
+    @Test
+    fun rendersLastEmptyAndEditedStateWhenStateRepositoryNotEmpty() {
+        val expectedState = EditedState(title, description, coverUrl, authorPosition)
+        whenever(bookStateRepository.isEmpty()).thenReturn(false)
+        whenever(bookStateRepository.findLast(any())).thenReturn(EmptyState(expectedAuthorsNames))
+        whenever(bookStateRepository.getLast()).thenReturn(expectedState)
+
+        presenter.bindIntents(view)
+
+        verify(view).renderBookState(EmptyState(expectedAuthorsNames))
+        verify(view).renderBookState(expectedState)
     }
 }
