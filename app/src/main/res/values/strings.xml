@@ -52,6 +52,9 @@
     <string name="book_cover_url_label">Cover url</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="remove_book_message">Book will be removed permanently form the server and your library. Are you sure? </string>
+    <string name="remove_book_title">Removing book? </string>
 
     <string name="large_text">
         "Material is the metaphor."

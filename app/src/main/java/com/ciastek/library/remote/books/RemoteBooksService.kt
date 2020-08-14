@@ -6,6 +6,7 @@ import com.ciastek.library.remote.books.list.repository.Book
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -20,4 +21,7 @@ interface RemoteBooksService {
 
     @POST("books")
     fun addBook(@Body book: NewBook): Completable
+
+    @DELETE("books/{id}")
+    fun deleteBook(@Path("id") id: Long): Completable
 }

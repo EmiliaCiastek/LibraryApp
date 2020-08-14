@@ -29,6 +29,9 @@ class BookDetailsViewModel(private val bookDetailsRepository: BookDetailsReposit
                         it.second)
     }
 
+    private val mutableBookRemovedEvent: MutableLiveData<Unit> = MutableLiveData()
+    val bookRemoved: LiveData<Unit> = Transformations.map(mutableBookRemovedEvent) { it }
+
     fun fetchBook(bookId: Long) {
         bookDetailsRepository.getBook(bookId)
                 .zipWith(userBookRepository.isBookInFavourites(bookId),
@@ -83,6 +86,16 @@ class BookDetailsViewModel(private val bookDetailsRepository: BookDetailsReposit
                             disposable.add(this)
                         }
             }
+        }
+    }
+
+    fun removeBook() {
+        mutableBookDetails.value?.first?.let { book ->
+            bookDetailsRepository.removeBook(book.id)
+                    .andThen(userBookRepository.removeBook(book.toBookEntity()))
+                    .observeOn(uiScheduler)
+                    .subscribe { mutableBookRemovedEvent.value = Unit }
+                    .apply { disposable.add(this) }
         }
     }
 }
